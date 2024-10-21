@@ -9,24 +9,10 @@ export default function Hero() {
                 fill
                 sizes='100vw'
                 priority={true}
-                style={{
-                    objectFit: 'cover',
-                    objectPosition: 'center top',
-                }}
+                className='object-cover object-top'
             />
-            <div
-                className='hero-overlay'
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                    zIndex: 1,
-                }}
-            ></div>
-            <div className='absolute inset-0 flex items-center justify-left z-10'>
+            <div className='absolute inset-0 bg-black bg-opacity-50 z-1'></div>
+            <div className='absolute inset-0 flex items-center justify-left z-1'>
                 <div className='text-white pl-8 md:pl-20'>
                     <h1 className='text-2xl md:text-4xl font-bold mb-2 leading-tight md:leading-tight'>
                         University of Toronto
