@@ -5,12 +5,13 @@
 :root {
     --background: #ffffff;
     --foreground: #000000;
-    --accent: #7f0000;
+    --accent: 0, 100%, 25%;
+    --accent-foreground: 0, 0%, 100%;
     --subtle: #4d4d4d;
     --secondary-accent: #cd8b76;
     --box-background: #f8f8f8;
-    --nav-text: #4a4a4a;
-    --nav-text-hover: #7f0000;
+    --nav-text: #000000;
+    --nav-text-hover: 0, 100%, 25%;
 }
 
 body {
