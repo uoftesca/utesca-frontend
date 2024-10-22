@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
+import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -55,8 +56,13 @@ const NavBar = () => {
         <nav className='flex items-center justify-between px-4 py-2 bg-white shadow-md'>
             <div className='flex items-center'>
                 <Link href='/'>
-                    <div className='w-[100px] h-[40px] bg-gray-200 flex items-center justify-center'>
-                        UTESCA
+                    <div className='relative w-[100px] h-[40px]'>
+                        <Image
+                            src='/UTESCA-red-black.png'
+                            alt='UTESCA Logo'
+                            fill
+                            className='object-contain'
+                        />
                     </div>
                 </Link>
             </div>
