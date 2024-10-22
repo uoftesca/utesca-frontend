@@ -1,14 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Portfolio } from './Portfolio';
 import { parse } from 'csv-parse/sync';
+import { useEffect, useState } from 'react';
+
+import { Portfolio } from './Portfolio';
 
 interface TeamMember {
-    name: string;
-    role: string;
-    program: string;
     imageUrl: string;
+    name: string;
+    program: string;
+    role: string;
 }
 
 const file = '/exec-team.csv';

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { LucideIcon } from 'lucide-react';
+
+import { Card, CardContent } from '@/components/ui/card';
 
 interface MissionCardProps {
     Icon: LucideIcon;

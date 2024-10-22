@@ -1,6 +1,6 @@
-import React from 'react';
+import { GraduationCap, Handshake, Users } from 'lucide-react';
+
 import MissionCard from '@/components/pages/about/MissionCard';
-import { Users, Handshake, GraduationCap } from 'lucide-react';
 
 const VisionAndMission: React.FC = () => {
     return (
