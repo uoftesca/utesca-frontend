@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-    --background: #ffffff;
-    --foreground: #000000;
+    --background: 100, 100%, 100%;
+    --foreground: 0, 0%, 0%;
     --accent: 0, 100%, 25%;
     --accent-foreground: 0, 0%, 100%;
-    --subtle: #4d4d4d;
-    --secondary-accent: #cd8b76;
-    --box-background: #f8f8f8;
-    --nav-text: #000000;
+    --subtle: 0, 0%, 30%;
+    --secondary-accent: 14, 47%, 63%;
+    --box-background: 0, 0%, 97%;
+    --nav-text: 0, 0%, 0%;
     --nav-text-hover: 0, 100%, 25%;
 }
 
