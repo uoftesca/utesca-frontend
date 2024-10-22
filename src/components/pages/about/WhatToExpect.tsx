@@ -5,7 +5,7 @@ import React from 'react';
  */
 const WhatToExpect: React.FC = () => {
     return (
-        <div className='text-center justify-center space-y-[24px]'>
+        <div className='text-center justify-center space-y-6'>
             <h1 className='text-2xl font-bold tracking-normal md:text-4xl text-accent'>
                 What to Expect
             </h1>
