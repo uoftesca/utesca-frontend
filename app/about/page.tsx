@@ -1,7 +1,8 @@
 import Hero from '@/components/Hero';
 import NavBar from '@/components/NavBar';
 import Container from '@/components/Container';
-import VisionAndMission from '@/components/VisionAndMission';
+import WhatToExpect from '@/components/pages/about/WhatToExpect';
+import VisionAndMission from '@/components/pages/about/VisionAndMission';
 
 export default function AboutUs() {
     return (
@@ -11,6 +12,7 @@ export default function AboutUs() {
                 <Hero />
                 <Container>
                     <VisionAndMission />
+                    <WhatToExpect />
                 </Container>
             </main>
         </>
