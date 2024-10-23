@@ -7,12 +7,12 @@ const testimonials = [
     {
         name: 'Jack',
         body: 'Working with UTESCA was a pleasure. Their team’s professionalism and ability to adapt to complex requirements were impressive. They delivered high-quality work on time.',
-        logo: 'https://avatar.vercel.sh/jack',
+        logo: '/testimonials/aikomail.png',
     },
     {
         name: 'Jane',
-        body: 'asdfjasdjfsadf',
-        logo: 'https://avatar.vercel.sh/jack',
+        body: 'Yet another testimonial.',
+        logo: '/testimonials/aikomail.png',
     },
 ];
 
@@ -36,13 +36,13 @@ const TestimonialCard = ({
             )}
         >
             <blockquote className='mb-2 text-sm'>{`“${body}”`}</blockquote>
-            <div className='flex flex-col items-center gap-2'>
+            <div className='flex flex-col items-center gap-1'>
                 <figcaption className='text-sm font-medium dark:text-white'>
                     — {name}
                 </figcaption>
                 <Image
                     className='object-cover'
-                    width={32}
+                    width={64}
                     height={32}
                     alt={`${name} logo`}
                     src={img}
