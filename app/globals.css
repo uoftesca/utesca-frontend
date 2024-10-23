@@ -10,7 +10,7 @@
     --subtle: #4d4d4d;
     --secondary-accent: 14, 47%, 63%;
     --card: 0, 0%, 97%;
-    --card-foreground: 0, 0%, 30%;
+    --card-foreground: 0%, 0%, 97%;
     --nav-text: 0, 0%, 0%;
     --nav-text-hover: 0, 100%, 25%;
 }
