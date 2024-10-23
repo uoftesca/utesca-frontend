@@ -32,12 +32,12 @@ const TestimonialCard = ({
         <figure
             className={cn(
                 'relative w-72 overflow-hidden rounded-xl p-4',
-                'border-gray-950/[.1] bg-card hover:bg-gray-950/[.05]'
+                'bg-card hover:bg-gray-950/[.05]'
             )}
         >
-            <blockquote className='mb-2 text-sm'>{`“${body}”`}</blockquote>
+            <blockquote className='mb-2 text-sm text-subtle font-normal'>{`“${body}”`}</blockquote>
             <div className='flex flex-col items-center gap-1'>
-                <figcaption className='text-sm font-medium dark:text-white'>
+                <figcaption className='text-sm font-normal text-subtle'>
                     — {name}
                 </figcaption>
                 <Image
