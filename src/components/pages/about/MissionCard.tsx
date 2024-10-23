@@ -13,9 +13,7 @@ const MissionCard: React.FC<MissionCardProps> = ({ Icon, text, className }) => {
         <Card className={`bg-card border-none w-full max-w-sm ${className}`}>
             <CardContent className='flex flex-col items-center p-6'>
                 <Icon className='w-12 h-12 text-accent mb-4' />
-                <p className='text-card-foreground text-center text-sm'>
-                    {text}
-                </p>
+                <p className='text-subtle text-center text-sm'>{text}</p>
             </CardContent>
         </Card>
     );
