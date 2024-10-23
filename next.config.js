@@ -2,7 +2,7 @@
 const nextConfig = {
     // ... other configurations ...
     images: {
-        domains: ['avatar.vercel.sh'],
+        domains: [],
     },
 };
 
