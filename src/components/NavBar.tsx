@@ -18,6 +18,7 @@ import {
     SheetContent,
     SheetHeader,
     SheetTrigger,
+    SheetTitle,
 } from '@/components/ui/sheet';
 
 const NavBar = () => {
@@ -61,6 +62,7 @@ const NavBar = () => {
                             src='/UTESCA-red-black.png'
                             alt='UTESCA Logo'
                             fill
+                            sizes='100px'
                             className='object-contain'
                         />
                     </div>
@@ -90,7 +92,11 @@ const NavBar = () => {
                         </Button>
                     </SheetTrigger>
                     <SheetContent side='top' className='bg-background'>
-                        <SheetHeader />
+                        <SheetHeader>
+                            <SheetTitle className='sr-only'>
+                                Navigation Menu
+                            </SheetTitle>
+                        </SheetHeader>
                         <nav className='flex flex-col space-y-4 mt-4'>
                             {navItems.map((item) => (
                                 <Link
