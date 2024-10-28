@@ -32,7 +32,7 @@ export default function ProjectComponent({
         <Collapsible
             open={isOpen}
             onOpenChange={setIsOpen}
-            className='w-full max-w-md rounded-lg bg-transparent relative'
+            className='w-full rounded-lg bg-transparent relative'
         >
             <div className='p-0 space-y-4'>
                 <div className='flex flex-col items-start gap-4'>
@@ -52,7 +52,7 @@ export default function ProjectComponent({
                                 <Button
                                     variant='ghost'
                                     size='sm'
-                                    className='p-0 [&_svg]:size-3'
+                                    className='p-0 h-auto [&_svg]:size-3'
                                 >
                                     <Triangle
                                         className={`transition-transform duration-200 fill-current ${
@@ -63,13 +63,15 @@ export default function ProjectComponent({
                             </CollapsibleTrigger>
                             <h3 className='font-normal'>{title}</h3>
                         </div>
-                        <span className='text-subtle italic'>{category}</span>
+                        <span className='text-subtle italic text-right'>
+                            {category}
+                        </span>
                     </div>
                 </div>
                 <CollapsibleContent>
                     <div className='flex items-stretch justify-between'>
                         <p className='text-subtle'>{description}</p>
-                        <div className='flex items-end justify-center'>
+                        <div className='inline-flex items-end'>
                             {link && (
                                 <a
                                     href={link}
@@ -77,7 +79,8 @@ export default function ProjectComponent({
                                     rel='noopener noreferrer'
                                     className={buttonVariants({
                                         variant: 'ghost',
-                                        className: 'p-0 [&_svg]:size-5',
+                                        className:
+                                            '!p-0 [&_svg]:size-5 !items-end',
                                     })}
                                 >
                                     <ExternalLink className='w-full h-full' />
