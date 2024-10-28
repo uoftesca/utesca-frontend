@@ -5,6 +5,7 @@ import WhatToExpect from '@/components/pages/about/WhatToExpect';
 import VisionAndMission from '@/components/pages/about/VisionAndMission';
 import MeetTheTeam from '@/components/pages/about/MeetTheTeam';
 import WhatOthersHaveToSay from '@/components/pages/about/WhatOthersHaveToSay';
+import Footer from '@/components/Footer';
 
 export default function AboutUs() {
     return (
@@ -19,6 +20,7 @@ export default function AboutUs() {
                     <WhatOthersHaveToSay />
                 </Container>
             </main>
+            <Footer />
         </>
     );
 }

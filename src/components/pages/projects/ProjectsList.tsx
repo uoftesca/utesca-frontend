@@ -10,7 +10,7 @@ interface Project {
 }
 
 interface ProjectsListProps {
-    projects: Project[];
+    projects: readonly Project[];
 }
 
 export default function ProjectsList({ projects }: ProjectsListProps) {

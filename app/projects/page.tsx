@@ -1,8 +1,10 @@
 import Container from '@/components/Container';
+import Footer from '@/components/Footer';
 import Hero from '@/components/Hero';
 import NavBar from '@/components/NavBar';
 
 import CEPDescription from '@/components/pages/projects/CEPDescription';
+import PartnerWithUs from '@/components/pages/projects/PartnerWithUs';
 import ProjectsList from '@/components/pages/projects/ProjectsList';
 
 const projects = [
@@ -75,8 +77,10 @@ export default function Projects() {
                 <Container>
                     <CEPDescription />
                     <ProjectsList projects={projects} />
+                    <PartnerWithUs />
                 </Container>
             </main>
+            <Footer />
         </>
     );
 }
