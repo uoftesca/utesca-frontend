@@ -6,11 +6,9 @@ export default function CEPDescription() {
             </h1>
             <p className='text-base text-subtle'>
                 Explore the impact of our Consulting Engineering Projects (CEP)
-                at UTESCA. Our student-led teams tackle real-world challenges,
-                applying classroom knowledge to deliver innovative solutions.
-                From sustainability to process optimizations, each project is a
-                testament to our commitment to practical learning and
-                professional development.
+                at UTESCA. Our students offer a range of technical skills to
+                solve technical engineering problems and develop the best
+                engineering-based solution with our pro bono service.
             </p>
         </div>
     );

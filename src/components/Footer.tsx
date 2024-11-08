@@ -1,6 +1,6 @@
 import { Mail } from 'lucide-react';
 import Link from 'next/link';
-import { FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { FaInstagram, FaLinkedin } from 'react-icons/fa';
 
 const socialLinks = {
     facebook: 'https://www.facebook.com/uoftesca/',
@@ -40,15 +40,6 @@ export default function Footer() {
                             Follow Us
                         </h3>
                         <div className='flex space-x-4'>
-                            <Link
-                                href={socialLinks.facebook}
-                                target='_blank'
-                                rel='noopener noreferrer'
-                                className='transition-colors duration-200 ease-in-out hover:text-accent'
-                            >
-                                <span className='sr-only'>Facebook</span>
-                                <FaFacebook className='h-6 w-6' />
-                            </Link>
                             <Link
                                 href={socialLinks.instagram}
                                 target='_blank'
