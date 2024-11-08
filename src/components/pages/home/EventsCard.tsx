@@ -1,7 +1,7 @@
 import { SquareArrowOutUpRight } from 'lucide-react';
 
 import { Card, CardContent } from '@/components/ui/card';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
 
 interface EventsCardProps {
     img: string;
@@ -10,7 +10,9 @@ interface EventsCardProps {
     className?: string;
 }
 
-export function EventsCard({ img, title, link, className }: EventsCardProps) {
+// export function EventsCard({ img, title, link, className }: EventsCardProps) {
+export function EventsCard({ img, title }: EventsCardProps) {
+
     return (
         <Card className='bg-transparent border-none shadow-none w-96'>
             <CardContent className='p-0 flex flex-col items-start'>

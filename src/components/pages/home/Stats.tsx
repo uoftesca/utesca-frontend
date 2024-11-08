@@ -1,5 +1,3 @@
-import { GraduationCap, Handshake, Users } from 'lucide-react';
-
 import StatsCard from './StatsCard';
 
 const Stats: React.FC = () => {

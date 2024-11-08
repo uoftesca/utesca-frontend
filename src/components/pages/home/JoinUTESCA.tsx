@@ -1,7 +1,3 @@
-import { GraduationCap, Handshake, Users } from 'lucide-react';
-
-import OverviewCard from './OverviewCard';
-
 const JoinUTESCA: React.FC = () => {
     return (
         <div className='w-full text-center space-y-6'>
