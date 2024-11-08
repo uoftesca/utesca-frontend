@@ -1,5 +1,3 @@
-import { GraduationCap, Handshake, Users } from 'lucide-react';
-
 import { EventsCard } from './EventsCard';
 import SeeMore from './SeeMore';
 

@@ -77,8 +77,9 @@ export function PartneredWith() {
     return (
         <div className='relative flex w-full flex-col items-center justify-center overflow-hidden rounded-lg'>
             <Marquee pauseOnHover className='[--duration:20s]' style={{textAlign: 'center'}}>
-                {partners.map((partner) => (
+                {partners.map((partner, index) => (
                     <PartnerCard
+                        key={index}
                         img={partner.logo}
                     />
                 ))}
