@@ -15,7 +15,7 @@ export default function Footer() {
                 <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
                     <div className='space-y-4'>
                         <h2 className='text-xl font-bold'>
-                            University of Toronto Engineering Consulting
+                            University of Toronto Engineering Student Consulting
                             Association
                         </h2>
                     </div>
@@ -73,7 +73,8 @@ export default function Footer() {
                 <div className='mt-8 border-t border-primary-foreground/10 pt-8 text-center text-sm'>
                     <p>
                         &copy; {new Date().getFullYear()} University of Toronto
-                        Engineering Consulting Association. All rights reserved.
+                        Engineering Student Consulting Association. All rights
+                        reserved.
                     </p>
                 </div>
             </div>
