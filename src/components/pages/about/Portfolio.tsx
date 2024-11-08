@@ -2,10 +2,10 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 interface PortfolioProps {
-    name: string;
-    role: string;
-    program: string;
-    imageUrl: string;
+    readonly name: string;
+    readonly role: string;
+    readonly program: string;
+    readonly imageUrl: string;
 }
 
 export function Portfolio({ name, role, program, imageUrl }: PortfolioProps) {
@@ -18,7 +18,7 @@ export function Portfolio({ name, role, program, imageUrl }: PortfolioProps) {
                         alt={name}
                         className='object-cover'
                     />
-                    <AvatarFallback>
+                    <AvatarFallback className='rounded-lg'>
                         {name
                             .split(' ')
                             .map((n) => n[0])
