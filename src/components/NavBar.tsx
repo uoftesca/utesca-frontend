@@ -21,36 +21,6 @@ import {
     SheetTitle,
 } from '@/components/ui/sheet';
 
-interface NavItemsProps {
-    onClick?: () => void;
-    navItems: Array<{ href: string; label: string }>;
-    closeMenu: () => void;
-}
-
-const NavItems = ({
-    onClick = () => {},
-    navItems,
-    closeMenu,
-}: NavItemsProps) => (
-    <>
-        {navItems.map((item) => (
-            <NavigationMenuItem key={item.href}>
-                <Link href={item.href} legacyBehavior passHref>
-                    <NavigationMenuLink
-                        className={navigationMenuTriggerStyle()}
-                        onClick={() => {
-                            onClick();
-                            closeMenu();
-                        }}
-                    >
-                        {item.label}
-                    </NavigationMenuLink>
-                </Link>
-            </NavigationMenuItem>
-        ))}
-    </>
-);
-
 const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -62,6 +32,26 @@ const NavBar = () => {
     ];
 
     const closeMenu = () => setIsOpen(false);
+
+    const NavItems = ({ onClick = () => {} }: { onClick?: () => void }) => (
+        <>
+            {navItems.map((item) => (
+                <NavigationMenuItem key={item.href}>
+                    <Link href={item.href} legacyBehavior passHref>
+                        <NavigationMenuLink
+                            className={navigationMenuTriggerStyle()}
+                            onClick={() => {
+                                onClick();
+                                closeMenu();
+                            }}
+                        >
+                            {item.label}
+                        </NavigationMenuLink>
+                    </Link>
+                </NavigationMenuItem>
+            ))}
+        </>
+    );
 
     return (
         <nav className='flex items-center justify-between px-4 py-2 bg-white shadow-md'>
@@ -83,7 +73,7 @@ const NavBar = () => {
             <div className='hidden md:block'>
                 <NavigationMenu>
                     <NavigationMenuList>
-                        <NavItems navItems={navItems} closeMenu={closeMenu} />
+                        <NavItems />
                     </NavigationMenuList>
                 </NavigationMenu>
             </div>
@@ -108,10 +98,16 @@ const NavBar = () => {
                             </SheetTitle>
                         </SheetHeader>
                         <nav className='flex flex-col space-y-4 mt-4'>
-                            <NavItems
-                                navItems={navItems}
-                                closeMenu={closeMenu}
-                            />
+                            {navItems.map((item) => (
+                                <Link
+                                    key={item.href}
+                                    href={item.href}
+                                    className='text-lg font-normal hover:text-accent'
+                                    onClick={closeMenu}
+                                >
+                                    {item.label}
+                                </Link>
+                            ))}
                         </nav>
                     </SheetContent>
                 </Sheet>
