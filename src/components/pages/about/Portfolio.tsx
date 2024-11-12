@@ -16,6 +16,8 @@ export function Portfolio({ name, role, program, imageUrl }: PortfolioProps) {
                     <AvatarImage
                         src={imageUrl}
                         alt={name}
+                        width={500}
+                        height={500}
                         className='object-cover'
                     />
                     <AvatarFallback className='rounded-lg'>

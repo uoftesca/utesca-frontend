@@ -95,7 +95,7 @@ export default function Team() {
                                     name={member.name}
                                     role={member.role}
                                     program={member.program}
-                                    imageUrl={member.imageUrl}
+                                    imageUrl={member.imageUrl || ''}
                                 />
                             </div>
                         ))}
