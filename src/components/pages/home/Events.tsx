@@ -10,18 +10,18 @@ const Events: React.FC = () => {
             <div className='flex flex-col items-center gap-6'>
                 <div className='max-w-fit grid justify-items-center grid-cols-1 md:grid-cols-2 gap-6'>
                     <EventsCard
-                        img='/events/tempevents.png'
+                        img='/events/acethecase.jpg'
                         title='Ace the Case Deloitte'
                         link=''
                     />
                     <EventsCard
-                        img='/events/tempevents.png'
-                        title='Consulting for a Day PWC'
+                        img='/events/consultantforaday.jpg'
+                        title='Consultant for a Day PWC'
                         link=''
                     />
                 </div>
                 <EventsCard
-                    img='/events/tempevents.png'
+                    img='/events/networkingandpanel.jpg'
                     title='Networking and Panel Events'
                     link=''
                     className='md:w-[calc(50%-12px)]'
