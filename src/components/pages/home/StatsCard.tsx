@@ -20,7 +20,7 @@ const StatsCard: React.FC<StatsCardProps> = ({
                 <p className='text-center text-lg text-accent font-bold'>
                     {title}
                 </p>
-                <p className='whitespace-pre-wrap text-6xl font-normal text-black dark:text-white'>
+                <p className='whitespace-pre-wrap text-6xl font-medium text-black dark:text-white'>
                     <NumberTicker value={num} />
                 </p>
                 <p className='text-subtle text-center text-sm'>{text}</p>
