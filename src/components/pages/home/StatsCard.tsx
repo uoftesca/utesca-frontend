@@ -16,12 +16,11 @@ const StatsCard: React.FC<StatsCardProps> = ({
 }) => {
     return (
         <Card className={`bg-card border-none w-full max-w-sm ${className}`}>
-            <CardContent className='flex flex-col items-center p-6'>
+            <CardContent className='flex flex-col items-center space-y-2 p-6'>
                 <p className='text-center text-lg text-accent font-bold'>
-                    {' '}
-                    {title}{' '}
+                    {title}
                 </p>
-                <p className='whitespace-pre-wrap text-6xl font-medium tracking-tighter text-black dark:text-white'>
+                <p className='whitespace-pre-wrap text-6xl font-normal text-black dark:text-white'>
                     <NumberTicker value={num} />
                 </p>
                 <p className='text-subtle text-center text-sm'>{text}</p>
