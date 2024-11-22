@@ -48,6 +48,9 @@ const partners = [
     }
 ];
 
+const firstRow = partners.slice(0, Math.ceil(partners.length / 2));
+const secondRow = partners.slice(Math.ceil(partners.length / 2));
+
 const PartnerCard = ({
     img,
 }: {
@@ -56,17 +59,17 @@ const PartnerCard = ({
     return (
         <figure
             className={cn(
-                'relative w-128 flex items-center justify-center overflow-hidden rounded-xl p-4',
-                'bg-card hover:bg-gray-950/[.05]'
+                'relative w-24 flex items-center justify-center overflow-hidden rounded-xl p-4 select-none'
             )}
         >
             <div className='flex items-center justify-center'>
                 <Image
-                    className='object-cover'
-                    width={256}
-                    height={128}
+                    className='object-cover pointer-events-none'
+                    width={64}
+                    height={24}
                     alt={`logo`}
                     src={img}
+                    draggable={false}
                 />
             </div>
         </figure>
@@ -76,10 +79,18 @@ const PartnerCard = ({
 export function PartneredWith() {
     return (
         <div className='relative flex w-full flex-col items-center justify-center overflow-hidden rounded-lg'>
-            <Marquee pauseOnHover className='[--duration:20s]' style={{textAlign: 'center'}}>
-                {partners.map((partner, index) => (
+            <Marquee className='[--duration:10s]'>
+                {firstRow.map((partner) => (
                     <PartnerCard
-                        key={index}
+                        key={partner.logo}
+                        img={partner.logo}
+                    />
+                ))}
+            </Marquee>
+            <Marquee reverse className='[--duration:10s]' style={{textAlign: 'center'}}>
+                {secondRow.map((partner) => (
+                    <PartnerCard
+                        key={partner.logo}
                         img={partner.logo}
                     />
                 ))}
