@@ -4,7 +4,7 @@ import SeeMore from './SeeMore';
 
 const WhatIsCEP: React.FC = () => {
     return (
-        <div className='w-full flex justify-center'>
+        <div className='w-full h-full flex justify-center'>
             <div className='w-full max-w-2xl text-center space-y-6'>
                 <h1 className='text-3xl font-bold tracking-normal w-full md:text-4xl text-accent'>
                     What is CEP?
@@ -46,15 +46,16 @@ const WhatIsCEP: React.FC = () => {
                 </div>
 
                 <div className='flex flex-col items-center gap-6'>
-                    <div className='max-w-fit grid justify-items-center grid-cols-1 md:grid-cols-3 gap-6'>
+                    <div className='max-w-fit grid justify-items-center grid-cols-1 md:grid-cols-3 gap-6 h-full'>
                         <InfoCard
                             text='Students will learn how to implement an engineering consulting strategy to solve problems in healthcare, AI, data analytics, sustainability, and many more industries!'
                             className='col-span-1 md:col-span-2'
                         />
-                        <div className='col-span-1 md:col-span-1 flex justify-center items-center'>
+                        <div className='col-span-1 md:col-span-1 h-full w-full flex'>
                             <SeeMore
                                 link='/projects'
-                                className='w-48 h-12 flex justify-center items-center'
+                                text='Explore Our Projects'
+                                className='flex-1'
                             />
                         </div>
                     </div>

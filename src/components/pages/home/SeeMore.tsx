@@ -1,17 +1,23 @@
-import { Card, CardContent } from '@/components/ui/card';
+import Link from 'next/link';
+import ShimmerButton from '@/components/ui/shimmer-button';
 
 interface SeeMoreProps {
     link: string;
+    text?: string;
     className?: string;
 }
 
-const SeeMore: React.FC<SeeMoreProps> = ({ link, className }) => {
+const SeeMore: React.FC<SeeMoreProps> = ({ link, text = "See More", className }) => {
     return (
-        <Card className={`bg-card border-none w-full max-w-sm ${className}`}>
-            <CardContent className='flex flex-col items-center p-6'>
-                <a className='text-subtle text-center text-sm' href={link}>See More...</a>
-            </CardContent>
-        </Card>
+        <Link href={link} className="w-full h-full flex">
+            <ShimmerButton 
+                borderRadius="0.5rem"
+                background="hsl(var(--accent))"
+                className={`w-full h-full flex-1 ${className || ''}`}
+            >
+                <span className="text-sm">{text}</span>
+            </ShimmerButton>
+        </Link>
     );
 };
 
