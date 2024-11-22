@@ -8,9 +8,11 @@ interface InfoCardProps {
 
 const InfoCard: React.FC<InfoCardProps> = ({title, text, className }) => {
     return (
-        <Card className={`bg-card border-none w-full max-w-sm ${className}`}>
-            <CardContent className='flex flex-col items-center p-6'>
-                <p className='text-center text-lg text-accent font-bold' > {title} </p>
+        <Card className={`bg-card border-none h-full ${className}`}>
+            <CardContent className='flex h-full flex-col items-center justify-center p-6 space-y-2'>
+                {title && (
+                    <p className='text-center text-lg text-accent font-bold'>{title}</p>
+                )}
                 <p className='text-subtle text-center text-sm'>{text}</p>
             </CardContent>
         </Card>
