@@ -17,17 +17,17 @@ const StatsCard1: React.FC<StatsCard1Props> = ({
 }) => {
     return (
         <Card className={`bg-card border-none w-full max-w-sm ${className}`}>
-            <CardContent className='flex h-full flex-col items-center justify-center space-y-2 p-6'>
+            <CardContent className='flex h-full flex-col items-center justify-center p-6'>
                 {title && (
-                    <p className='text-center text-sm font-bold'>{title}</p>
+                    <p className='text-center text-sm font-bold leading-tight'>{title}</p>
                 )}
-                <p className='text-center text-5xl text-accent font-bold'>{num}</p>
-                <div className='space-y-1'>
+                <p className='text-center text-5xl text-accent font-bold leading-tight'>{num}</p>
+                <div className='flex flex-col'>
                     {text && (
-                        <p className='text-subtle text-center text-sm'>{text}</p>
+                        <p className='text-subtle text-center text-sm leading-tight'>{text}</p>
                     )}
                     {text1 && (
-                        <p className='text-subtle text-center text-sm'>{text1}</p>
+                        <p className='text-subtle text-center text-sm leading-tight'>{text1}</p>
                     )}
                 </div>
             </CardContent>
