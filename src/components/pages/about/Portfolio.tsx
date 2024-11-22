@@ -12,13 +12,14 @@ export function Portfolio({ name, role, program, imageUrl }: PortfolioProps) {
     return (
         <Card className='bg-transparent border-none shadow-none w-32'>
             <CardContent className='p-0 flex flex-col items-start'>
-                <Avatar className='w-32 h-32 mb-1 rounded-lg'>
+                <Avatar className='w-32 h-32 mb-1 rounded-lg select-none'>
                     <AvatarImage
                         src={imageUrl}
                         alt={name}
                         width={500}
                         height={500}
-                        className='object-cover'
+                        className='object-cover pointer-events-none select-none'
+                        draggable={false}
                     />
                     <AvatarFallback className='rounded-lg'>
                         {name
