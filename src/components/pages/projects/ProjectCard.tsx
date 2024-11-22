@@ -42,7 +42,8 @@ export default function ProjectComponent({
                                 src={img}
                                 alt={title}
                                 fill
-                                className='object-cover rounded-lg'
+                                className='object-cover rounded-lg select-none'
+                                draggable={false}
                             />
                         )}
                     </div>
