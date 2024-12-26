@@ -120,7 +120,7 @@ const config: Config = {
     		'2xl': '1536px'
     	}
     },
-    plugins: [tailwindcssAnimate],
+    plugins: [tailwindcssAnimate, require("tailwindcss-animate")],
 };
 
 export default config;
