@@ -81,7 +81,7 @@ export default function ProjectComponent({
                                     className={buttonVariants({
                                         variant: 'ghost',
                                         className:
-                                            '!p-0 [&_svg]:size-5 !items-end',
+                                            'hover:bg-transparent !p-0 [&_svg]:size-5 !items-end',
                                     })}
                                 >
                                     <ExternalLink className='w-full h-full' />
