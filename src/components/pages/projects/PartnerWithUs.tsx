@@ -64,7 +64,7 @@ export default function PartnerWithUs() {
                 us at{' '}
                 <a
                     href='mailto:uoft.esca@gmail.com'
-                    className='font-bold hover:underline hover:text-accent transition-colors duration-200 ease-in-out'
+                    className='font-bold text-accent no-underline hover:underline'
                 >
                     uoft.esca@gmail.com
                 </a>
