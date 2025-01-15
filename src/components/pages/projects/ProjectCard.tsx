@@ -53,7 +53,7 @@ export default function ProjectComponent({
                                 <Button
                                     variant='ghost'
                                     size='sm'
-                                    className='p-0 h-auto [&_svg]:size-3'
+                                    className='p-0 h-auto [&_svg]:size-3 hover:bg-transparent'
                                 >
                                     <Triangle
                                         className={`transition-transform duration-200 fill-current ${
@@ -69,7 +69,7 @@ export default function ProjectComponent({
                         </span>
                     </div>
                 </div>
-                <CollapsibleContent className="transition-all duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0">
+                <CollapsibleContent className='transition-all duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0'>
                     <div className='flex items-stretch justify-between'>
                         <p className='text-subtle'>{description}</p>
                         <div className='inline-flex items-end'>
