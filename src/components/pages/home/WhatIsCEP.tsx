@@ -37,18 +37,12 @@ const WhatIsCEP: React.FC = () => {
                             className='col-span-1 md:col-span-2'
                         />
                     </div>
-                    <div className='max-w-fit grid justify-items-center grid-cols-1 md:grid-cols-3 gap-6'>
-                        <InfoCard
-                            text='Our students offer a range of technical skills to solve technical engineering problems and develop the best engineering-based solution with our pro bono service.'
-                            className='col-span-1 md:col-span-3 w-full'
-                        />
-                    </div>
                 </div>
 
                 <div className='flex flex-col items-center gap-6'>
                     <div className='max-w-fit grid justify-items-center grid-cols-1 md:grid-cols-3 gap-6 h-full'>
                         <InfoCard
-                            text='Students will learn how to implement an engineering consulting strategy to solve problems in healthcare, AI, data analytics, sustainability, and many more industries!'
+                            text='Our students offer a range of technical skills to solve engineering problems in healthcare, AI, data analytics, sustainability, and many more industries! Students learn how to implement engineering consulting strategies to develop the best engineering-based solution with our pro bono service.'
                             className='col-span-1 md:col-span-2'
                         />
                         <div className='col-span-1 md:col-span-1 h-full w-full flex'>
