@@ -6,6 +6,8 @@ import { Event } from '@/types/event';
 import { fetchEvents, getEventsForDate, formatEventDate } from '@/utils/events';
 import EventCard from './EventCard';
 import { motion, AnimatePresence } from 'framer-motion';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface UpcomingEventsProps {
     onEventsChange: (hasEvents: boolean) => void;
@@ -58,6 +60,10 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
                             day_selected:
                                 'rounded-md text-white hover:text-white',
                             day_today: 'border-2 border-accent text-black',
+                            day: cn(
+                                buttonVariants({ variant: 'ghost' }),
+                                'h-9 w-9 p-0 font-normal aria-selected:opacity-100 [&:not([aria-selected]):hover]:bg-accent [&:not([aria-selected]):hover]:text-white rounded-md'
+                            ),
                         }}
                         modifiers={{
                             event: eventDates,

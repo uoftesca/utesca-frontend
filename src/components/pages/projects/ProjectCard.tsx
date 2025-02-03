@@ -2,14 +2,13 @@
 
 import * as React from 'react';
 import { ExternalLink, Triangle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import Image from 'next/image';
-import { buttonVariants } from '@/components/ui/button';
 
 interface ProjectProps {
     title: string;

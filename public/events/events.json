@@ -38,7 +38,7 @@
             "description": "The Ace the Case 2024 event, held in collaboration with Deloitte on March 9th, 2024, at the University of Toronto's St. George Campus. This flagship case competition brought together fifteen teams, each consisting of four students, to showcase their creative problem-solving and presentation skills.\n\nDuring \"Competition Day,\" participants engaged deeply with Deloitte's operations, explored recruitment opportunities, and presented their innovative solutions to a panel of company judges. The event provided an exceptional platform for students to demonstrate their abilities, network with esteemed Deloitte professionals, and compete for cash prizes.\n\nEvent Highlights:\n\n• Participants tested their skills in analytics, problem-solving, and teamwork\n• Students connected with consulting experts and peers, expanding their professional networks\n• Winners walked away with cash prizes and valuable experiences to enhance their resumes\n\nWe extend our heartfelt congratulations to all participants and winners, and a big thank you to Deloitte for their collaboration. Stay connected with us through our social media channels for updates on Ace the Case 2025!",
             "category": "Case Competition",
             "registrationLink": "",
-            "image": "/events/networkingandpanel.jpg"
+            "image": "/events/acethecase.jpg"
         },
         {
             "title": "Networking and Panel Events",
@@ -46,7 +46,7 @@
             "description": "Our networking mixer offers students the chance to engage with company representatives, explore recruitment opportunities, and exchange resumes. Companies will highlight the skills and experiences available through internships and post-graduate positions.\n\nFeaturing a panel of professionals from sectors like technology, healthcare, environment, and infrastructure, the event will provide insights into breaking into engineering consulting and understanding industry similarities and differences.\n\nJoin us to expand your network and explore career opportunities in engineering consulting!",
             "category": "",
             "registrationLink": "",
-            "image": "https://images.unsplash.com/photo-1550305080-4e029753abcf?q=80&w=2371&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            "image": "/events/networkingandpanel.jpg"
         }
     ]
 } 
