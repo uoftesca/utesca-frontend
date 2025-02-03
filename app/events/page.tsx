@@ -11,7 +11,34 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 
 export default function Event() {
+    const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+        new Date()
+    );
     const [hasSelectedEvents, setHasSelectedEvents] = useState(false);
+
+    const handleDateSelect = (date: Date) => {
+        setSelectedDate(date);
+
+        // Wait for next tick to ensure DOM has updated
+        setTimeout(() => {
+            const eventContainer = document.querySelector(
+                '[data-selected-events]'
+            );
+
+            if (eventContainer) {
+                const containerRect = eventContainer.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+
+                // Calculate position to center the event container
+                const scrollTo =
+                    window.scrollY +
+                    containerRect.top -
+                    (windowHeight - containerRect.height) / 2;
+
+                window.scrollTo({ top: scrollTo, behavior: 'smooth' });
+            }
+        }, 0);
+    };
 
     return (
         <>
@@ -19,7 +46,11 @@ export default function Event() {
             <main>
                 <Hero />
                 <Container>
-                    <UpcomingEvents onEventsChange={setHasSelectedEvents} />
+                    <UpcomingEvents
+                        onEventsChange={setHasSelectedEvents}
+                        selectedDate={selectedDate}
+                        onDateSelect={setSelectedDate}
+                    />
                     <motion.div
                         initial={false}
                         animate={{
@@ -32,7 +63,7 @@ export default function Event() {
                         }}
                     >
                         <div className='space-y-12 md:space-y-24 py-12'>
-                            <EventDetails />
+                            <EventDetails onDateSelect={handleDateSelect} />
                             <PastEvents />
                         </div>
                     </motion.div>

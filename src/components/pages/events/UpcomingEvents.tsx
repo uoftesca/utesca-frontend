@@ -9,10 +9,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 interface UpcomingEventsProps {
     onEventsChange: (hasEvents: boolean) => void;
+    selectedDate: Date | undefined;
+    onDateSelect: (date: Date | undefined) => void;
 }
 
-const UpcomingEvents: React.FC<UpcomingEventsProps> = ({ onEventsChange }) => {
-    const [date, setDate] = React.useState<Date | undefined>(new Date());
+const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
+    onEventsChange,
+    selectedDate,
+    onDateSelect,
+}) => {
     const [events, setEvents] = React.useState<Event[]>([]);
     const [selectedEvents, setSelectedEvents] = React.useState<Event[]>([]);
 
@@ -25,15 +30,15 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({ onEventsChange }) => {
     }, []);
 
     React.useEffect(() => {
-        if (date && events.length > 0) {
-            const dateEvents = getEventsForDate(events, date);
+        if (selectedDate && events.length > 0) {
+            const dateEvents = getEventsForDate(events, selectedDate);
             setSelectedEvents(dateEvents);
             onEventsChange(dateEvents.length > 0);
         } else {
             setSelectedEvents([]);
             onEventsChange(false);
         }
-    }, [date, events, onEventsChange]);
+    }, [selectedDate, events, onEventsChange]);
 
     const eventDates = events.map((event) => event.date);
 
@@ -46,8 +51,8 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({ onEventsChange }) => {
                 <div className='flex justify-center'>
                     <Calendar
                         mode='single'
-                        selected={date}
-                        onSelect={setDate}
+                        selected={selectedDate}
+                        onSelect={onDateSelect}
                         className='rounded-md border w-fit'
                         classNames={{
                             day_selected:
@@ -68,6 +73,7 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({ onEventsChange }) => {
                 {selectedEvents.length > 0 && (
                     <motion.div
                         key='events-container'
+                        data-selected-events
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
