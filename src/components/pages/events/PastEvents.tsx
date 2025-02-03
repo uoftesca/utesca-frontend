@@ -1,30 +1,40 @@
-import { EventsCard } from '../home/EventsCard';
+import * as React from 'react';
+import { Event } from '@/types/event';
+import { fetchEvents, formatEventDate } from '@/utils/events';
+import EventCard from './EventCard';
 
 const PastEvents: React.FC = () => {
+    const [events, setEvents] = React.useState<Event[]>([]);
+
+    React.useEffect(() => {
+        const loadEvents = async () => {
+            const allEvents = await fetchEvents();
+            const pastEvents = allEvents.filter((event) => {
+                const cleanStatus = event.status.replace(/['"]+/g, '').trim();
+                return cleanStatus === 'past';
+            });
+            setEvents(pastEvents);
+        };
+        loadEvents();
+    }, []);
+
     return (
-        <div className='w-full text-center space-y-6'>
-            <h1 className='text-2xl font-bold tracking-normal md:text-4xl text-accent'>
+        <div className='space-y-6'>
+            <h1 className='text-2xl font-bold tracking-normal md:text-4xl text-accent text-center'>
                 Past Events
             </h1>
-            <div className='flex flex-col items-center gap-6'>
-                <div className='max-w-fit grid justify-items-center grid-cols-1 md:grid-cols-2 gap-6'>
-                    <EventsCard
-                        img='/events/acethecase.jpg'
-                        title='Ace the Case Deloitte'
-                        link=''
-                    />
-                    <EventsCard
-                        img='/events/consultantforaday.jpg'
-                        title='Consultant for a Day PWC'
-                        link=''
-                    />
-                </div>
-                <EventsCard
-                    img='/events/networkingandpanel.jpg'
-                    title='Networking and Panel Events'
-                    link=''
-                    className='md:w-[calc(50%-12px)]'
-                />
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+                {events.map((event) => {
+                    const { month, day } = formatEventDate(event.date);
+                    return (
+                        <EventCard
+                            key={`${event.title}-${event.date.toISOString()}`}
+                            {...event}
+                            month={month}
+                            day={day}
+                        />
+                    );
+                })}
             </div>
         </div>
     );

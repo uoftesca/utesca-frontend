@@ -1,0 +1,44 @@
+{
+    "events": [
+        {
+            "title": "Ace the Case Deloitte",
+            "date": "2025-03-08",
+            "description": "",
+            "category": "Case Competition",
+            "registrationLink": "https://docs.google.com/forms/d/e/1FAIpQLSdFZ_iJvC7IY6OgKi6a6D6aMaz-nTcq6Tv78YeET_wQ6cdghg/viewform?usp=header",
+            "image": ""
+        },
+        {
+            "title": "Excel Powerpoint Workshop",
+            "date": "2025-02-12",
+            "description": "",
+            "category": "",
+            "registrationLink": "",
+            "image": ""
+        },
+        {
+            "title": "Consultant for a Day with PWC",
+            "date": "2025-03-20",
+            "description": "",
+            "category": "",
+            "registrationLink": "",
+            "image": ""
+        },
+        {
+            "title": "Consultant for a Day with PWC",
+            "date": "2024-03-27",
+            "description": "The UTESCA x PwC Consultant for a Day event on March 27, 2024, was a remarkable experience, uniting aspiring consultants for an engaging evening at the University of Toronto's St. George Campus.\n\nEvent Highlights:\n\n• The event began with introductions to UTESCA and PwC, laying the groundwork for learning and collaboration, and equipping attendees with valuable tips on consulting case formats for the interactive sessions.\n\n• Participants tackled a real-world case study in small groups, guided by PwC consultants, refining their problem-solving skills and consulting strategies. Group presentations followed, sparking discussions and feedback.\n\n• The evening concluded with a networking session, where attendees connected with PwC professionals over drinks and appetizers, fostering valuable relationships.\n\nLooking Ahead:\n\nWe thank PwC and all participants for making this event memorable. Stay tuned for more exciting events and opportunities!",
+            "category": "",
+            "registrationLink": "",
+            "image": "/events/consultantforaday.jpg"
+        },
+        {
+            "title": "Ace the Case",
+            "date": "2024-03-09",
+            "description": "The Ace the Case 2024 event, held in collaboration with Deloitte on March 9th, 2024, at the University of Toronto's St. George Campus. This flagship case competition brought together fifteen teams, each consisting of four students, to showcase their creative problem-solving and presentation skills.\n\nDuring \"Competition Day,\" participants engaged deeply with Deloitte's operations, explored recruitment opportunities, and presented their innovative solutions to a panel of company judges. The event provided an exceptional platform for students to demonstrate their abilities, network with esteemed Deloitte professionals, and compete for cash prizes.\n\nEvent Highlights:\n\n• Participants tested their skills in analytics, problem-solving, and teamwork\n• Students connected with consulting experts and peers, expanding their professional networks\n• Winners walked away with cash prizes and valuable experiences to enhance their resumes\n\nWe extend our heartfelt congratulations to all participants and winners, and a big thank you to Deloitte for their collaboration. Stay connected with us through our social media channels for updates on Ace the Case 2025!",
+            "category": "Case Competition",
+            "registrationLink": "",
+            "image": "/events/networkingandpanel.jpg"
+        }
+    ]
+} 
