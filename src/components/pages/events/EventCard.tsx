@@ -18,8 +18,13 @@ export default function EventCard({
     image,
     registrationLink,
     status,
-}: EventCardProps) {
-    const [isOpen, setIsOpen] = React.useState(false);
+    isExpanded = false,
+}: EventCardProps & { isExpanded?: boolean }) {
+    const [isOpen, setIsOpen] = React.useState(isExpanded);
+
+    React.useEffect(() => {
+        setIsOpen(isExpanded);
+    }, [isExpanded]);
 
     return (
         <Collapsible

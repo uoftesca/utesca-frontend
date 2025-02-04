@@ -17,7 +17,9 @@ export default function Event() {
     const [hasSelectedEvents, setHasSelectedEvents] = useState(false);
 
     const handleDateSelect = (date: Date) => {
-        setSelectedDate(date);
+        // Create a new Date object to avoid reference issues
+        const newDate = new Date(date);
+        setSelectedDate(newDate);
 
         // Wait for next tick to ensure DOM has updated
         setTimeout(() => {
@@ -50,6 +52,7 @@ export default function Event() {
                         onEventsChange={setHasSelectedEvents}
                         selectedDate={selectedDate}
                         onDateSelect={setSelectedDate}
+                        defaultMonth={selectedDate}
                     />
                     <motion.div
                         initial={false}

@@ -13,15 +13,26 @@ interface UpcomingEventsProps {
     onEventsChange: (hasEvents: boolean) => void;
     selectedDate: Date | undefined;
     onDateSelect: (date: Date | undefined) => void;
+    defaultMonth?: Date;
 }
 
 const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
     onEventsChange,
     selectedDate,
     onDateSelect,
+    defaultMonth,
 }) => {
     const [events, setEvents] = React.useState<Event[]>([]);
     const [selectedEvents, setSelectedEvents] = React.useState<Event[]>([]);
+    const [currentMonth, setCurrentMonth] = React.useState<Date>(
+        defaultMonth || new Date()
+    );
+
+    React.useEffect(() => {
+        if (selectedDate) {
+            setCurrentMonth(selectedDate);
+        }
+    }, [selectedDate]);
 
     React.useEffect(() => {
         const loadEvents = async () => {
@@ -55,6 +66,8 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
                         mode='single'
                         selected={selectedDate}
                         onSelect={onDateSelect}
+                        month={currentMonth}
+                        onMonthChange={setCurrentMonth}
                         className='rounded-md border w-fit'
                         classNames={{
                             day_selected:
@@ -111,6 +124,7 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
                                             {...event}
                                             month={month}
                                             day={day}
+                                            isExpanded={true}
                                         />
                                     </motion.div>
                                 );
