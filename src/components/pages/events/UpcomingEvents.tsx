@@ -82,7 +82,7 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
                             event: eventDates,
                         }}
                         modifiersClassNames={{
-                            event: 'font-bold text-accent',
+                            event: 'font-bold bg-accent/10 text-accent',
                         }}
                     />
                 </div>
