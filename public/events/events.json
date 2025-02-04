@@ -6,7 +6,8 @@
             "description": "",
             "category": "Case Competition",
             "registrationLink": "https://docs.google.com/forms/d/e/1FAIpQLSdFZ_iJvC7IY6OgKi6a6D6aMaz-nTcq6Tv78YeET_wQ6cdghg/viewform?usp=header",
-            "image": "https://images.unsplash.com/photo-1573989699073-3627d792cbb6?q=80&w=2564&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            "image": "https://images.unsplash.com/photo-1573989699073-3627d792cbb6?q=80&w=2564&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "imagePosition": "top"
         },
         {
             "title": "Excel Powerpoint Workshop",
@@ -22,7 +23,8 @@
             "description": "",
             "category": "",
             "registrationLink": "",
-            "image": "https://images.unsplash.com/photo-1615469309489-0a464a9925cb?q=80&w=2462&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            "image": "https://images.unsplash.com/photo-1615469309489-0a464a9925cb?q=80&w=2462&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "imagePosition": -130
         },
         {
             "title": "Consultant for a Day with PWC",

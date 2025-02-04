@@ -1,5 +1,7 @@
 export type EventStatus = 'upcoming' | 'past';
 
+export type ImagePosition = 'center' | 'top' | 'bottom' | number;
+
 export interface Event {
     readonly title: string;
     readonly date: Date;
@@ -7,6 +9,7 @@ export interface Event {
     readonly category: string;
     readonly registrationLink?: string;
     readonly image?: string;
+    readonly imagePosition?: ImagePosition;
     readonly status: EventStatus;
 }
 

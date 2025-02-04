@@ -7,7 +7,7 @@ import {
     CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import Image from 'next/image';
-import { EventCardProps } from '@/types/event';
+import { EventCardProps, ImagePosition } from '@/types/event';
 
 export default function EventCard({
     title,
@@ -16,6 +16,7 @@ export default function EventCard({
     category,
     description,
     image,
+    imagePosition = 'center',
     registrationLink,
     status,
     isExpanded = false,
@@ -25,6 +26,22 @@ export default function EventCard({
     React.useEffect(() => {
         setIsOpen(isExpanded);
     }, [isExpanded]);
+
+    const getImageStyle = (position: ImagePosition): React.CSSProperties => {
+        if (typeof position === 'number') {
+            return {
+                objectPosition: `center ${position}px`,
+            };
+        }
+        return {};
+    };
+
+    const getImageClassName = (position: ImagePosition): string => {
+        if (typeof position === 'number') {
+            return 'object-cover rounded-lg select-none';
+        }
+        return `object-cover rounded-lg select-none object-${position}`;
+    };
 
     return (
         <Collapsible
@@ -40,7 +57,8 @@ export default function EventCard({
                                 src={image}
                                 alt={title}
                                 fill
-                                className='object-cover rounded-lg select-none'
+                                className={getImageClassName(imagePosition)}
+                                style={getImageStyle(imagePosition)}
                                 draggable={false}
                             />
                         ) : (
