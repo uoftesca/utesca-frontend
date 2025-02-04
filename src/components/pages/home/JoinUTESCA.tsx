@@ -1,12 +1,16 @@
-
 const JoinUTESCA: React.FC = () => {
     return (
-        <div className='w-full text-center space-y-6'>
+        <div className='w-full text-center max-w-2xl mx-auto space-y-6'>
             <h1 className='text-2xl font-bold tracking-normal md:text-4xl text-accent'>
-               Join UTESCA
+                Join UTESCA
             </h1>
             <p className='text-base text-subtle mx-auto'>
-                We begin our VP recruitment in early summer, followed by director recruitment. Check out our &quot;Meet Our Team&quot; section for available roles, and stay tuned to our mailing list and social media for updates—especially as we approach the hiring cycle.            </p>
+                We begin our VP recruitment in early summer, followed by
+                director recruitment. Check out our &quot;Meet Our Team&quot;
+                section for available roles, and stay tuned to our mailing list
+                and social media for updates—especially as we approach the
+                hiring cycle.{' '}
+            </p>
             <p className='text-base text-subtle'>
                 If you are interested in collaborating with us, please contact
                 us at{' '}

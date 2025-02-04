@@ -4,12 +4,14 @@ import OverviewCard from './OverviewCard';
 
 const WhatDoesUTESCADo: React.FC = () => {
     return (
-        <div className='w-full text-center space-y-6'>
+        <div className='w-full text-center max-w-2xl mx-auto space-y-6'>
             <h1 className='text-2xl font-bold tracking-normal md:text-4xl text-accent'>
                 What does UTESCA do?
             </h1>
             <p className='text-base text-subtle mx-auto'>
-                UTESCA is the premier engineering consulting club at UofT. We bridge engineering and consulting for students who are interested in pursuing a career in consulting.
+                UTESCA is the premier engineering consulting club at UofT. We
+                bridge engineering and consulting for students who are
+                interested in pursuing a career in consulting.
             </p>
             <div className='flex flex-col items-center gap-6'>
                 <div className='max-w-fit grid justify-items-center grid-cols-1 md:grid-cols-2 gap-6'>
