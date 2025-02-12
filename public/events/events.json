@@ -3,18 +3,18 @@
         {
             "title": "Ace the Case Deloitte",
             "date": "2025-03-08",
-            "description": "",
+            "description": "UTESCA & Deloitte are back with Ace the Case 2025, our Engineering Consulting Case Competition! 🏆\n\nThis is your chance to tackle real-world challenges, network with professionals, and compete for cash prizes!\n\n📍 UofT - St. George Campus\n🗓️ When: March 8th, 2025\n⏰ Time: 9:00 AM - 4:00 PM\n📌 Registration Deadline: Februrary 28th @ 11:59 PM",
             "category": "Case Competition",
-            "registrationLink": "https://docs.google.com/forms/d/e/1FAIpQLSdFZ_iJvC7IY6OgKi6a6D6aMaz-nTcq6Tv78YeET_wQ6cdghg/viewform?usp=header",
+            "registrationLink": "https://docs.google.com/forms/d/e/1FAIpQLSdFZ_iJvC7IY6OgKi6a6D6aMaz-nTcq6Tv78YeET_wQ6cdghg/viewform",
             "image": "https://images.unsplash.com/photo-1573989699073-3627d792cbb6?q=80&w=2564&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             "imagePosition": "top"
         },
         {
             "title": "Excel Powerpoint Workshop",
             "date": "2025-02-12",
-            "description": "",
+            "description": "Join us for a comprehensive Excel and PowerPoint workshop designed to enhance your data analysis and presentation skills.\n\n📍 UofT - St. George Campus\n🗓️ When: February 12th, 2025\n⏰ Time: 6:00 PM - 8:00 PM",
             "category": "",
-            "registrationLink": "",
+            "registrationLink": "https://docs.google.com/forms/d/e/1FAIpQLSehXhSe30VziMEx9DmugAiMt-HZ_HGMbwvD3oJ1WWMf3zAPqA/viewform?usp=preview",
             "image": "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=2376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         },
         {
@@ -51,4 +51,4 @@
             "image": "/events/networkingandpanel.jpg"
         }
     ]
-} 
+}
