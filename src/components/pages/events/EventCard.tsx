@@ -108,34 +108,22 @@ export default function EventCard({
                                 </p>
                             )}
                         </div>
-                        <div className='inline-flex items-start ml-4'>
-                            {status === 'upcoming' && registrationLink && (
-                                <a
-                                    href={registrationLink}
-                                    target='_blank'
-                                    rel='noopener noreferrer'
-                                    className={buttonVariants({
-                                        variant: 'ghost',
-                                        className:
-                                            'hover:bg-transparent !p-0 [&_svg]:size-5 !items-end',
-                                    })}
+                        <div className='inline-flex items-end ml-4'>
+                            {registrationLink && (
+                                <Button
+                                    variant='link'
+                                    size='icon'
+                                    className='p-0 m-0 w-fit h-fit'
+                                    asChild
                                 >
-                                    <ExternalLink className='w-full h-full' />
-                                </a>
-                            )}
-                            {status === 'past' && registrationLink && (
-                                <a
-                                    href={registrationLink}
-                                    target='_blank'
-                                    rel='noopener noreferrer'
-                                    className={buttonVariants({
-                                        variant: 'ghost',
-                                        className:
-                                            'hover:bg-transparent !p-0 [&_svg]:size-5 !items-end',
-                                    })}
-                                >
-                                    <ExternalLink className='w-full h-full' />
-                                </a>
+                                    <a
+                                        href={registrationLink}
+                                        target='_blank'
+                                        rel='noopener noreferrer'
+                                    >
+                                        <ExternalLink />
+                                    </a>
+                                </Button>
                             )}
                         </div>
                     </div>
