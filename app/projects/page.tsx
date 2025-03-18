@@ -9,21 +9,44 @@ import ProjectsList from '@/components/pages/projects/ProjectsList';
 
 const projects = [
     {
-        title: 'Mobile Mailing App',
-        category: 'App Development',
+        title: 'Deep Pixel',
+        category: 'Generative AI, Project Development',
         description:
-            "Developed a fully functional calendar app (both iOS and Android) within the company's existing Mailing app - with functionalities including event creation, editing, invites etc.",
-        link: 'https://utesca-website.vercel.app',
+            "Developing a Generative AI product that enhances children's education and entertainment experiences while ensuring digital protection and prioritizing the overall wellbeing of the user.",
         status: 'current',
-        img: 'https://plus.unsplash.com/premium_photo-1682309526815-efe5d6225117?q=80&w=1512&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        img: '',
     },
     {
-        title: 'Fine-Tuning Functions',
-        category: 'Coding & 3D Modelling',
+        title: 'Green Speaking',
+        category: 'Website Design',
         description:
-            'Delivered a functioning C# coding script in Unity 3D that would allow the company to fine-tune the CAD model for a 3D-printed plastic limb socket for patient prosthetics.',
+            "Enhancing the design and user experience of the company's website. The team increased the visual appeal and user-friendliness of the website while enhancing its search engine through effective SEO practices, including keyword use and content strategy.",
         status: 'current',
-        img: 'https://images.unsplash.com/photo-1484662020986-75935d2ebc66?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        img: '',
+    },
+    {
+        title: 'Nodalli',
+        category: 'Automation Development',
+        description:
+            "Delivered a fully functional and deployable automation tool that replaces the company's manual process of searching contacts on Apollo.io, scrapping additional data with Apify, and exporting the results into Excel, ultimately facilitating job search.",
+        status: 'current',
+        img: '',
+    },
+    {
+        title: 'University Health Network (UHN)',
+        category: 'Data Analysis',
+        description:
+            "Developed a comprehensive data tool to assess and visualize the cumulative environmental benefits of the company's sustainability initiatives over the past decade.",
+        status: 'current',
+        img: '',
+    },
+    {
+        title: 'Finliti',
+        category: 'Kubernetes & Software Integration',
+        description:
+            "Integrating Kubernetes API into the company's system and developed a backtester that analyzes effectiveness of investment strategies.",
+        status: 'current',
+        img: '',
     },
     {
         title: 'Mobile Mailing App',
