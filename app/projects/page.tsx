@@ -14,7 +14,7 @@ const projects = [
         description:
             "Developing a Generative AI product that enhances children's education and entertainment experiences while ensuring digital protection and prioritizing the overall wellbeing of the user.",
         status: 'current',
-        img: '',
+        img: '/projects/DeepPixel.png',
     },
     {
         title: 'Green Speaking',
@@ -22,7 +22,7 @@ const projects = [
         description:
             "Enhancing the design and user experience of the company's website. The team increased the visual appeal and user-friendliness of the website while enhancing its search engine through effective SEO practices, including keyword use and content strategy.",
         status: 'current',
-        img: '',
+        img: '/projects/GreenSpeaking.png',
     },
     {
         title: 'Nodalli',
@@ -30,7 +30,7 @@ const projects = [
         description:
             "Delivered a fully functional and deployable automation tool that replaces the company's manual process of searching contacts on Apollo.io, scrapping additional data with Apify, and exporting the results into Excel, ultimately facilitating job search.",
         status: 'current',
-        img: '',
+        img: '/projects/Nodalli.png',
     },
     {
         title: 'University Health Network (UHN)',
@@ -38,7 +38,7 @@ const projects = [
         description:
             "Developed a comprehensive data tool to assess and visualize the cumulative environmental benefits of the company's sustainability initiatives over the past decade.",
         status: 'current',
-        img: '',
+        img: '/projects/UHN.png',
     },
     {
         title: 'Finliti',
@@ -46,7 +46,7 @@ const projects = [
         description:
             "Integrating Kubernetes API into the company's system and developed a backtester that analyzes effectiveness of investment strategies.",
         status: 'current',
-        img: '',
+        img: '/projects/Finliti.png',
     },
     {
         title: 'Mobile Mailing App',
