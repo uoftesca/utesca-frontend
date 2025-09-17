@@ -10,7 +10,7 @@ const Stats: React.FC = () => {
           <StatsCard
             title='Engaged with'
             num={15}
-            text='undergraduate disciplines'
+            text='undergraduate and graduate disciplines'
           />
         </div>
       </div>
