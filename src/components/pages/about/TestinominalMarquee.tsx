@@ -10,9 +10,19 @@ const testimonials = [
     logo: '/testimonials/aikomail.png',
   },
   {
-    name: 'EY Senior Consultant',
-    body: 'Wow. What a turnout!',
-    logo: '/testimonials/ey.png',
+    name: 'Nodalli',
+    body: 'Working with the UTESCA CEP team was nothing short of incredible. Their professionalism, technical skills, and drive exceeded our expectations.',
+    logo: '/testimonials/nodalli.png',
+  },
+  {
+    name: 'Nodalli',
+    body: "UTESCA's students approached our project with the same rigor and commitment you'd expect from a professional consulting firm. They quickly understood our needs and delivered solutions that created lasting value for Nodalli.",
+    logo: '/testimonials/nodalli.png',
+  },
+  {
+    name: 'Nodalli',
+    body: 'The team not only built a working tool but also gave us a framework for scaling our operations. Their impact is still felt in our day-to-day business.',
+    logo: '/testimonials/nodalli.png',
   },
 ];
 
@@ -32,10 +42,11 @@ const TestimonialCard = ({
     <figure
       className={cn(
         'relative w-72 overflow-hidden rounded-xl p-4',
-        'bg-card hover:bg-gray-950/[.05]'
+        'bg-card hover:bg-gray-950/[.05]',
+        'flex flex-col items-center justify-center'
       )}
     >
-      <blockquote className="mb-2 text-sm text-subtle font-normal">{`“${body}”`}</blockquote>
+      <blockquote className="mb-2 text-sm text-subtle font-normal text-center">{`"${body}"`}</blockquote>
       <div className="flex flex-col items-center gap-1">
         <figcaption className="text-sm font-normal text-subtle">
           — {name}
