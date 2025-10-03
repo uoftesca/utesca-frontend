@@ -10,17 +10,17 @@ const testimonials = [
     logo: '/testimonials/aikomail.png',
   },
   {
-    name: 'Nodalli',
+    name: 'Daniel Martinovic',
     body: 'Working with the UTESCA CEP team was nothing short of incredible. Their professionalism, technical skills, and drive exceeded our expectations.',
     logo: '/testimonials/nodalli.png',
   },
   {
-    name: 'Nodalli',
+    name: 'Daniel Martinovic',
     body: "UTESCA's students approached our project with the same rigor and commitment you'd expect from a professional consulting firm. They quickly understood our needs and delivered solutions that created lasting value for Nodalli.",
     logo: '/testimonials/nodalli.png',
   },
   {
-    name: 'Nodalli',
+    name: 'Daniel Martinovic',
     body: 'The team not only built a working tool but also gave us a framework for scaling our operations. Their impact is still felt in our day-to-day business.',
     logo: '/testimonials/nodalli.png',
   },
