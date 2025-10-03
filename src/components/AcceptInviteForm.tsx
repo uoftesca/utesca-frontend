@@ -83,7 +83,11 @@ export default function AcceptInviteForm() {
             console.log('Metadata valid:', metadata);
             setUserMetadata(metadata);
             // Clean up URL
-            window.history.replaceState({}, document.title, window.location.pathname);
+            window.history.replaceState(
+              {},
+              document.title,
+              window.location.pathname
+            );
             return;
           }
         }
@@ -108,7 +112,10 @@ export default function AcceptInviteForm() {
           return;
         }
 
-        console.log('User metadata from existing session:', session.user.user_metadata);
+        console.log(
+          'User metadata from existing session:',
+          session.user.user_metadata
+        );
 
         // Extract user metadata from session
         const metadata = session.user.user_metadata as UserMetadata;
@@ -181,9 +188,9 @@ export default function AcceptInviteForm() {
 
       // Redirect to dashboard
       router.push('/dashboard');
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error setting up account:', err);
-      setError(err.message || 'Failed to set up account');
+      setError(err instanceof Error ? err.message : 'Failed to set up account');
     } finally {
       setLoading(false);
     }
