@@ -1,44 +1,38 @@
 name,role,program,imageUrl
 
 # Presidents
-Mehak Afzal,Co-President,MechE 2T5 + PEY,/about/headshots/mehak-afzal.jpg
-Jasmine Yanoshita,Co-President,CivE 2T5 + PEY,/about/headshots/jasmine-yanoshita.jpg
+Iqra Khan,Co-President,Mech 2T7 + PEY,
+Clemen Chan,Co-President,ECE 2T7 + PEY,/about/headshots/clemen-chan.jpg
+
+# Outreach Team
+Joao (Johnny) De Campos Carvalho,Outreach Director,Mech 2T8,/about/headshots/joao-carvalho.jpg
+Maggie Wu,Outreach Director,Indy 2T7 + PEY,/about/headshots/maggie-wu.jpg
+Andrew Yin,Outreach Director,Indy 2T7,/about/headshots/andrew-yin.jpg
+
+# Events Team
+Henry Chung,Events Director,Indy 2T8,/about/headshots/henry-chung.jpg
+Amiran Sultana,Events Director,Civ 2T8 + PEY,/about/headshots/amiran-sultana.jpg
 
 # Administration Team
-Marc Zhang,VP of Operations,MSE 2T6 + PEY,/about/headshots/marc-zhang.jpg
-Jethro Tong,VP of Finance,MSE 2T5,/about/headshots/jethro-tong.jpg
-Iqra Khan,VP of Finance,MechE 2T6,/about/headshots/iqra-khan.jpg
-
-# Corporate Relations Team
-Zoya Khan,VP of Corporate Relations,MechE 2T6,/about/headshots/zoya-khan.jpg
-Howen Diau,CR Director,ECE 2T7 + PEY,/about/headshots/howen-diau.jpg
-Manan Sawrangpate,CR Director,Robo 2T6,/about/headshots/manan-s.jpg
-Andrew Song,CR Director,Indy 2T4 + PEY,/about/headshots/andrew-song.jpg
-Vishwajith Subhashraj,CR Director,Indy 2T7,/about/headshots/vishwa.jpg
-Elena Yijia Zhu,CR Director,Indy 2T7 + PEY,/about/headshots/elena.jpg
-
-# CEP Team
-Clemen Chan,VP of Consulting Engineering Projects (CEP),ECE 2T7 + PEY,/about/headshots/clemen-chan.jpg
-Beatriz Correa de Mello,CEP Director,Indy 2T7 + PEY,/about/headshots/beatriz-correa.jpg
-Juanita Galvis,CEP Director,Indy 2T6 + PEY,
-Jimena Hidalgo,CEP Director,Indy 2T6,/about/headshots/jimena-hidalgo.jpg
-Dylan Ngan,CEP Director,MSE 2T6 + PEY,/about/headshots/dylan-ngan.jpg
-Brayton Yu,CEP Director,ECE 2T7,/about/headshots/brayton-yu.jpg
+Manan Sawrangpate,VP of O&IA,EngSci Robo 2T6,/about/headshots/manan-sawrangpate.jpg
+Zoya Khan,VP of Finance,Mech 2T6,/about/headshots/zoya-khan.jpg
+Jason Liu,O&IA Director,Civ 2T8 + PEY,/about/headshots/jason-liu.jpg
+Abaidullah Arif,O&IA Director,Civ 2T5 + PEY,/about/headshots/abaidullah-arif.jpg
+Ridaan Gupta,Finance Director,Indy 2T8 + PEY,/about/headshots/reidaan-gupta.jpg
 
 # Marketing Team
-Rangajah Manoharan,VP of Marketing,Indy 2T6,
-Ali Jaouni,Marketing Director,Indy 2T7,/about/headshots/ali-jaouni.jpg
-John Kim,Marketing Director,ECE 2T7,/about/headshots/john-kim.jpg
-Carolina Fischmeister,"Graphic Designer, Marketing Director",Indy 2T7,/about/headshots/carolina-fischmeister.jpg
-Katherine Mezei,"Graphics Designer, Marketing Director",ChemE 2T7,/about/headshots/katy.jpg
+Aahana Srivastava,Marketing Director,ECE 2T8 + PEY,/about/headshots/aahana-srivasta.jpg
+Gurleen Virdi,Design & Marketing Director,Indy 2T6,/about/headshots/gurleen-virdi.jpg
+
+# CEP Team
+Beatriz Corrêa de Mello,VP of CEP,Indy 2T7 + PEY,/about/headshots/beatriz-mello.jpg
+Alex Kurk, CEP Director,Mech 2T6,/about/headshots/alex-kurk.jpg
 
 # Web Team
-Sarah Kim,VP of Web,BI 2T6,/about/headshots/sarah-kim.jpg
-Annie Wang,Front-End Dev,CS 2T6,/about/headshots/annie-wang.jpg
-Rachel Deng,"UI/UX Designer, Front-End Dev",CS 2T7 + ASIP,/about/headshots/rachel-deng.jpg
-
-# Interns
-Jay Patel,First Year Intern (Finance),EngSci 2T8,/about/headshots/jay-patel.jpg
-Amiran Sultana,First Year Intern (Marketing),CivE 2T8,/about/headshots/amiran-sultana.jpg
-Baron Liu,First Year Intern (CEP),EngSci 2T8,/about/headshots/baron-liu.jpg
-Ines de Uriarte Alvarez de Espejo,CR Director,EngSci 2T8,/about/headshots/uriarte.jpg
+Rachel Deng,VP of Web,CS 2T7,/about/headshots/rachel-deng.png
+Muhtasim Khan,Technical Lead,CS 2T7,/about/headshots/muhtasim-khan.jpg
+Seungil Baik,Web Dev,CS 2T7,/about/headshots/seungil-baik.jpg
+Vishaal Gopalan,Web Dev,ECE 2T8 + PEY,/about/headshots/vishaal-gopalan.jpg
+Jeha Park,Web Dev,CS 2T7,
+Adam Petrovic,Web Dev,CS 2T7 + ASIP,/about/headshots/adam-petrovic.jpg
+Annie Wang,Web Dev,CS 2T6,/about/headshots/annie-wang.jpg
