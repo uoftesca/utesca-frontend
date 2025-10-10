@@ -15,7 +15,7 @@ const testimonials = [
     logo: '/testimonials/nodalli.png',
   },
   {
-    name: 'Jason Ramsey',
+    name: 'Jason Ramsay',
     body: "UTESCA's students approached our project with the same rigor and commitment you'd expect from a professional consulting firm. They quickly understood our needs and delivered solutions that created lasting value for Nodalli.",
     logo: '/testimonials/nodalli.png',
   },
