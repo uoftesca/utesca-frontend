@@ -19,21 +19,23 @@ function isUpcoming(date: Date): boolean {
     return date >= now;
 }
 
-export async function fetchEvents(): Promise<Event[]> {
-    const response = await fetch('/events/events.json');
-    const data: EventsData = await response.json();
-    
-    return data.events.map((rawEvent) => {
-        const eventDate = new Date(rawEvent.date + 'T00:00:00');
-        return {
-            ...rawEvent,
-            date: eventDate,
-            status: isUpcoming(eventDate) ? 'upcoming' as EventStatus : 'past' as EventStatus,
-            registrationLink: rawEvent.registrationLink || undefined,
-            image: rawEvent.image || undefined,
-        };
-    });
+// utils/events.ts
+export async function fetchEvents() {
+  const res = await fetch('http://127.0.0.1:8001/api/v1/events', { cache: 'no-store' });
+  if (!res.ok) throw new Error(`events fetch failed: ${res.status}`);
+  const data = await res.json();
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  return (data.events || []).map((e: any) => {
+    const d = new Date(e.date);
+    const status = d >= today ? 'upcoming' : 'past'; // <-- derive here
+    return { ...e, date: d, status };
+  });
 }
+
+
 
 export function getEventsForDate(events: Event[], date: Date): Event[] {
     return events.filter((event) => {

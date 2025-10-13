@@ -20,6 +20,7 @@ export default function EventCard({
     registrationLink,
     status,
     isExpanded = false,
+    driveLink,
 }: EventCardProps & { isExpanded?: boolean }) {
     const [isOpen, setIsOpen] = React.useState(isExpanded);
 
@@ -53,14 +54,21 @@ export default function EventCard({
                 <div className='flex flex-col items-start gap-4'>
                     <div className='relative w-full h-56 rounded-lg bg-secondary'>
                         {image ? (
-                            <Image
+                            <a
+                                href={driveLink || '#'}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`${title} image - opens related folder`}
+                            >
+                                <Image
                                 src={image}
                                 alt={title}
                                 fill
                                 className={getImageClassName(imagePosition)}
                                 style={getImageStyle(imagePosition)}
                                 draggable={false}
-                            />
+                                />
+                            </a>
                         ) : (
                             <div className='flex items-center justify-center w-full h-full'>
                                 <div className='text-center'>

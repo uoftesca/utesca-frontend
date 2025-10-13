@@ -11,6 +11,7 @@ export interface Event {
     readonly image?: string;
     readonly imagePosition?: ImagePosition;
     readonly status: EventStatus;
+    readonly driveLink?: string;
 }
 
 export interface EventCardProps extends Omit<Event, 'date'> {
