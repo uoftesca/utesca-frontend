@@ -24,6 +24,11 @@ const testimonials = [
     body: 'The team not only built a working tool but also gave us a framework for scaling our operations. Their impact is still felt in our day-to-day business.',
     logo: '/testimonials/nodalli.png',
   },
+  {
+    name: 'Jennifer Wang, Senior Consultant',
+    body: 'These students are: The. Real. Deal.',
+    logo:'/testimonials/ey.png',
+  }
 ];
 
 const firstRow = testimonials.slice(0, testimonials.length / 2);
