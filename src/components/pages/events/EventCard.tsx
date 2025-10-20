@@ -18,6 +18,7 @@ export default function EventCard({
     image,
     imagePosition = 'center',
     registrationLink,
+    driveLink,
     status,
     isExpanded = false,
 }: EventCardProps & { isExpanded?: boolean }) {
@@ -51,27 +52,56 @@ export default function EventCard({
         >
             <div className='p-0 space-y-4'>
                 <div className='flex flex-col items-start gap-4'>
-                    <div className='relative w-full h-56 rounded-lg bg-secondary'>
-                        {image ? (
-                            <Image
-                                src={image}
-                                alt={title}
-                                fill
-                                className={getImageClassName(imagePosition)}
-                                style={getImageStyle(imagePosition)}
-                                draggable={false}
-                            />
-                        ) : (
-                            <div className='flex items-center justify-center w-full h-full'>
-                                <div className='text-center'>
-                                    <div className='text-2xl font-bold'>
-                                        {month}
+                    {driveLink ? (
+                        <a
+                            href={driveLink}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='block relative w-full h-56 rounded-lg bg-secondary cursor-pointer overflow-hidden'
+                        >
+                            {image ? (
+                                <Image
+                                    src={image}
+                                    alt={title}
+                                    fill
+                                    className={getImageClassName(imagePosition)}
+                                    style={getImageStyle(imagePosition)}
+                                    draggable={false}
+                                />
+                            ) : (
+                                <div className='flex items-center justify-center w-full h-full'>
+                                    <div className='text-center'>
+                                        <div className='text-2xl font-bold'>
+                                            {month}
+                                        </div>
+                                        <div className='text-4xl'>{day}</div>
                                     </div>
-                                    <div className='text-4xl'>{day}</div>
                                 </div>
-                            </div>
-                        )}
-                    </div>
+                            )}
+                        </a>
+                    ) : (
+                        <div className='relative w-full h-56 rounded-lg bg-secondary'>
+                            {image ? (
+                                <Image
+                                    src={image}
+                                    alt={title}
+                                    fill
+                                    className={getImageClassName(imagePosition)}
+                                    style={getImageStyle(imagePosition)}
+                                    draggable={false}
+                                />
+                            ) : (
+                                <div className='flex items-center justify-center w-full h-full'>
+                                    <div className='text-center'>
+                                        <div className='text-2xl font-bold'>
+                                            {month}
+                                        </div>
+                                        <div className='text-4xl'>{day}</div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
                     <div className='flex items-center justify-between w-full'>
                         <div className='flex items-center gap-3'>
                             <CollapsibleTrigger asChild>
