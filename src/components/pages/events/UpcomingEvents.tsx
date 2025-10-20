@@ -37,7 +37,7 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
     React.useEffect(() => {
         const loadEvents = async () => {
             const allEvents = await fetchEvents();
-            setEvents(allEvents.filter((event) => event.status === 'upcoming'));
+            setEvents(allEvents.filter((event: Event) => event.status === 'upcoming'));
         };
         loadEvents();
     }, []);
