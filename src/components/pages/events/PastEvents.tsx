@@ -9,10 +9,7 @@ const PastEvents: React.FC = () => {
     React.useEffect(() => {
         const loadEvents = async () => {
             const allEvents = await fetchEvents();
-            const pastEvents = allEvents.filter((event) => {
-                const cleanStatus = event.status.replace(/['"]+/g, '').trim();
-                return cleanStatus === 'past';
-            });
+            const pastEvents = allEvents.filter((event: Event) => event.status === 'past');
             setEvents(pastEvents);
         };
         loadEvents();
