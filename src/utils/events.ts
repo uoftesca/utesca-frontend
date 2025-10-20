@@ -50,7 +50,7 @@ export function getEventsForDate(events: Event[], date: Date): Event[] {
 
 export function formatEventDate(date: Date): { month: string; day: string } {
     return {
-        month: date.toLocaleString('default', { month: 'short' }),
-        day: date.getDate().toString().padStart(2, '0'),
+        month: date.toLocaleString('default', { month: 'short', timeZone: 'UTC' }),
+        day: date.getUTCDate().toString().padStart(2, '0'),
     };
 }

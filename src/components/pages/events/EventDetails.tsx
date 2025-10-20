@@ -15,8 +15,8 @@ const EventDetails: React.FC<EventDetailsProps> = ({ onDateSelect }) => {
             const allEvents = await fetchEvents();
             // Sort upcoming events by date and take the first three
             const nextEvents = allEvents
-                .filter((event) => event.status === 'upcoming')
-                .sort((a, b) => a.date.getTime() - b.date.getTime())
+                .filter((event: Event) => event.status === 'upcoming')
+                .sort((a: Event, b: Event) => a.date.getTime() - b.date.getTime())
                 .slice(0, 3);
             setUpcomingEvents(nextEvents);
         };
@@ -29,6 +29,13 @@ const EventDetails: React.FC<EventDetailsProps> = ({ onDateSelect }) => {
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center'>
                     {upcomingEvents.map((event) => {
                         const { month, day } = formatEventDate(event.date);
+                        // Normalize UTC date to local timezone for calendar
+                        const utcDate = event.date;
+                        const normalizedDate = new Date(
+                            utcDate.getUTCFullYear(),
+                            utcDate.getUTCMonth(),
+                            utcDate.getUTCDate()
+                        );
                         return (
                             <UpcomingEventPreview
                                 key={`${
@@ -37,7 +44,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({ onDateSelect }) => {
                                 title={event.title}
                                 month={month}
                                 day={day}
-                                date={event.date}
+                                date={normalizedDate}
                                 onDateSelect={onDateSelect}
                             />
                         );
