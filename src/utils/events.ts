@@ -5,12 +5,10 @@ interface RawEvent {
     date: string;
     description: string;
     category: string;
-    registrationLink: string;
-    image: string;
-}
-
-interface EventsData {
-    events: RawEvent[];
+    registrationLink?: string;
+    image?: string;
+    imagePosition?: string | number;
+    driveLink?: string;
 }
 
 function isUpcoming(date: Date): boolean {
@@ -19,18 +17,24 @@ function isUpcoming(date: Date): boolean {
     return date >= now;
 }
 
-export async function fetchEvents(): Promise<Event[]> {
-    const response = await fetch('/events/events.json');
-    const data: EventsData = await response.json();
-    
-    return data.events.map((rawEvent) => {
-        const eventDate = new Date(rawEvent.date + 'T00:00:00');
+export async function fetchEvents() {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`events fetch failed: ${res.status}`);
+    const data = await res.json();
+
+    return (data.events || []).map((e: RawEvent) => {
+        const d = new Date(e.date);
+        const status: EventStatus = isUpcoming(d) ? 'upcoming' : 'past';
         return {
-            ...rawEvent,
-            date: eventDate,
-            status: isUpcoming(eventDate) ? 'upcoming' as EventStatus : 'past' as EventStatus,
-            registrationLink: rawEvent.registrationLink || undefined,
-            image: rawEvent.image || undefined,
+            title: e.title,
+            date: d,
+            description: e.description,
+            category: e.category,
+            registrationLink: e.registrationLink,
+            image: e.image,
+            imagePosition: e.imagePosition,
+            driveLink: e.driveLink,
+            status,
         };
     });
 }
@@ -49,4 +53,4 @@ export function formatEventDate(date: Date): { month: string; day: string } {
         month: date.toLocaleString('default', { month: 'short' }),
         day: date.getDate().toString().padStart(2, '0'),
     };
-} 
+}

@@ -10,10 +10,11 @@ export interface Event {
     readonly registrationLink?: string;
     readonly image?: string;
     readonly imagePosition?: ImagePosition;
+    readonly driveLink?: string;
     readonly status: EventStatus;
 }
 
 export interface EventCardProps extends Omit<Event, 'date'> {
     readonly month: string;
     readonly day: string;
-} 
+}
