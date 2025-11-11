@@ -1,14 +1,19 @@
 import { Event, EventStatus } from '@/types/event';
 
-interface RawEvent {
+interface ApiEventResponse {
+    id: string;
     title: string;
-    date: string;
+    dateTime: string; // ISO datetime string
     description: string;
     category: string;
     registrationLink?: string;
-    image?: string;
+    imageUrl?: string;
     imagePosition?: string | number;
     driveLink?: string;
+}
+
+interface ApiEventsResponse {
+    events: ApiEventResponse[];
 }
 
 function isUpcoming(date: Date): boolean {
@@ -18,20 +23,27 @@ function isUpcoming(date: Date): boolean {
 }
 
 export async function fetchEvents() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`events fetch failed: ${res.status}`);
-    const data = await res.json();
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+    const res = await fetch(`${apiUrl}/events`, { cache: 'no-store' });
 
-    return (data.events || []).map((e: RawEvent) => {
-        const d = new Date(e.date);
+    if (!res.ok) {
+        throw new Error(`events fetch failed: ${res.status}`);
+    }
+
+    const data: ApiEventsResponse = await res.json();
+
+    return (data.events || []).map((e: ApiEventResponse) => {
+        // Parse dateTime from ISO string to Date
+        const d = new Date(e.dateTime);
         const status: EventStatus = isUpcoming(d) ? 'upcoming' : 'past';
+
         return {
             title: e.title,
             date: d,
-            description: e.description,
-            category: e.category,
+            description: e.description || '',
+            category: e.category || '',
             registrationLink: e.registrationLink,
-            image: e.image,
+            image: e.imageUrl, // Map imageUrl to image
             imagePosition: e.imagePosition,
             driveLink: e.driveLink,
             status,
