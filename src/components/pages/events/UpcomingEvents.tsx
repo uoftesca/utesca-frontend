@@ -53,10 +53,9 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
         }
     }, [selectedDate, events, onEventsChange]);
 
-    // Normalize event dates to local timezone for calendar comparison
     const eventDates = events.map((event) => {
-        const utcDate = event.date;
-        return new Date(utcDate.getUTCFullYear(), utcDate.getUTCMonth(), utcDate.getUTCDate());
+        const eventDate = new Date(event.date);
+        return new Date(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate());
     });
 
     return (

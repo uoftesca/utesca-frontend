@@ -29,12 +29,12 @@ const EventDetails: React.FC<EventDetailsProps> = ({ onDateSelect }) => {
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center'>
                     {upcomingEvents.map((event) => {
                         const { month, day } = formatEventDate(event.date);
-                        // Normalize UTC date to local timezone for calendar
-                        const utcDate = event.date;
-                        const normalizedDate = new Date(
-                            utcDate.getUTCFullYear(),
-                            utcDate.getUTCMonth(),
-                            utcDate.getUTCDate()
+                        const eventDate = new Date(event.date);
+                        // Create a date at midnight local time for calendar
+                        const calendarDate = new Date(
+                            eventDate.getFullYear(),
+                            eventDate.getMonth(),
+                            eventDate.getDate()
                         );
                         return (
                             <UpcomingEventPreview
@@ -44,7 +44,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({ onDateSelect }) => {
                                 title={event.title}
                                 month={month}
                                 day={day}
-                                date={normalizedDate}
+                                date={calendarDate}
                                 onDateSelect={onDateSelect}
                             />
                         );

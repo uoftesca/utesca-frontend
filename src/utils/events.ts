@@ -1,9 +1,9 @@
-import { Event, EventStatus } from '@/types/event';
+import { Event, EventStatus, ImagePosition } from '@/types/event';
 
 interface ApiEventResponse {
     id: string;
     title: string;
-    dateTime: string; // ISO datetime string
+    dateTime: string;
     description: string;
     category: string;
     registrationLink?: string;
@@ -33,9 +33,28 @@ export async function fetchEvents() {
     const data: ApiEventsResponse = await res.json();
 
     return (data.events || []).map((e: ApiEventResponse) => {
-        // Parse dateTime from ISO string to Date
+        // Parse dateTime from ISO string to Date (already in Toronto time)
         const d = new Date(e.dateTime);
         const status: EventStatus = isUpcoming(d) ? 'upcoming' : 'past';
+
+        // Convert imagePosition to proper type
+        let imagePosition: ImagePosition | undefined = undefined;
+        if (e.imagePosition !== undefined) {
+            if (typeof e.imagePosition === 'number') {
+                imagePosition = e.imagePosition;
+            } else if (typeof e.imagePosition === 'string') {
+                // Check if it's a valid ImagePosition string
+                if (e.imagePosition === 'center' || e.imagePosition === 'top' || e.imagePosition === 'bottom') {
+                    imagePosition = e.imagePosition;
+                } else {
+                    // Try to parse as number
+                    const parsed = Number.parseFloat(e.imagePosition);
+                    if (!Number.isNaN(parsed)) {
+                        imagePosition = parsed;
+                    }
+                }
+            }
+        }
 
         return {
             title: e.title,
@@ -44,25 +63,27 @@ export async function fetchEvents() {
             category: e.category || '',
             registrationLink: e.registrationLink,
             image: e.imageUrl, // Map imageUrl to image
-            imagePosition: e.imagePosition,
+            imagePosition,
             driveLink: e.driveLink,
             status,
-        };
+        } as Event;
     });
 }
 
 export function getEventsForDate(events: Event[], date: Date): Event[] {
     return events.filter((event) => {
         const eventDate = new Date(event.date);
-        return eventDate.getUTCFullYear() === date.getUTCFullYear() &&
-            eventDate.getUTCMonth() === date.getUTCMonth() &&
-            eventDate.getUTCDate() === date.getUTCDate();
+        // Use local date methods since dates are stored in Toronto time
+        return eventDate.getFullYear() === date.getFullYear() &&
+            eventDate.getMonth() === date.getMonth() &&
+            eventDate.getDate() === date.getDate();
     });
 }
 
 export function formatEventDate(date: Date): { month: string; day: string } {
+    // Use local time since dates are stored in Toronto time
     return {
-        month: date.toLocaleString('default', { month: 'short', timeZone: 'UTC' }),
-        day: date.getUTCDate().toString().padStart(2, '0'),
+        month: date.toLocaleString('default', { month: 'short' }),
+        day: date.getDate().toString().padStart(2, '0'),
     };
 }
