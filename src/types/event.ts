@@ -10,7 +10,7 @@ export interface Event {
     readonly registrationLink?: string;
     readonly image?: string;
     readonly imagePosition?: ImagePosition;
-    readonly driveLink?: string;
+    readonly albumLink?: string;
     readonly status: EventStatus;
 }
 

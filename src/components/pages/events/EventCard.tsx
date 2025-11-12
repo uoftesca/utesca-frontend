@@ -18,7 +18,7 @@ export default function EventCard({
     image,
     imagePosition = 'center',
     registrationLink,
-    driveLink,
+    albumLink,
     status,
     isExpanded = false,
 }: EventCardProps & { isExpanded?: boolean }) {
@@ -52,9 +52,9 @@ export default function EventCard({
         >
             <div className='p-0 space-y-4'>
                 <div className='flex flex-col items-start gap-4'>
-                    {driveLink ? (
+                    {albumLink ? (
                         <a
-                            href={driveLink}
+                            href={albumLink}
                             target='_blank'
                             rel='noopener noreferrer'
                             className='block relative w-full h-56 rounded-lg bg-secondary cursor-pointer overflow-hidden'

@@ -9,7 +9,7 @@ interface ApiEventResponse {
     registrationLink?: string;
     imageUrl?: string;
     imagePosition?: string | number;
-    driveLink?: string;
+    albumLink?: string;
 }
 
 interface ApiEventsResponse {
@@ -64,7 +64,7 @@ export async function fetchEvents() {
             registrationLink: e.registrationLink,
             image: e.imageUrl, // Map imageUrl to image
             imagePosition,
-            driveLink: e.driveLink,
+            albumLink: e.albumLink,
             status,
         } as Event;
     });
