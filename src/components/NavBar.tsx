@@ -102,7 +102,7 @@ const NavBar = () => {
                                 <Link
                                     key={item.href}
                                     href={item.href}
-                                    className='text-lg font-normal hover:text-accent'
+                                    className='text-lg font-normal hover:text-primary'
                                     onClick={closeMenu}
                                 >
                                     {item.label}

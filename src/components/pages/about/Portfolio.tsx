@@ -29,9 +29,9 @@ export function Portfolio({ name, role, program, imageUrl }: PortfolioProps) {
                     </AvatarFallback>
                 </Avatar>
                 <div className='text-left w-full'>
-                    <p className='font-semibold text-subtle text-sm'>{name}</p>
-                    <p className='text-sm text-subtle'>{role}</p>
-                    <p className='text-sm text-subtle'>{program}</p>
+                    <p className='font-semibold text-muted-foreground text-sm'>{name}</p>
+                    <p className='text-sm text-muted-foreground'>{role}</p>
+                    <p className='text-sm text-muted-foreground'>{program}</p>
                 </div>
             </CardContent>
         </Card>

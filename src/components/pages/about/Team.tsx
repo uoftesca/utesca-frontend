@@ -80,7 +80,7 @@ export default function Team() {
         <div className='container mx-auto'>
             {Object.entries(teamGroups).map(([teamName, members]) => (
                 <div key={teamName} className='mb-8'>
-                    <h2 className='text-2xl font-bold text-accent mb-4'>
+                    <h2 className='text-2xl font-bold text-primary mb-4'>
                         {teamName}
                     </h2>
                     <div className='flex flex-wrap justify-center justify-items-center gap-6 max-w-xl mx-auto'>

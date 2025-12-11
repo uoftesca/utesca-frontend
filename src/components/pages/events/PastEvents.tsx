@@ -17,7 +17,7 @@ const PastEvents: React.FC = () => {
 
     return (
         <div className='w-full text-center p-6 space-y-6'>
-            <h1 className='text-2xl font-bold tracking-normal md:text-4xl text-accent'>
+            <h1 className='text-2xl font-bold tracking-normal md:text-4xl text-primary'>
                 Past Events
             </h1>
             <div className='flex flex-col items-center gap-6'>

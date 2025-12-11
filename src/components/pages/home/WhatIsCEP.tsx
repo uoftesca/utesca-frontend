@@ -6,7 +6,7 @@ const WhatIsCEP: React.FC = () => {
     return (
         <div className='w-full h-full flex justify-center'>
             <div className='w-full max-w-2xl text-center space-y-6'>
-                <h1 className='text-3xl font-bold tracking-normal w-full md:text-4xl text-accent'>
+                <h1 className='text-3xl font-bold tracking-normal w-full md:text-4xl text-primary'>
                     What is CEP?
                 </h1>
                 <div className='flex flex-col items-center gap-6'>

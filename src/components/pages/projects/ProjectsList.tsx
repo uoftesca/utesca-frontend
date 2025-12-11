@@ -24,7 +24,7 @@ export default function ProjectsList({ projects }: ProjectsListProps) {
     return (
         <div className='space-y-12'>
             <section className='space-y-6'>
-                <h2 className='text-2xl leading-none text-accent font-bold'>
+                <h2 className='text-2xl leading-none text-primary font-bold'>
                     Current Projects
                 </h2>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
@@ -35,7 +35,7 @@ export default function ProjectsList({ projects }: ProjectsListProps) {
             </section>
 
             <section className='space-y-6'>
-                <h2 className='text-2xl text-accent font-bold'>
+                <h2 className='text-2xl text-primary font-bold'>
                     Past Projects
                 </h2>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>

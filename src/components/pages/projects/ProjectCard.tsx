@@ -46,13 +46,13 @@ export default function ProjectComponent({
                             />
                         )}
                     </div>
-                    <div className='flex items-center justify-between w-full'>
-                        <div className='flex items-center gap-3'>
+                    <div className='flex items-start justify-between w-full'>
+                        <div className='flex items-start gap-3'>
                             <CollapsibleTrigger asChild>
                                 <Button
                                     variant='ghost'
                                     size='sm'
-                                    className='p-0 h-auto [&_svg]:size-3 hover:bg-transparent'
+                                    className='p-0 h-auto [&_svg]:size-3 hover:bg-transparent text-inherit hover:text-primary mt-[5px]'
                                 >
                                     <Triangle
                                         className={`transition-transform duration-200 fill-current ${
@@ -63,14 +63,14 @@ export default function ProjectComponent({
                             </CollapsibleTrigger>
                             <h3 className='font-normal'>{title}</h3>
                         </div>
-                        <span className='text-subtle italic text-right'>
+                        <span className='text-muted-foreground italic text-right'>
                             {category}
                         </span>
                     </div>
                 </div>
                 <CollapsibleContent className='transition-all duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0'>
                     <div className='flex items-stretch justify-between'>
-                        <p className='text-subtle'>{description}</p>
+                        <p className='text-muted-foreground'>{description}</p>
                         <div className='inline-flex items-end'>
                             {link && (
                                 <a
