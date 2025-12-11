@@ -37,8 +37,9 @@ const NavBar = () => {
         <>
             {navItems.map((item) => (
                 <NavigationMenuItem key={item.href}>
-                    <Link href={item.href} passHref>
-                        <NavigationMenuLink
+                    <NavigationMenuLink asChild>
+                        <Link
+                            href={item.href}
                             className={navigationMenuTriggerStyle()}
                             onClick={() => {
                                 onClick();
@@ -46,8 +47,8 @@ const NavBar = () => {
                             }}
                         >
                             {item.label}
-                        </NavigationMenuLink>
-                    </Link>
+                        </Link>
+                    </NavigationMenuLink>
                 </NavigationMenuItem>
             ))}
         </>
