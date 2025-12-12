@@ -2,6 +2,7 @@ import {
     PublicEventDetail,
     RegistrationSubmitRequest,
     RegistrationSubmitResponse,
+    UploadFileDeleteRequest,
     UploadFileRequest,
     UploadFileResponse,
 } from '@/types/registration';
@@ -95,5 +96,19 @@ export const publicApi = {
             method: 'POST',
             body: JSON.stringify(payload),
         });
+    },
+
+    async deleteRegistrationFile(
+        slug: string,
+        fileId: string,
+        payload: UploadFileDeleteRequest
+    ): Promise<{ success: boolean }> {
+        return publicRequest<{ success: boolean }>(
+            `/events/${slug}/upload-file/${fileId}`,
+            {
+                method: 'DELETE',
+                body: JSON.stringify(payload),
+            }
+        );
     },
 };

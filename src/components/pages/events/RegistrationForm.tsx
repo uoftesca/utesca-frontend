@@ -4,6 +4,7 @@ import { useMemo, useState, type ReactNode } from "react";
 import { Calendar, CircleCheck, Loader2, MapPin, Upload } from "lucide-react";
 
 import { publicApi } from "@/lib/public-api";
+import { useUploadThing } from "@/lib/uploadthing";
 import {
     PublicEventDetail,
     RegistrationFormField,
@@ -44,6 +45,13 @@ type RegistrationFormProps = {
 };
 
 type FieldErrors = Record<string, string[]>;
+type FileUploadState = {
+    status: "idle" | "uploading" | "uploaded" | "error" | "deleting";
+    file?: File;
+    url?: string;
+    fileId?: string;
+    error?: string;
+};
 
 function getDefaultValue(field: RegistrationFormField) {
     if (field.type === 'checkbox') return [] as string[];
@@ -160,6 +168,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
     const [submitError, setSubmitError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [activeDropField, setActiveDropField] = useState<string | null>(null);
+    const [fileUploads, setFileUploads] = useState<Record<string, FileUploadState>>({});
 
     const uploadSessionId = useMemo(
         () =>
@@ -168,6 +177,10 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
                 : `${Date.now()}`,
         []
     );
+
+    const { startUpload } = useUploadThing("resumeUploader", {
+        onUploadError: () => undefined,
+    });
 
     if (!schema) {
         return (
@@ -251,12 +264,84 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
         });
     };
 
-    const handleFileChange = (fieldId: string, fileList: FileList | null) => {
-        const file = fileList?.[0];
-        setFormValues((prev) => ({
+    const handleFileUpload = async (fieldId: string, file: File | null) => {
+        if (!file) {
+            setFileUploads((prev) => ({
+                ...prev,
+                [fieldId]: { status: "idle" },
+            }));
+            setFormValues((prev) => ({ ...prev, [fieldId]: '' }));
+            return;
+        }
+
+        // local guard to match backend limits
+        if (file.size > 2_097_152) {
+            setFileUploads((prev) => ({
+                ...prev,
+                [fieldId]: { status: "error", file, error: "File must be under 2MB." },
+            }));
+            return;
+        }
+        if (file.type !== "application/pdf") {
+            setFileUploads((prev) => ({
+                ...prev,
+                [fieldId]: { status: "error", file, error: "Only PDF files are allowed." },
+            }));
+            return;
+        }
+
+        setFileUploads((prev) => ({
             ...prev,
-            [fieldId]: file ?? '',
+            [fieldId]: { status: "uploading", file },
         }));
+
+        try {
+            const uploadRes = await startUpload([file]);
+            const uploaded = uploadRes?.[0];
+
+            if (!uploaded?.ufsUrl) {
+                throw new Error("Upload failed. Please try again.");
+            }
+
+            const meta = await publicApi.uploadRegistrationFile(slug, {
+                uploadSessionId,
+                fieldName: fieldId,
+                fileUrl: uploaded.ufsUrl,
+                fileName: file.name,
+                fileSize: file.size,
+                mimeType: file.type,
+                eventId: event.id,
+            });
+            const returnedFileId = meta.fileId;
+
+            setFileUploads((prev) => ({
+                ...prev,
+                [fieldId]: {
+                    status: "uploaded",
+                    file,
+                    url: uploaded.ufsUrl,
+                    fileId: returnedFileId,
+                },
+            }));
+            setFormValues((prev) => ({ ...prev, [fieldId]: file.name }));
+        } catch (err) {
+            setFileUploads((prev) => ({
+                ...prev,
+                [fieldId]: {
+                    status: "error",
+                    file,
+                    error:
+                        err instanceof Error
+                            ? err.message
+                            : "Upload failed. Please try again.",
+                },
+            }));
+        }
+    };
+
+    const handleFileChange = (fieldId: string, fileList: FileList | null) => {
+        const file = fileList?.[0] ?? null;
+        handleFileUpload(fieldId, file);
     };
 
     const validateAll = () => {
@@ -360,52 +445,126 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
         </div>
     );
 
-    const renderFileField = (field: RegistrationFormField, value: unknown) => (
-        <div className="flex flex-col gap-2">
-            <label
-                htmlFor={`file-${field.id}`}
-                className={`flex w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed px-4 py-6 text-center text-sm transition ${
-                    activeDropField === field.id
-                        ? 'border-primary bg-primary/5'
-                        : 'border-muted-foreground/40 hover:border-primary/70'
-                } ${submitting || isClosed ? 'opacity-60' : ''}`}
-                onDragOver={(e) => {
-                    e.preventDefault();
-                    setActiveDropField(field.id);
-                }}
-                onDragLeave={() => setActiveDropField(null)}
-                onDrop={(e) => {
-                    e.preventDefault();
-                    handleFileChange(field.id, e.dataTransfer.files);
-                    setActiveDropField(null);
-                }}
-            >
-                <Upload className="h-5 w-5 text-primary" />
-                <div className="flex flex-col">
-                    <span className="font-medium">
-                        Upload a file
-                    </span>
-                    <span className="text-xs text-muted-foreground">
-                        {value instanceof File && value.name
-                            ? value.name
-                            : 'Drag and drop or click to choose'}
-                    </span>
-                </div>
-            </label>
-            <Input
-                id={`file-${field.id}`}
-                type="file"
-                accept={field.validation?.allowedTypes?.join(',')}
-                disabled={submitting || isClosed}
-                className="hidden"
-                onChange={(e) => handleFileChange(field.id, e.target.files)}
-            />
-            <span className="text-xs text-muted-foreground-foreground">
-                File uploads are not supported yet on this site. Please proceed
-                without attaching a file; if required, reach out to the organizer.
-            </span>
-        </div>
-    );
+    const getFileKeyFromUrl = (url: string | undefined) => {
+        if (!url) return null;
+        const parts = url.split("/");
+        if (!parts.length) return null;
+        const last = parts[parts.length - 1];
+        return last?.split("?")[0] || null;
+    };
+
+    const renderFileField = (field: RegistrationFormField, value: unknown) => {
+        const uploadState = fileUploads[field.id] ?? { status: "idle" as const };
+        const isBusy = submitting || isClosed || uploadState.status === "uploading";
+        const deleteInFlight = uploadState.status === "deleting";
+
+        return (
+            <div className="flex flex-col gap-2">
+                <label
+                    htmlFor={`file-${field.id}`}
+                    className={`flex w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed px-4 py-6 text-center text-sm transition ${
+                        activeDropField === field.id
+                            ? 'border-primary bg-primary/5'
+                            : 'border-muted-foreground/40 hover:border-primary/70'
+                    } ${isBusy ? 'opacity-60' : ''}`}
+                    onDragOver={(e) => {
+                        e.preventDefault();
+                        setActiveDropField(field.id);
+                    }}
+                    onDragLeave={() => setActiveDropField(null)}
+                    onDrop={(e) => {
+                        e.preventDefault();
+                        handleFileChange(field.id, e.dataTransfer.files);
+                        setActiveDropField(null);
+                    }}
+                >
+                    <Upload className="h-5 w-5 text-primary" />
+                    <div className="flex flex-col">
+                        <span className="font-medium">
+                            {uploadState.status === "uploading" ? "Uploading..." : "Upload a file"}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                            {uploadState.file?.name ??
+                                (value instanceof File && value.name
+                                    ? value.name
+                                    : 'Drag and drop or click to choose (PDF, max 2MB)')}
+                        </span>
+                    </div>
+                </label>
+                <Input
+                    id={`file-${field.id}`}
+                    type="file"
+                    accept={field.validation?.allowedTypes?.join(',')}
+                    disabled={isBusy}
+                    className="hidden"
+                    onChange={(e) => handleFileChange(field.id, e.target.files)}
+                />
+                <span className="text-xs text-muted-foreground">
+                    PDF only, max 2MB. Files are stored after successful upload.
+                </span>
+                {uploadState.status === "uploaded" && uploadState.file && (
+                    <div className="flex items-center justify-between text-xs">
+                        <div className="text-emerald-700 inline-flex items-center gap-1">
+                            <CircleCheck className="h-4 w-4" />
+                            <span>Uploaded {uploadState.file.name}</span>
+                        </div>
+                        <button
+                            type="button"
+                            className="text-destructive hover:underline disabled:opacity-60"
+                            disabled={deleteInFlight}
+                            onClick={async () => {
+                                if (!uploadState.fileId) return;
+                                setFileUploads((prev) => ({
+                                    ...prev,
+                                    [field.id]: { ...uploadState, status: "deleting" },
+                                }));
+                                try {
+                                    await publicApi.deleteRegistrationFile(
+                                        slug,
+                                        uploadState.fileId,
+                                        {
+                                            uploadSessionId,
+                                            fieldName: field.id,
+                                        }
+                                    );
+                                    const fileKey = getFileKeyFromUrl(uploadState.url);
+                                    if (fileKey) {
+                                        await fetch("/api/uploadthing/delete", {
+                                            method: "POST",
+                                            headers: { "Content-Type": "application/json" },
+                                            body: JSON.stringify({ fileKey }),
+                                        });
+                                    }
+                                    setFileUploads((prev) => ({
+                                        ...prev,
+                                        [field.id]: { status: "idle" },
+                                    }));
+                                    setFormValues((prev) => ({ ...prev, [field.id]: '' }));
+                                } catch (err) {
+                                    setFileUploads((prev) => ({
+                                        ...prev,
+                                        [field.id]: {
+                                            ...uploadState,
+                                            status: "error",
+                                            error:
+                                                err instanceof Error
+                                                    ? err.message
+                                                    : "Failed to delete file.",
+                                        },
+                                    }));
+                                }
+                            }}
+                        >
+                            Remove
+                        </button>
+                    </div>
+                )}
+                {uploadState.status === "error" && uploadState.error && (
+                    <div className="text-xs text-destructive">{uploadState.error}</div>
+                )}
+            </div>
+        );
+    };
 
     const renderTextField = (field: RegistrationFormField, value: unknown) => (
         <Input
@@ -439,6 +598,26 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
         const errors = validateAll();
         if (Object.keys(errors).length > 0) return;
 
+        const hasUploading = Object.values(fileUploads).some(
+            (state) => state.status === "uploading" || state.status === "deleting"
+        );
+        if (hasUploading) {
+            setSubmitError("Please wait for file uploads to finish.");
+            return;
+        }
+
+        const requiredFileMissing = schema.fields.some(
+            (field) =>
+                field.type === 'file' &&
+                field.required &&
+                (fileUploads[field.id]?.status !== "uploaded" ||
+                    !fileUploads[field.id]?.url)
+        );
+        if (requiredFileMissing) {
+            setSubmitError("Please upload the required file(s) before submitting.");
+            return;
+        }
+
         setSubmitting(true);
         try {
             const payload: RegistrationSubmitRequest = {
@@ -450,7 +629,13 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
                 const current = formValues[field.id];
 
                 if (field.type === 'file') {
-                    // Not supported yet; do not include in payload
+                    const uploadState = fileUploads[field.id];
+                    payload.formData[field.id] = uploadState?.url
+                        ? {
+                              fileUrl: uploadState.url,
+                              fileName: uploadState.file?.name ?? '',
+                          }
+                        : null;
                     return;
                 }
 
@@ -543,36 +728,42 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
                         <FieldSet className="space-y-6">
                             <FieldSeparator />
                             <FieldGroup className="grid gap-6 md:grid-cols-2">
-                                {schema.fields.map((field) => (
-                                    <Field
-                                        key={field.id}
-                                        className={`gap-2 ${isWideField(field.type) ? 'md:col-span-2' : ''}`}
-                                    >
-                                        <FieldLabel>
-                                            <div className="flex items-center gap-1 text-sm font-medium text-foreground">
-                                                <span>{field.label}</span>
-                                                {field.required && (
-                                                    <span className="text-destructive">*</span>
+                                {schema.fields.map((field) => {
+                                    const uploadState = fileUploads[field.id];
+                                    const combinedErrors = [
+                                        ...(fieldErrors[field.id]?.map((message) => ({
+                                            message,
+                                        })) ?? []),
+                                        ...(uploadState?.error
+                                            ? [{ message: uploadState.error }]
+                                            : []),
+                                    ];
+
+                                    return (
+                                        <Field
+                                            key={field.id}
+                                            className={`gap-2 ${isWideField(field.type) ? 'md:col-span-2' : ''}`}
+                                        >
+                                            <FieldLabel>
+                                                <div className="flex items-center gap-1 text-sm font-medium text-foreground">
+                                                    <span>{field.label}</span>
+                                                    {field.required && (
+                                                        <span className="text-destructive">*</span>
+                                                    )}
+                                                </div>
+                                            </FieldLabel>
+                                            <FieldContent>
+                                                {renderField(field)}
+                                                {field.helperText && (
+                                                    <FieldDescription>
+                                                        {field.helperText}
+                                                    </FieldDescription>
                                                 )}
-                                            </div>
-                                        </FieldLabel>
-                                        <FieldContent>
-                                            {renderField(field)}
-                                            {field.helperText && (
-                                                <FieldDescription>
-                                                    {field.helperText}
-                                                </FieldDescription>
-                                            )}
-                                            <FieldError
-                                                errors={
-                                                    fieldErrors[field.id]?.map((message) => ({
-                                                        message,
-                                                    })) ?? []
-                                                }
-                                            />
-                                        </FieldContent>
-                                    </Field>
-                                ))}
+                                                <FieldError errors={combinedErrors} />
+                                            </FieldContent>
+                                        </Field>
+                                    );
+                                })}
                             </FieldGroup>
                         </FieldSet>
 
