@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
-import { Calendar, CircleCheck, Loader2, MapPin, Upload } from "lucide-react";
+import { CircleAlert, Calendar, CircleCheck, Loader2, MapPin, Upload } from "lucide-react";
 
 import { publicApi } from "@/lib/public-api";
 import { useUploadThing } from "@/lib/uploadthing";
@@ -718,6 +718,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
                     <>
                         {schema.autoAccept && (
                             <Alert className="border-primary/30 bg-primary/5 text-primary-foreground/80">
+                                <CircleAlert className="h-4 w-4" />
                                 <AlertTitle>You will automatically be accepted to this event.</AlertTitle>
                                 <AlertDescription>
                                     You may receive a confirmation email shortly after submitting.
