@@ -45,6 +45,11 @@ export interface UploadFileResponse {
     fileId: string;
 }
 
+export interface UploadFileDeleteRequest {
+    uploadSessionId: string;
+    fieldName: string;
+}
+
 export interface RegistrationSubmitRequest {
     formData: Record<string, unknown>;
     uploadSessionId: string;
