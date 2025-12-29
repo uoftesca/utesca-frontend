@@ -705,6 +705,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
                         </div>
                         <p>{successMessage}</p>
                         <Button
+                            type="button"
                             variant="outline"
                             className="w-fit"
                             onClick={() => {
