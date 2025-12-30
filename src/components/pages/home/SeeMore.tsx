@@ -10,12 +10,12 @@ interface SeeMoreProps {
 const SeeMore: React.FC<SeeMoreProps> = ({ link, text = "See More", className }) => {
     return (
         <Link href={link} className="w-full h-full flex">
-            <ShimmerButton 
+            <ShimmerButton
                 borderRadius="0.5rem"
-                background="hsl(var(--accent))"
-                className={`w-full h-full flex-1 ${className || ''}`}
+                background="var(--primary)"
+                className={`w-full h-full flex-1 text-primary-foreground ${className || ''}`}
             >
-                <span className="text-sm">{text}</span>
+                <span className="text-sm text-primary-foreground">{text}</span>
             </ShimmerButton>
         </Link>
     );

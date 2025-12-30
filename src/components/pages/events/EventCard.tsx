@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ExternalLink, Triangle } from 'lucide-react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
     Collapsible,
@@ -17,7 +18,10 @@ export default function EventCard({
     description,
     image,
     imagePosition = 'center',
+    slug,
     registrationLink,
+    registrationDeadline,
+    registrationFormSchema,
     albumLink,
     status,
     isExpanded = false,
@@ -43,6 +47,19 @@ export default function EventCard({
         }
         return `object-cover rounded-lg select-none object-${position}`;
     };
+
+    const registrationDeadlineDate = registrationDeadline
+        ? new Date(registrationDeadline)
+        : null;
+    const isRegistrationOpen =
+        !registrationDeadlineDate || registrationDeadlineDate.getTime() > Date.now();
+    const hasInternalRegistration =
+        Boolean(slug && registrationFormSchema && isRegistrationOpen);
+    const registrationUrl = hasInternalRegistration
+        ? `/events/${slug}/register`
+        : registrationLink || null;
+    const isExternalRegistration =
+        registrationUrl ? registrationUrl.startsWith('http') : false;
 
     return (
         <Collapsible
@@ -102,13 +119,13 @@ export default function EventCard({
                             )}
                         </div>
                     )}
-                    <div className='flex items-center justify-between w-full'>
-                        <div className='flex items-center gap-3'>
+                    <div className='flex items-start justify-between w-full'>
+                        <div className='flex items-start gap-3'>
                             <CollapsibleTrigger asChild>
                                 <Button
                                     variant='ghost'
                                     size='sm'
-                                    className='p-0 h-auto [&_svg]:size-3 hover:bg-transparent'
+                                    className='p-0 h-auto [&_svg]:size-3 hover:bg-transparent text-inherit hover:text-primary mt-[5px]'
                                 >
                                     <Triangle
                                         className={`transition-transform duration-200 fill-current ${
@@ -119,7 +136,7 @@ export default function EventCard({
                             </CollapsibleTrigger>
                             <h3 className='font-normal'>{title}</h3>
                         </div>
-                        <span className='text-subtle italic text-right'>
+                        <span className='text-muted-foreground italic text-right'>
                             {category}
                         </span>
                     </div>
@@ -127,32 +144,42 @@ export default function EventCard({
                 <CollapsibleContent className='transition-all duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0'>
                     <div className='flex items-stretch justify-between text-left'>
                         <div className='flex-1 space-y-4'>
-                            <p className='text-subtle text-left whitespace-pre-line'>
+                            <p className='text-muted-foreground text-left whitespace-pre-line'>
                                 {description}
                             </p>
                             {status === 'upcoming' && (
-                                <p className='text-sm text-subtle text-left'>
-                                    {registrationLink
+                                <p className='text-sm text-muted-foreground text-left'>
+                                    {registrationUrl
                                         ? 'Registration available'
                                         : 'Registration not available yet'}
                                 </p>
                             )}
                         </div>
                         <div className='inline-flex items-end ml-4'>
-                            {registrationLink && (
+                            {registrationUrl && (
                                 <Button
                                     variant='link'
                                     size='icon'
                                     className='p-0 m-0 w-fit h-fit'
                                     asChild
                                 >
-                                    <a
-                                        href={registrationLink}
-                                        target='_blank'
-                                        rel='noopener noreferrer'
-                                    >
-                                        <ExternalLink />
-                                    </a>
+                                    {isExternalRegistration ? (
+                                        <a
+                                            href={registrationUrl}
+                                            target='_blank'
+                                            rel='noopener noreferrer'
+                                        >
+                                            <ExternalLink />
+                                        </a>
+                                    ) : (
+                                        <Link
+                                            href={registrationUrl}
+                                            target='_blank'
+                                            rel='noopener noreferrer'
+                                        >
+                                            <ExternalLink />
+                                        </Link>
+                                    )}
                                 </Button>
                             )}
                         </div>

@@ -20,11 +20,11 @@ const MissionCard: React.FC<MissionCardProps> = ({
             className={`bg-card border-none w-full max-w-sm shadow-none ${className}`}
         >
             <CardContent className='flex flex-col items-left p-6 gap-3'>
-                <Icon className='w-12 h-12 text-accent' strokeWidth={1.5} />
-                <p className='text-accent font-bold w-full text-sm text-left'>
+                <Icon className='w-12 h-12 text-primary' strokeWidth={1.5} />
+                <p className='text-primary font-bold w-full text-sm text-left'>
                     {title}
                 </p>
-                <p className='text-subtle text-sm text-left'>{text}</p>
+                <p className='text-muted-foreground text-sm text-left'>{text}</p>
             </CardContent>
         </Card>
     );

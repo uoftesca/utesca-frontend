@@ -19,15 +19,15 @@ const SingleEventCard: React.FC<SingleEventCardProps> = ({
         <Card className={`bg-card border-none w-full max-w-xs ${className}`}>
             <CardContent className='flex flex-col items-center space-y-2 p-6'>
                 <div className='border rounded-lg border-accent p-4'>
-                    <p className='text-subtle text-center text-lg'>
+                    <p className='text-muted-foreground text-center text-lg'>
                         {month}
                     </p>
                     <p className='whitespace-pre-wrap text-6xl font-medium text-black dark:text-white'>
                         {date}
                     </p>
                 </div>
-                <p className='text-center text-lg text-accent font-bold'>{name}</p>
-                <p className='text-subtle text-center text-sm'>{description}</p>
+                <p className='text-center text-lg text-primary font-bold'>{name}</p>
+                <p className='text-muted-foreground text-center text-sm'>{description}</p>
             </CardContent>
         </Card>
     );

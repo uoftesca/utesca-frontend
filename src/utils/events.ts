@@ -1,12 +1,16 @@
 import { Event, EventStatus, ImagePosition } from '@/types/event';
+import { RegistrationFormSchema } from '@/types/registration';
 
 interface ApiEventResponse {
     id: string;
+    slug: string;
     title: string;
     dateTime: string;
     description: string;
     category: string;
     registrationLink?: string;
+    registrationDeadline?: string | null;
+    registrationFormSchema?: unknown;
     imageUrl?: string;
     imagePosition?: string | number;
     albumLink?: string;
@@ -33,6 +37,10 @@ export async function fetchEvents() {
     const data: ApiEventsResponse = await res.json();
 
     return (data.events || []).map((e: ApiEventResponse) => {
+        if (!e.slug) {
+            throw new Error('events fetch failed: missing slug');
+        }
+
         // Parse dateTime from ISO string to Date (already in Toronto time)
         const d = new Date(e.dateTime);
         const status: EventStatus = isUpcoming(d) ? 'upcoming' : 'past';
@@ -56,12 +64,18 @@ export async function fetchEvents() {
             }
         }
 
+        const registrationFormSchema =
+            e.registrationFormSchema as RegistrationFormSchema | undefined;
+
         return {
             title: e.title,
+            slug: e.slug,
             date: d,
             description: e.description || '',
             category: e.category || '',
             registrationLink: e.registrationLink,
+            registrationDeadline: e.registrationDeadline ?? null,
+            registrationFormSchema: registrationFormSchema ?? null,
             image: e.imageUrl, // Map imageUrl to image
             imagePosition,
             albumLink: e.albumLink,

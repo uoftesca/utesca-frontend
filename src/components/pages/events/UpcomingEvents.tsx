@@ -61,7 +61,7 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
     return (
         <div className='space-y-12'>
             <div className='text-center space-y-6'>
-                <h1 className='text-2xl font-bold tracking-normal md:text-4xl text-accent'>
+                <h1 className='text-2xl font-bold tracking-normal md:text-4xl text-primary'>
                     Upcoming Events
                 </h1>
                 <div className='flex justify-center'>
@@ -85,7 +85,7 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
                             event: eventDates,
                         }}
                         modifiersClassNames={{
-                            event: 'font-bold bg-accent/10 text-accent',
+                            event: 'font-bold bg-accent/10 text-primary',
                         }}
                     />
                 </div>

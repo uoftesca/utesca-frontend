@@ -5,10 +5,10 @@ import MissionCard from '@/components/pages/about/MissionCard';
 const VisionAndMission: React.FC = () => {
     return (
         <div className='w-full text-center space-y-6'>
-            <h1 className='text-2xl font-bold tracking-normal md:text-4xl text-accent'>
+            <h1 className='text-2xl font-bold tracking-normal md:text-4xl text-primary'>
                 Our Vision & Mission
             </h1>
-            <p className='text-base text-subtle mx-auto'>
+            <p className='text-base text-muted-foreground mx-auto'>
                 UTESCA began with a simple idea: How can we bring engineering
                 students together to give back to our local community? Over
                 time, this has evolved into our three core offerings:

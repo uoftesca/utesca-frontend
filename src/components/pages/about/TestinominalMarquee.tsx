@@ -51,9 +51,9 @@ const TestimonialCard = ({
         'flex flex-col items-center justify-center'
       )}
     >
-      <blockquote className="mb-2 text-sm text-subtle font-normal text-center">{`"${body}"`}</blockquote>
+      <blockquote className="mb-2 text-sm text-muted-foreground font-normal text-center">{`"${body}"`}</blockquote>
       <div className="flex flex-col items-center gap-1">
-        <figcaption className="text-sm font-normal text-subtle">
+        <figcaption className="text-sm font-normal text-muted-foreground">
           — {name}
         </figcaption>
         <Image

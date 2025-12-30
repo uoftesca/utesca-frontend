@@ -25,7 +25,7 @@ export default function UpcomingEventPreview({
                     <div className='text-2xl font-bold'>{month}</div>
                     <div className='text-4xl'>{day}</div>
                 </div>
-                <div className='text-md font-medium break-words line-clamp-2 text-center w-full text-accent'>
+                <div className='text-md font-medium break-words line-clamp-2 text-center w-full text-primary'>
                     {title}
                 </div>
             </div>

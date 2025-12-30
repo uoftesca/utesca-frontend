@@ -21,13 +21,13 @@ const StatsCard1: React.FC<StatsCard1Props> = ({
                 {title && (
                     <p className='text-center text-sm font-bold leading-tight'>{title}</p>
                 )}
-                <p className='text-center text-5xl text-accent font-bold leading-tight'>{num}</p>
+                <p className='text-center text-5xl text-primary font-bold leading-tight'>{num}</p>
                 <div className='flex flex-col'>
                     {text && (
-                        <p className='text-subtle text-center text-sm leading-tight'>{text}</p>
+                        <p className='text-muted-foreground text-center text-sm leading-tight'>{text}</p>
                     )}
                     {text1 && (
-                        <p className='text-subtle text-center text-sm leading-tight'>{text1}</p>
+                        <p className='text-muted-foreground text-center text-sm leading-tight'>{text1}</p>
                     )}
                 </div>
             </CardContent>

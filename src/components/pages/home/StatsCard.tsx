@@ -17,13 +17,13 @@ const StatsCard: React.FC<StatsCardProps> = ({
     return (
         <Card className={`bg-card border-none w-full max-w-sm ${className}`}>
             <CardContent className='flex flex-col items-center space-y-2 p-6'>
-                <p className='text-center text-lg text-accent font-bold'>
+                <p className='text-center text-lg text-primary font-bold'>
                     {title}
                 </p>
                 <p className='whitespace-pre-wrap text-6xl font-medium text-black dark:text-white'>
                     <NumberTicker value={num} />
                 </p>
-                <p className='text-subtle text-center text-sm'>{text}</p>
+                <p className='text-card-foreground text-center text-sm'>{text}</p>
             </CardContent>
         </Card>
     );

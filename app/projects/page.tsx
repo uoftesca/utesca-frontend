@@ -11,7 +11,7 @@ const projects = [
   {
     title:
       'Haptic Vision: Accessible Robotic Technology for the Blind and Low Vision',
-    category: 'Robitics, Project Development',
+    category: 'Robotics, Project Development',
     description:
       'Haptic Vision is an accessible technology developer focused on creating robotic solutions to help Blind and Low Vision (BLV) individuals interact with the digital world. The project involves developing a software solution that can automatically convert 2D user interfaces, such as websites, into real-time digital 3D models. This software will run on low-power computing equipment and use either an AI system or classical programming techniques. The 3D model will be updated in real-time within a Unity environment and integrated with the company’s existing robotic prototypes and haptic displays. The final deliverable is a software that can capture a screen, convert the content into a 3D model, and physically represent it through robotic hardware controlled by an Arduino system. The project spans 6-8 months, with a focus on screen capture, element detection, 3D model conversion, and robotic integration.',
     status: 'current',
@@ -19,7 +19,7 @@ const projects = [
   },
   {
     title: 'Finliti Corporation: Designing a Card Dealer',
-    category: 'Kubernetes & Software Integration',
+    category: 'Kubernetes, Software Integration',
     description:
       'Finliti, a fintech innovator focused on gamified financial products, is seeking a team to design and prototype a compact card dealer. This device needs to handle up to 160 cards, remain stable on a 15-degree incline, and have a sleek, "Apple-like" design. The final deliverables include CAD models and drawings with key dimensions, a functional prototype (3D-printed, laser-cut, or hybrid), and documentation of design decisions. The project spans 6-8 months and requires skills in mechanical design, prototyping, and human-centered design. The prototype should also have a secure discard box and be tested for usability and mechanical reliability',
     status: 'current',
@@ -27,7 +27,7 @@ const projects = [
   },
   {
     title: 'Nodalli AI: Contact Monitoring and Hygiene System',
-    category: 'Automation Development',
+    category: 'Automation, Development',
     description:
       'Nodalli is a platform that uses AI-powered automation to make professional networking more accessible and efficient. The project, named "Ecoguard," is to build a standalone contact monitoring and hygiene system to ensure ethical and effective outreach. The system will act as an "immune system" for Nodalli\'s networking ecosystem, flagging bounces, eliminating duplicate records, and scoring contacts based on engagement. The team will design an API-integratable service that accepts raw contact data, applies rules and scoring, and returns a cleaned list. A key feature is the ability to automatically organize contacts into sub-CRM groupings like "High-Value Prospects" or "Do Not Contact". The project is expected to span 6-8 months and will involve creating an initial prototype, a beta version, and the final deliverable, which includes a lightweight dashboard for admins.',
     status: 'current',
@@ -35,7 +35,7 @@ const projects = [
   },
   {
     title: 'Smart CashBackTV: AI-Powered TV Commercial Detection',
-    category: 'Automation Development',
+    category: 'Automation, Development',
     description:
       'Smart CashBackTV is a company that enables local small and medium-sized businesses to leverage targeted TV advertising. The project involves developing an automated system to detect, classify, and tag advertisements in real-time/pre-recorded TV content. This will involve using various audio/video processing methods and AI techniques. The team will create a "plug and play" software solution that can run on a PC or server, automatically timestamping TV advertisements and categorizing them as either a known or new advertisement. The system will also have a simple user interface for monitoring metrics and manually confirming new advertisements. Additionally, the team will assist in integrating this system into an Android application. The project timeline spans 6-8 months, covering everything from understanding existing systems to developing the AI and a user interface.',
     status: 'current',
