@@ -14,7 +14,7 @@
         --primary-foreground: oklch(0.9850 0 0);
         --secondary: oklch(0.9354 0.0310 20.1731);
         --secondary-foreground: oklch(0.3999 0.1641 29.2339);
-        --muted: oklch(0.9700 0 0);
+        --muted: oklch(86.9% 0.005 56.366);
         --muted-foreground:oklch(43.9% 0 0);
         --accent: oklch(0.9220 0 0);
         --accent-foreground: oklch(0.2050 0 0);
@@ -56,6 +56,11 @@
         --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
         --tracking-normal: 0em;
         --spacing: 0.25rem;
+
+        /* RSVP Page specific colors */
+        --rsvp-navy: oklch(0.2094 0.0199 248.8017);
+        --rsvp-red: oklch(0.3999 0.1641 29.2339);
+        --rsvp-red-bright: oklch(0.6999 0.1641 29.2339);
     }
     .dark {
         --background: oklch(0.1450 0 0);
@@ -124,5 +129,69 @@
 @layer utilities {
     .text-balance {
         text-wrap: balance;
+    }
+
+    /* RSVP Page Utilities */
+    .grid-pattern {
+        background-image:
+            linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 60px 60px;
+    }
+
+    .gradient-glow {
+        background: radial-gradient(
+            circle at center,
+            var(--rsvp-red-bright) 0%,
+            var(--rsvp-red) 40%,
+            transparent 70%
+        );
+        filter: blur(80px);
+        opacity: 0.3;
+    }
+
+    .text-gradient {
+        background: linear-gradient(
+            135deg,
+            var(--rsvp-red) 0%,
+            var(--rsvp-red-bright) 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .gradient-primary {
+        background: linear-gradient(
+            135deg,
+            var(--rsvp-red) 0%,
+            var(--rsvp-red-bright) 100%
+        );
+    }
+
+    .shadow-glow {
+        box-shadow:
+            0 0 30px rgba(239, 68, 68, 0.3),
+            0 0 60px rgba(239, 68, 68, 0.15);
+    }
+
+    .shadow-glow-hover {
+        box-shadow:
+            0 0 50px rgba(239, 68, 68, 0.5),
+            0 0 100px rgba(239, 68, 68, 0.25),
+            0 0 150px rgba(239, 68, 68, 0.1);
+    }
+
+    .animate-glow-pulse {
+        animation: glow-pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes glow-pulse {
+        0%, 100% {
+            opacity: 0.3;
+        }
+        50% {
+            opacity: 0.5;
+        }
     }
 }

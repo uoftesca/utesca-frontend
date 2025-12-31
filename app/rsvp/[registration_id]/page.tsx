@@ -11,17 +11,12 @@ export default async function RsvpPage({ params }: RsvpPageProps) {
 
     try {
         const rsvpData = await publicApi.getRsvpDetails(registration_id);
-        console.log(rsvpData)
 
         return (
-            <main className="min-h-screen bg-background">
-                <div className="container mx-auto flex justify-center py-16 px-8 md:py-24">
-                    <RsvpConfirmationView
-                        initialData={rsvpData}
-                        registrationId={registration_id}
-                    />
-                </div>
-            </main>
+            <RsvpConfirmationView
+                initialData={rsvpData}
+                registrationId={registration_id}
+            />
         );
     } catch (error) {
         // API returns 404 for invalid/inaccessible registrations
