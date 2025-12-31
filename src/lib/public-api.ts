@@ -2,6 +2,9 @@ import {
     PublicEventDetail,
     RegistrationSubmitRequest,
     RegistrationSubmitResponse,
+    RsvpConfirmResponse,
+    RsvpDeclineResponse,
+    RsvpDetailsResponse,
     UploadFileDeleteRequest,
     UploadFileRequest,
     UploadFileResponse,
@@ -108,6 +111,28 @@ export const publicApi = {
             {
                 method: 'DELETE',
                 body: JSON.stringify(payload),
+            }
+        );
+    },
+
+    async getRsvpDetails(registrationId: string): Promise<RsvpDetailsResponse> {
+        return publicRequest<RsvpDetailsResponse>(`/rsvp/${registrationId}`);
+    },
+
+    async confirmRsvp(registrationId: string): Promise<RsvpConfirmResponse> {
+        return publicRequest<RsvpConfirmResponse>(
+            `/rsvp/${registrationId}/confirm`,
+            {
+                method: 'POST',
+            }
+        );
+    },
+
+    async declineRsvp(registrationId: string): Promise<RsvpDeclineResponse> {
+        return publicRequest<RsvpDeclineResponse>(
+            `/rsvp/${registrationId}/decline`,
+            {
+                method: 'POST',
             }
         );
     },
