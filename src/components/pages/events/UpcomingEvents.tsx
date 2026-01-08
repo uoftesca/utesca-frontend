@@ -75,7 +75,6 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
                         classNames={{
                             day_selected:
                                 'rounded-md text-white hover:text-white',
-                            day_today: 'border-2 border-accent text-black',
                             day: cn(
                                 buttonVariants({ variant: 'ghost' }),
                                 'h-9 w-9 p-0 font-normal aria-selected:opacity-100 [&:not([aria-selected]):hover]:bg-accent [&:not([aria-selected]):hover]:text-white rounded-md'
@@ -85,7 +84,7 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
                             event: eventDates,
                         }}
                         modifiersClassNames={{
-                            event: 'font-bold bg-accent/10 text-primary',
+                            event: 'font-bold bg-primary/10 text-primary',
                         }}
                     />
                 </div>

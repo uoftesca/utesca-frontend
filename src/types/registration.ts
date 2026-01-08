@@ -71,3 +71,45 @@ export interface PublicEventDetail {
     registrationDeadline?: string | null;
     registrationFormSchema?: RegistrationFormSchema | null;
 }
+
+// RSVP Types
+export type RsvpStatus = 'accepted' | 'confirmed' | 'not_attending';
+
+export interface RsvpEventDetails {
+    title: string;
+    dateTime: string | null;
+    location: string | null;
+    description: string | null;
+}
+
+export interface RsvpRegistrationDetails {
+    status: RsvpStatus;
+    submittedAt: string;
+    confirmedAt: string | null;
+}
+
+export interface RsvpDetailsResponse {
+    event: RsvpEventDetails;
+    registration: RsvpRegistrationDetails;
+    currentStatus: RsvpStatus;
+    canConfirm: boolean;
+    canDecline: boolean;
+    isFinal: boolean;
+    eventHasPassed: boolean;
+}
+
+export interface RsvpConfirmResponse {
+    success: boolean;
+    message: string;
+    event: {
+        title: string | null;
+        dateTime: string | null;
+        location: string | null;
+    };
+}
+
+export interface RsvpDeclineResponse {
+    success: boolean;
+    message: string;
+    final: boolean;
+}
