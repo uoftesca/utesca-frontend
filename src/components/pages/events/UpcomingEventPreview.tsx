@@ -22,8 +22,8 @@ export default function UpcomingEventPreview({
         >
             <div className='flex flex-col items-center justify-between w-full h-full'>
                 <div className='flex-1 flex flex-col items-center justify-center'>
-                    <div className='text-2xl font-bold'>{month}</div>
-                    <div className='text-4xl'>{day}</div>
+                    <div className='text-2xl font-bold text-black'>{month}</div>
+                    <div className='text-4xl text-black'>{day}</div>
                 </div>
                 <div className='text-md font-medium break-words line-clamp-2 text-center w-full text-primary'>
                     {title}
