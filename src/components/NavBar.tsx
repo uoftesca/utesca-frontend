@@ -60,7 +60,7 @@ const NavBar = () => {
                 <Link href='/'>
                     <div className='relative w-[100px] h-[40px]'>
                         <Image
-                            src='/UTESCA-red-black.png'
+                            src='/utesca-logo.png'
                             alt='UTESCA Logo'
                             fill
                             sizes='100px'
