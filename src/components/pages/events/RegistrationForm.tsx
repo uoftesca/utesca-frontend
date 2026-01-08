@@ -718,8 +718,8 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
                 ) : (
                     <>
                         {schema.autoAccept && (
-                            <Alert className="border-primary/30 bg-primary/5 text-primary-foreground/80">
-                                <CircleAlert className="h-4 w-4" />
+                            <Alert className="border-primary/30 bg-primary/5 text-primary">
+                                <CircleAlert className="h-4 w-4 !text-primary" />
                                 <AlertTitle>You will automatically be accepted to this event.</AlertTitle>
                                 <AlertDescription>
                                     You may receive a confirmation email shortly after submitting.
