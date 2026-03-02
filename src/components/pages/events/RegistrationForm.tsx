@@ -3,6 +3,8 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { CircleAlert, Calendar, CircleCheck, Loader2, MapPin, Upload } from "lucide-react";
 
+import imageCompression from 'browser-image-compression';
+
 import { publicApi } from "@/lib/public-api";
 import { useUploadThing } from "@/lib/uploadthing";
 import {
@@ -46,12 +48,23 @@ type RegistrationFormProps = {
 
 type FieldErrors = Record<string, string[]>;
 type FileUploadState = {
-    status: "idle" | "uploading" | "uploaded" | "error" | "deleting";
+    status: "idle" | "compressing" | "uploading" | "uploaded" | "error" | "deleting";
     file?: File;
     url?: string;
     fileId?: string;
     error?: string;
 };
+
+async function compressImageFile(file: File, maxSizeBytes: number): Promise<File> {
+    if (!file.type.startsWith('image/')) return file;
+    const isHeic = file.type === 'image/heic' || file.type === 'image/heif';
+    return imageCompression(file, {
+        maxSizeMB: maxSizeBytes / (1024 * 1024),
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+        fileType: isHeic ? 'image/jpeg' : file.type,
+    });
+}
 
 function getDefaultValue(field: RegistrationFormField) {
     if (field.type === 'checkbox') return [] as string[];
@@ -277,14 +290,6 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
 
         const fieldDef = schema.fields.find((f) => f.id === fieldId);
         const maxSize = fieldDef?.validation?.maxSize ?? 8_388_608;
-        if (file.size > maxSize) {
-            const maxMB = Math.round(maxSize / (1024 * 1024));
-            setFileUploads((prev) => ({
-                ...prev,
-                [fieldId]: { status: "error", file, error: `File must be under ${maxMB}MB.` },
-            }));
-            return;
-        }
         const allowedTypes = fieldDef?.validation?.allowedTypes ?? [
             "application/pdf",
             "image/jpeg",
@@ -301,13 +306,36 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
             return;
         }
 
+        let fileToUpload = file;
+        if (file.type.startsWith('image/')) {
+            setFileUploads((prev) => ({ ...prev, [fieldId]: { status: "compressing", file } }));
+            try {
+                fileToUpload = await compressImageFile(file, maxSize);
+            } catch {
+                setFileUploads((prev) => ({
+                    ...prev,
+                    [fieldId]: { status: "error", file, error: "Compression failed. Please try again." },
+                }));
+                return;
+            }
+        }
+
+        if (fileToUpload.size > maxSize) {
+            const maxMB = Math.round(maxSize / (1024 * 1024));
+            setFileUploads((prev) => ({
+                ...prev,
+                [fieldId]: { status: "error", file, error: `File must be under ${maxMB}MB even after compression.` },
+            }));
+            return;
+        }
+
         setFileUploads((prev) => ({
             ...prev,
             [fieldId]: { status: "uploading", file },
         }));
 
         try {
-            const uploadRes = await startUpload([file]);
+            const uploadRes = await startUpload([fileToUpload]);
             const uploaded = uploadRes?.[0];
 
             if (!uploaded?.ufsUrl) {
@@ -319,8 +347,8 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
                 fieldName: fieldId,
                 fileUrl: uploaded.ufsUrl,
                 fileName: file.name,
-                fileSize: file.size,
-                mimeType: file.type,
+                fileSize: fileToUpload.size,
+                mimeType: fileToUpload.type,
                 eventId: event.id,
             });
             const returnedFileId = meta.fileId;
@@ -470,8 +498,12 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
 
     const renderFileField = (field: RegistrationFormField, value: unknown) => {
         const uploadState = fileUploads[field.id] ?? { status: "idle" as const };
-        const isBusy = submitting || isClosed || uploadState.status === "uploading";
+        const isBusy = submitting || isClosed || uploadState.status === "uploading" || uploadState.status === "compressing";
         const deleteInFlight = uploadState.status === "deleting";
+
+        let uploadLabel = "Upload a file";
+        if (uploadState.status === "compressing") uploadLabel = "Compressing...";
+        else if (uploadState.status === "uploading") uploadLabel = "Uploading...";
 
         return (
             <div className="flex flex-col gap-2">
@@ -496,7 +528,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
                     <Upload className="h-5 w-5 text-primary" />
                     <div className="flex flex-col">
                         <span className="font-medium">
-                            {uploadState.status === "uploading" ? "Uploading..." : "Upload a file"}
+                            {uploadLabel}
                         </span>
                         <span className="text-xs text-muted-foreground">
                             {uploadState.file?.name ?? 'Drag and drop or click to choose'}
