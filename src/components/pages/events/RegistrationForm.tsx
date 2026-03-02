@@ -3,6 +3,8 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { CircleAlert, Calendar, CircleCheck, Loader2, MapPin, Upload } from "lucide-react";
 
+import imageCompression from 'browser-image-compression';
+
 import { publicApi } from "@/lib/public-api";
 import { useUploadThing } from "@/lib/uploadthing";
 import {
@@ -46,12 +48,23 @@ type RegistrationFormProps = {
 
 type FieldErrors = Record<string, string[]>;
 type FileUploadState = {
-    status: "idle" | "uploading" | "uploaded" | "error" | "deleting";
+    status: "idle" | "compressing" | "uploading" | "uploaded" | "error" | "deleting";
     file?: File;
     url?: string;
     fileId?: string;
     error?: string;
 };
+
+async function compressImageFile(file: File, maxSizeBytes: number): Promise<File> {
+    if (!file.type.startsWith('image/')) return file;
+    const isHeic = file.type === 'image/heic' || file.type === 'image/heif';
+    return imageCompression(file, {
+        maxSizeMB: maxSizeBytes / (1024 * 1024),
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+        fileType: isHeic ? 'image/jpeg' : file.type,
+    });
+}
 
 function getDefaultValue(field: RegistrationFormField) {
     if (field.type === 'checkbox') return [] as string[];
@@ -85,28 +98,25 @@ function validateCheckboxField(required: boolean, value: unknown) {
 
 function validateFileField(
     required: boolean,
-    validation: RegistrationFormField['validation'] | undefined,
-    value: unknown
-) {
-    const errors: string[] = [];
-    const file = value instanceof File ? value : undefined;
+    uploadState: FileUploadState | undefined
+): string[] {
+    if (required && (!uploadState || uploadState.status !== 'uploaded')) {
+        return ['This file is required.'];
+    }
+    return [];
+}
 
-    if (required) {
-        errors.push('File upload is required but not yet supported on this site.');
-    }
-    if (file) {
-        errors.push('File uploads are not supported yet. Please do not attach a file.');
-    }
-    if (validation?.maxSize && file && file.size > validation.maxSize) {
-        errors.push(
-            `File must be smaller than ${Math.round(validation.maxSize / 1024 / 1024)}MB.`
-        );
-    }
-    if (file && validation?.allowedTypes?.length && !validation.allowedTypes.includes(file.type)) {
-        errors.push('Unsupported file type.');
-    }
-
-    return errors;
+function formatAllowedTypes(allowedTypes: string[] | undefined): string {
+    if (!allowedTypes?.length) return 'PDF or image';
+    const labels: Record<string, string> = {
+        'application/pdf': 'PDF',
+        'image/jpeg': 'JPEG',
+        'image/png': 'PNG',
+        'image/webp': 'WebP',
+        'image/heic': 'HEIC',
+        'image/heif': 'HEIF',
+    };
+    return allowedTypes.map((t) => labels[t] ?? t).join(', ');
 }
 
 function validateTextField(
@@ -140,14 +150,18 @@ function validateTextField(
     return errors;
 }
 
-function validateField(field: RegistrationFormField, value: unknown): string[] {
+function validateField(
+    field: RegistrationFormField,
+    value: unknown,
+    fileUploadState?: FileUploadState
+): string[] {
     const { required, validation } = field;
 
     if (field.type === 'checkbox') {
         return validateCheckboxField(required ?? false, value);
     }
     if (field.type === 'file') {
-        return validateFileField(required ?? false, validation, value);
+        return validateFileField(required ?? false, fileUploadState);
     }
     return validateTextField(required ?? false, validation, value);
 }
@@ -274,18 +288,43 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
             return;
         }
 
-        // local guard to match backend limits
-        if (file.size > 2_097_152) {
+        const fieldDef = schema.fields.find((f) => f.id === fieldId);
+        const maxSize = fieldDef?.validation?.maxSize ?? 8_388_608;
+        const allowedTypes = fieldDef?.validation?.allowedTypes ?? [
+            "application/pdf",
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "image/heic",
+            "image/heif",
+        ];
+        if (!allowedTypes.includes(file.type)) {
             setFileUploads((prev) => ({
                 ...prev,
-                [fieldId]: { status: "error", file, error: "File must be under 2MB." },
+                [fieldId]: { status: "error", file, error: "Unsupported file type." },
             }));
             return;
         }
-        if (file.type !== "application/pdf") {
+
+        let fileToUpload = file;
+        if (file.type.startsWith('image/')) {
+            setFileUploads((prev) => ({ ...prev, [fieldId]: { status: "compressing", file } }));
+            try {
+                fileToUpload = await compressImageFile(file, maxSize);
+            } catch {
+                setFileUploads((prev) => ({
+                    ...prev,
+                    [fieldId]: { status: "error", file, error: "Compression failed. Please try again." },
+                }));
+                return;
+            }
+        }
+
+        if (fileToUpload.size > maxSize) {
+            const maxMB = Math.round(maxSize / (1024 * 1024));
             setFileUploads((prev) => ({
                 ...prev,
-                [fieldId]: { status: "error", file, error: "Only PDF files are allowed." },
+                [fieldId]: { status: "error", file, error: `File must be under ${maxMB}MB even after compression.` },
             }));
             return;
         }
@@ -296,7 +335,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
         }));
 
         try {
-            const uploadRes = await startUpload([file]);
+            const uploadRes = await startUpload([fileToUpload]);
             const uploaded = uploadRes?.[0];
 
             if (!uploaded?.ufsUrl) {
@@ -308,8 +347,8 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
                 fieldName: fieldId,
                 fileUrl: uploaded.ufsUrl,
                 fileName: file.name,
-                fileSize: file.size,
-                mimeType: file.type,
+                fileSize: fileToUpload.size,
+                mimeType: fileToUpload.type,
                 eventId: event.id,
             });
             const returnedFileId = meta.fileId;
@@ -347,7 +386,11 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
     const validateAll = () => {
         const errors: FieldErrors = {};
         schema.fields.forEach((field) => {
-            const errs = validateField(field, formValues[field.id]);
+            const errs = validateField(
+                field,
+                formValues[field.id],
+                field.type === 'file' ? fileUploads[field.id] : undefined
+            );
             if (errs.length) errors[field.id] = errs;
         });
         setFieldErrors(errors);
@@ -455,8 +498,12 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
 
     const renderFileField = (field: RegistrationFormField, value: unknown) => {
         const uploadState = fileUploads[field.id] ?? { status: "idle" as const };
-        const isBusy = submitting || isClosed || uploadState.status === "uploading";
+        const isBusy = submitting || isClosed || uploadState.status === "uploading" || uploadState.status === "compressing";
         const deleteInFlight = uploadState.status === "deleting";
+
+        let uploadLabel = "Upload a file";
+        if (uploadState.status === "compressing") uploadLabel = "Compressing...";
+        else if (uploadState.status === "uploading") uploadLabel = "Uploading...";
 
         return (
             <div className="flex flex-col gap-2">
@@ -481,13 +528,10 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
                     <Upload className="h-5 w-5 text-primary" />
                     <div className="flex flex-col">
                         <span className="font-medium">
-                            {uploadState.status === "uploading" ? "Uploading..." : "Upload a file"}
+                            {uploadLabel}
                         </span>
                         <span className="text-xs text-muted-foreground">
-                            {uploadState.file?.name ??
-                                (value instanceof File && value.name
-                                    ? value.name
-                                    : 'Drag and drop or click to choose (PDF, max 2MB)')}
+                            {uploadState.file?.name ?? 'Drag and drop or click to choose'}
                         </span>
                     </div>
                 </label>
@@ -500,7 +544,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
                     onChange={(e) => handleFileChange(field.id, e.target.files)}
                 />
                 <span className="text-xs text-muted-foreground">
-                    PDF only, max 2MB. Files are stored after successful upload.
+                    {formatAllowedTypes(field.validation?.allowedTypes)}, max {Math.round((field.validation?.maxSize ?? 8_388_608) / (1024 * 1024))}MB. Files are stored after successful upload.
                 </span>
                 {uploadState.status === "uploaded" && uploadState.file && (
                     <div className="flex items-center justify-between text-xs">
