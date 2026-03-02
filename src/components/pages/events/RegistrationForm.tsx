@@ -85,28 +85,25 @@ function validateCheckboxField(required: boolean, value: unknown) {
 
 function validateFileField(
     required: boolean,
-    validation: RegistrationFormField['validation'] | undefined,
-    value: unknown
-) {
-    const errors: string[] = [];
-    const file = value instanceof File ? value : undefined;
+    uploadState: FileUploadState | undefined
+): string[] {
+    if (required && (!uploadState || uploadState.status !== 'uploaded')) {
+        return ['This file is required.'];
+    }
+    return [];
+}
 
-    if (required) {
-        errors.push('File upload is required but not yet supported on this site.');
-    }
-    if (file) {
-        errors.push('File uploads are not supported yet. Please do not attach a file.');
-    }
-    if (validation?.maxSize && file && file.size > validation.maxSize) {
-        errors.push(
-            `File must be smaller than ${Math.round(validation.maxSize / 1024 / 1024)}MB.`
-        );
-    }
-    if (file && validation?.allowedTypes?.length && !validation.allowedTypes.includes(file.type)) {
-        errors.push('Unsupported file type.');
-    }
-
-    return errors;
+function formatAllowedTypes(allowedTypes: string[] | undefined): string {
+    if (!allowedTypes?.length) return 'PDF or image';
+    const labels: Record<string, string> = {
+        'application/pdf': 'PDF',
+        'image/jpeg': 'JPEG',
+        'image/png': 'PNG',
+        'image/webp': 'WebP',
+        'image/heic': 'HEIC',
+        'image/heif': 'HEIF',
+    };
+    return allowedTypes.map((t) => labels[t] ?? t).join(', ');
 }
 
 function validateTextField(
@@ -140,14 +137,18 @@ function validateTextField(
     return errors;
 }
 
-function validateField(field: RegistrationFormField, value: unknown): string[] {
+function validateField(
+    field: RegistrationFormField,
+    value: unknown,
+    fileUploadState?: FileUploadState
+): string[] {
     const { required, validation } = field;
 
     if (field.type === 'checkbox') {
         return validateCheckboxField(required ?? false, value);
     }
     if (field.type === 'file') {
-        return validateFileField(required ?? false, validation, value);
+        return validateFileField(required ?? false, fileUploadState);
     }
     return validateTextField(required ?? false, validation, value);
 }
@@ -274,18 +275,28 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
             return;
         }
 
-        // local guard to match backend limits
-        if (file.size > 2_097_152) {
+        const fieldDef = schema.fields.find((f) => f.id === fieldId);
+        const maxSize = fieldDef?.validation?.maxSize ?? 8_388_608;
+        if (file.size > maxSize) {
+            const maxMB = Math.round(maxSize / (1024 * 1024));
             setFileUploads((prev) => ({
                 ...prev,
-                [fieldId]: { status: "error", file, error: "File must be under 2MB." },
+                [fieldId]: { status: "error", file, error: `File must be under ${maxMB}MB.` },
             }));
             return;
         }
-        if (file.type !== "application/pdf") {
+        const allowedTypes = fieldDef?.validation?.allowedTypes ?? [
+            "application/pdf",
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "image/heic",
+            "image/heif",
+        ];
+        if (!allowedTypes.includes(file.type)) {
             setFileUploads((prev) => ({
                 ...prev,
-                [fieldId]: { status: "error", file, error: "Only PDF files are allowed." },
+                [fieldId]: { status: "error", file, error: "Unsupported file type." },
             }));
             return;
         }
@@ -347,7 +358,11 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
     const validateAll = () => {
         const errors: FieldErrors = {};
         schema.fields.forEach((field) => {
-            const errs = validateField(field, formValues[field.id]);
+            const errs = validateField(
+                field,
+                formValues[field.id],
+                field.type === 'file' ? fileUploads[field.id] : undefined
+            );
             if (errs.length) errors[field.id] = errs;
         });
         setFieldErrors(errors);
@@ -484,10 +499,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
                             {uploadState.status === "uploading" ? "Uploading..." : "Upload a file"}
                         </span>
                         <span className="text-xs text-muted-foreground">
-                            {uploadState.file?.name ??
-                                (value instanceof File && value.name
-                                    ? value.name
-                                    : 'Drag and drop or click to choose (PDF, max 2MB)')}
+                            {uploadState.file?.name ?? 'Drag and drop or click to choose'}
                         </span>
                     </div>
                 </label>
@@ -500,7 +512,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
                     onChange={(e) => handleFileChange(field.id, e.target.files)}
                 />
                 <span className="text-xs text-muted-foreground">
-                    PDF only, max 2MB. Files are stored after successful upload.
+                    {formatAllowedTypes(field.validation?.allowedTypes)}, max {Math.round((field.validation?.maxSize ?? 8_388_608) / (1024 * 1024))}MB. Files are stored after successful upload.
                 </span>
                 {uploadState.status === "uploaded" && uploadState.file && (
                     <div className="flex items-center justify-between text-xs">
