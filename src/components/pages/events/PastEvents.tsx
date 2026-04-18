@@ -9,19 +9,21 @@ const PastEvents: React.FC = () => {
     React.useEffect(() => {
         const loadEvents = async () => {
             const allEvents = await fetchEvents();
-            const pastEvents = allEvents.filter((event: Event) => event.status === 'past');
+            const pastEvents = allEvents.filter(
+                (event: Event) => event.status === 'past',
+            );
             setEvents(pastEvents);
         };
         loadEvents();
     }, []);
 
     return (
-        <div className='w-full text-center p-6 space-y-6'>
-            <h1 className='text-2xl font-bold tracking-normal md:text-4xl text-primary'>
+        <div className="w-full text-center p-6 space-y-6">
+            <h1 className="text-2xl font-bold tracking-normal md:text-4xl text-primary">
                 Past Events
             </h1>
-            <div className='flex flex-col items-center gap-6'>
-                <div className='w-full flex flex-col md:flex-row flex-wrap justify-center gap-6'>
+            <div className="flex flex-col items-center gap-6">
+                <div className="w-full flex flex-col md:flex-row flex-wrap justify-center gap-6">
                     {events.map((event) => {
                         const { month, day } = formatEventDate(event.date);
                         return (
@@ -29,7 +31,7 @@ const PastEvents: React.FC = () => {
                                 key={`${
                                     event.title
                                 }-${event.date.toISOString()}`}
-                                className='w-full md:w-[calc(50%-12px)] max-w-[400px]'
+                                className="w-full md:w-[calc(50%-12px)] max-w-[400px]"
                             >
                                 <EventCard {...event} month={month} day={day} />
                             </div>

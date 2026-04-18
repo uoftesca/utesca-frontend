@@ -52,29 +52,32 @@ export default function EventCard({
         ? new Date(registrationDeadline)
         : null;
     const isRegistrationOpen =
-        !registrationDeadlineDate || registrationDeadlineDate.getTime() > Date.now();
-    const hasInternalRegistration =
-        Boolean(slug && registrationFormSchema && isRegistrationOpen);
+        !registrationDeadlineDate ||
+        registrationDeadlineDate.getTime() > Date.now();
+    const hasInternalRegistration = Boolean(
+        slug && registrationFormSchema && isRegistrationOpen,
+    );
     const registrationUrl = hasInternalRegistration
         ? `/events/${slug}/register`
         : registrationLink || null;
-    const isExternalRegistration =
-        registrationUrl ? registrationUrl.startsWith('http') : false;
+    const isExternalRegistration = registrationUrl
+        ? registrationUrl.startsWith('http')
+        : false;
 
     return (
         <Collapsible
             open={isOpen}
             onOpenChange={setIsOpen}
-            className='w-full rounded-lg bg-transparent relative'
+            className="w-full rounded-lg bg-transparent relative"
         >
-            <div className='p-0 space-y-4'>
-                <div className='flex flex-col items-start gap-4'>
+            <div className="p-0 space-y-4">
+                <div className="flex flex-col items-start gap-4">
                     {albumLink ? (
                         <a
                             href={albumLink}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='block relative w-full h-56 rounded-lg bg-secondary cursor-pointer overflow-hidden'
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block relative w-full h-56 rounded-lg bg-secondary cursor-pointer overflow-hidden"
                         >
                             {image ? (
                                 <Image
@@ -86,18 +89,18 @@ export default function EventCard({
                                     draggable={false}
                                 />
                             ) : (
-                                <div className='flex items-center justify-center w-full h-full'>
-                                    <div className='text-center'>
-                                        <div className='text-2xl font-bold'>
+                                <div className="flex items-center justify-center w-full h-full">
+                                    <div className="text-center">
+                                        <div className="text-2xl font-bold">
                                             {month}
                                         </div>
-                                        <div className='text-4xl'>{day}</div>
+                                        <div className="text-4xl">{day}</div>
                                     </div>
                                 </div>
                             )}
                         </a>
                     ) : (
-                        <div className='relative w-full h-56 rounded-lg bg-secondary'>
+                        <div className="relative w-full h-56 rounded-lg bg-secondary">
                             {image ? (
                                 <Image
                                     src={image}
@@ -108,24 +111,24 @@ export default function EventCard({
                                     draggable={false}
                                 />
                             ) : (
-                                <div className='flex items-center justify-center w-full h-full'>
-                                    <div className='text-center'>
-                                        <div className='text-2xl font-bold'>
+                                <div className="flex items-center justify-center w-full h-full">
+                                    <div className="text-center">
+                                        <div className="text-2xl font-bold">
                                             {month}
                                         </div>
-                                        <div className='text-4xl'>{day}</div>
+                                        <div className="text-4xl">{day}</div>
                                     </div>
                                 </div>
                             )}
                         </div>
                     )}
-                    <div className='flex items-start justify-between w-full'>
-                        <div className='flex items-start gap-3'>
+                    <div className="flex items-start justify-between w-full">
+                        <div className="flex items-start gap-3">
                             <CollapsibleTrigger asChild>
                                 <Button
-                                    variant='ghost'
-                                    size='sm'
-                                    className='p-0 h-auto [&_svg]:size-3 hover:bg-transparent text-inherit hover:text-primary mt-[5px]'
+                                    variant="ghost"
+                                    size="sm"
+                                    className="p-0 h-auto [&_svg]:size-3 hover:bg-transparent text-inherit hover:text-primary mt-[5px]"
                                 >
                                     <Triangle
                                         className={`transition-transform duration-200 fill-current ${
@@ -134,48 +137,48 @@ export default function EventCard({
                                     />
                                 </Button>
                             </CollapsibleTrigger>
-                            <h3 className='font-normal'>{title}</h3>
+                            <h3 className="font-normal">{title}</h3>
                         </div>
-                        <span className='text-muted-foreground italic text-right'>
+                        <span className="text-muted-foreground italic text-right">
                             {category}
                         </span>
                     </div>
                 </div>
-                <CollapsibleContent className='transition-all duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0'>
-                    <div className='flex items-stretch justify-between text-left'>
-                        <div className='flex-1 space-y-4'>
-                            <p className='text-muted-foreground text-left whitespace-pre-line'>
+                <CollapsibleContent className="transition-all duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0">
+                    <div className="flex items-stretch justify-between text-left">
+                        <div className="flex-1 space-y-4">
+                            <p className="text-muted-foreground text-left whitespace-pre-line">
                                 {description}
                             </p>
                             {status === 'upcoming' && (
-                                <p className='text-sm text-muted-foreground text-left'>
+                                <p className="text-sm text-muted-foreground text-left">
                                     {registrationUrl
                                         ? 'Registration available'
                                         : 'Registration not available yet'}
                                 </p>
                             )}
                         </div>
-                        <div className='inline-flex items-end ml-4'>
+                        <div className="inline-flex items-end ml-4">
                             {registrationUrl && (
                                 <Button
-                                    variant='link'
-                                    size='icon'
-                                    className='p-0 m-0 w-fit h-fit'
+                                    variant="link"
+                                    size="icon"
+                                    className="p-0 m-0 w-fit h-fit"
                                     asChild
                                 >
                                     {isExternalRegistration ? (
                                         <a
                                             href={registrationUrl}
-                                            target='_blank'
-                                            rel='noopener noreferrer'
+                                            target="_blank"
+                                            rel="noopener noreferrer"
                                         >
                                             <ExternalLink />
                                         </a>
                                     ) : (
                                         <Link
                                             href={registrationUrl}
-                                            target='_blank'
-                                            rel='noopener noreferrer'
+                                            target="_blank"
+                                            rel="noopener noreferrer"
                                         >
                                             <ExternalLink />
                                         </Link>
