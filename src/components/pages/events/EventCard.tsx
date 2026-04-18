@@ -137,7 +137,7 @@ export default function EventCard({
                                     />
                                 </Button>
                             </CollapsibleTrigger>
-                            <h3 className="font-normal">{title}</h3>
+                            <h3 className="font-normal text-left">{title}</h3>
                         </div>
                         <span className="text-muted-foreground italic text-right">
                             {category}
