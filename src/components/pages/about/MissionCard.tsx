@@ -16,15 +16,15 @@ const MissionCard: React.FC<MissionCardProps> = ({
     className,
 }) => {
     return (
-        <Card
-            className={`bg-card border-none w-full max-w-sm shadow-none ${className}`}
-        >
-            <CardContent className='flex flex-col items-left p-6 gap-3'>
-                <Icon className='w-12 h-12 text-primary' strokeWidth={1.5} />
-                <p className='text-primary font-bold w-full text-sm text-left'>
+        <Card className={`bg-card border-none w-full max-w-sm h-full ${className}`}>
+            <CardContent className='flex h-full flex-col items-center justify-start p-6'>
+                <Icon className='w-12 h-12 text-primary mb-4' />
+                <p className='text-center text-lg text-primary font-bold'>
                     {title}
                 </p>
-                <p className='text-muted-foreground text-sm text-left'>{text}</p>
+                <p className='text-muted-foreground text-center text-sm'>
+                    {text}
+                </p>
             </CardContent>
         </Card>
     );
