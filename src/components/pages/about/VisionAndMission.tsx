@@ -8,13 +8,13 @@ const VisionAndMission: React.FC = () => {
             <h1 className='text-2xl font-bold tracking-normal md:text-4xl text-primary'>
                 Our Vision & Mission
             </h1>
-            <p className='text-base text-muted-foreground mx-auto'>
+            <p className='text-base text-muted-foreground mx-auto max-w-5xl'>
                 UTESCA began with a simple idea: How can we bring engineering
                 students together to give back to our local community? Over
                 time, this has evolved into our three core offerings:
             </p>
             <div className='flex flex-col items-center gap-6'>
-                <div className='max-w-fit grid justify-items-center grid-cols-1 md:grid-cols-3 gap-6'>
+                <div className='w-full grid justify-items-center grid-cols-1 md:grid-cols-3 gap-6'>
                     <MissionCard
                         Icon={BriefcaseBusiness}
                         title='Pro-Bono Service'

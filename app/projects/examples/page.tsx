@@ -80,15 +80,15 @@ const projects = [
     status: 'past',
     img: '/projects/GreenSpeaking.png',
   },
-  {
-    title: 'Nodalli',
-    category: 'Automation Development',
-    section: 'Automation & Systems',
-    description:
-      "Delivered a fully functional and deployable automation tool that replaces the company's manual process of searching contacts on Apollo.io, scrapping additional data with Apify, and exporting the results into Excel, ultimately facilitating job search.",
-    status: 'past',
-    img: '/projects/Nodalli.png',
-  },
+  // {
+  //   title: 'Nodalli',
+  //   category: 'Automation Development',
+  //   section: 'Automation & Systems',
+  //   description:
+  //     "Delivered a fully functional and deployable automation tool that replaces the company's manual process of searching contacts on Apollo.io, scrapping additional data with Apify, and exporting the results into Excel, ultimately facilitating job search.",
+  //   status: 'past',
+  //   img: '/projects/Nodalli.png',
+  // },
   {
     title: 'University Health Network (UHN)',
     category: 'Data Analysis',
@@ -98,15 +98,15 @@ const projects = [
     status: 'past',
     img: '/projects/UHN.png',
   },
-  {
-    title: 'Finliti',
-    category: 'Kubernetes & Software Integration',
-    section: 'Automation & Systems',
-    description:
-      "Integrating Kubernetes API into the company's system and developed a backtester that analyzes effectiveness of investment strategies.",
-    status: 'past',
-    img: '/projects/Finliti.png',
-  },
+  // {
+  //   title: 'Finliti',
+  //   category: 'Kubernetes & Software Integration',
+  //   section: 'Automation & Systems',
+  //   description:
+  //     "Integrating Kubernetes API into the company's system and developed a backtester that analyzes effectiveness of investment strategies.",
+  //   status: 'past',
+  //   img: '/projects/Finliti.png',
+  // },
   {
     title: 'Mobile Mailing App',
     category: 'App Development',

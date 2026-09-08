@@ -2,41 +2,62 @@ name,role,program,imageUrl
 
 # Presidents
 Clemen Chan,Co-President,ECE 2T7 + PEY,/about/headshots/clemen-chan.jpg
-Iqra Khan,Co-President,Mech 2T6 + PEY,/about/headshots/iqra-khan.jpg
+Carolina Fischmeister,Co-President,INDY 2T8,/about/headshots/carolina-fischmeister.jpg
 
 # Administration Team
-Manan Sawrangpate,VP of O&IA,EngSci Robo 2T6,/about/headshots/manan-sawrangpate.jpg
-Zoya Khan,VP of Finance,Mech 2T6,/about/headshots/zoya-khan.jpg
-Abaidullah Arif,O&IA Director,Civ 2T5 + PEY,/about/headshots/abaidullah-arif.jpg
-Jason Liu,O&IA Director,Civ 2T8 + PEY,/about/headshots/jason-liu.jpg
-Ridaan Gupta,Finance Director,Indy 2T8 + PEY,/about/headshots/ridaan-gupta.jpg
+Henry Chung,VP of O&IA,INDY 2T8 + PEY,/about/headshots/henry-chung.jpg
+Cara Ng,O&IA Director,INDY 2T8 + PEY,/about/headshots/cara-ng.jpg
+Karma Namgyal,O&IA Director,ECE 2T8 + PEY,/about/headshots/karma-namgyal.jpg
+Naufal As Shodiq,Finance Director,MECH 2T9 + PEY,/about/headshots/naufal-shodiq.jpg
 
 # Outreach Team
-Carolina Fischmeister,VP of Outreach,Indy 2T8,/about/headshots/carolina-fischmeister.jpeg
-Joao (Johnny) De Campos Carvalho,Outreach Director,Mech 2T8,/about/headshots/joao-carvalho.jpg
-Maggie Wu,Outreach Director,Indy 2T7 + PEY,/about/headshots/maggie-wu.jpg
-Andrew Yin,Outreach Director,Indy 2T7,/about/headshots/andrew-yin.jpg
+Johnny Campos,VP of Outreach,MECH 2T8 + PEY,/about/headshots/johnny-campos.jpg
+Connor Andjelic,Outreach Director,CHEM 2T8 + PEY,/about/headshots/connor-andjelic.jpg
+King (Johnson) Hung,Outreach Director,CHEM 2T8 + PEY,/about/headshots/king-hung.jpg
+Ethan Xu,Outreach Director,ENGSCI 2T9 + PEY,/about/headshots/ethan-xu.jpg
+Bruno Velázquez,Outreach Director,MSE 2T9 + PEY,/about/headshots/bruno-velazquez.jpg
 
 # Events Team
-Elena Zhu,VP of Events,Indy + 2T7,/about/headshots/elena-zhu.jpg
-Henry Chung,Events Director,Indy 2T8,/about/headshots/henry-chung.jpg
-Amiran Sultana,Events Director,Civ 2T8 + PEY,/about/headshots/amiran-sultana.jpeg
+Amiran Sultana,VP of Events,CIV 2T8 + PEY,/about/headshots/amiran-sultana.jpg
+Daniel Ortiz,Events Director,UTIAS Masters,/about/headshots/daniel-ortiz.jpg
+Natalie El Taki,Events Director,CIV 2T8,/about/headshots/natalie-taki.jpg
+Baran Askarifirouzjaee,Events Director,INDY 2T9,/about/headshots/baran-askari.jpg
+Devanshi Makkar,Events Director,ENGSCI 2T9 + PEY,/about/headshots/devanshi-makkar.jpg
 
 # Marketing Team
-Rangajah Manoharan, VP of Marketing,Indy 2T6 + PEY,/about/headshots/rangajah-manoharan.jpeg
-Aahana Srivastava,Marketing Director,ECE 2T8 + PEY,/about/headshots/aahana-srivastava.jpeg
-Gurleen Virdi,Design & Marketing Director,Indy 2T6,/about/headshots/gurleen-virdi.jpg
+Coralyn Zhong,VP of Marketing,EngSci 2T9 + PEY,/about/headshots/coralyn-zhong.jpg
+Shirly Tian,Marketing Director,CIV 2T8 + PEY,/about/headshots/shirly-tian.jpg
+Mia Halim,Marketing Director,CIV 2T9 + PEY,/about/headshots/mia-halim.jpg
 
 # CEP Team
-Beatriz Corrêa de Mello,VP of CEP,Indy 2T7 + PEY,/about/headshots/beatriz-mello.jpg
-Alex Kurk, CEP Director,Mech 2T6,/about/headshots/alex-kurk.jpg
-Rayan Sibai, CEP Director,Civ 2T5 + PEY,/about/headshots/rayan-sibai.jpg
+Joel Vadakken,VP of CEP,EngSci 2T7 + PEY,/about/headshots/joel-vadakken.jpg
+Nolan Cheung,CEP Director,Indy 2T9 + PEY,/about/headshots/nolan-cheung.jpg
+Erfan Nazarian,CEP Director,ECE 2T6 + PEY,/about/headshots/erfan-nazarian.jpg
+Artin Molaei-Forouhar,CEP Director,ECE 2T6 + PEY,/about/headshots/artin-forouhar.jpg
+Mai Fujii,CEP Director,ECE 2T9 + PEY,/about/headshots/mai-fujii.jpg
+Meha Raina,CEP Director,INDY 2T8 + PEY,/about/headshots/meha-raina.jpg
+Syed Ali Sher,CEP Director,ECE 2T9 + PEY,/about/headshots/syed-sher.jpg
+Anastasia Ayow,CEP Director,MECH 2T8 + PEY,/about/headshots/anastasia-ayow.jpg
+Ryan Gill,CEP Director,CHEM 2T9 + PEY,/about/headshots/ryan-gill.jpg
+Ibrahim Yafawi,CEP Director,INDY 2T8 + PEY,
+Chenyu Li,CEP Director,MECH 2T9 + PEY,/about/headshots/chenyu-li.jpg
 
 # Web Team
-Rachel Deng,VP of Web,CS 2T7,/about/headshots/rachel-deng.jpg
-Muhtasim Khan,Technical Lead,CS 2T7,/about/headshots/muhtasim-khan.jpg
-Seungil Baik,Web Dev,CS 2T7,/about/headshots/seungil-baik.jpg
-Vishaal Gopalan,Web Dev,ECE 2T8 + PEY,/about/headshots/vishaal-gopalan.jpg
-Jeha Park,Web Dev,CS 2T7,
-Adam Petrovic,Web Dev,CS 2T7 + ASIP,/about/headshots/adam-petrovic.jpg
-Annie Wang,Web Dev,CS 2T6,/about/headshots/annie-wang.jpg
+Muhtasim Khan,VP of Web,CS 2T6 + Co-op,/about/headshots/muhtasim-khan.jpg
+Ayaan Islam,Senior Dev,CS 2T8,/about/headshots/ayaan-islam.jpg
+Shaurya Sareen,System Architect,CS 2T8,/about/headshots/shaurya-sareen.jpg
+Niki Bidhendi,Project Manager,MECH 2T6 + PEY,/about/headshots/niki-bidhendi.jpg
+Zoya Khan,Product Manager,MECH 2T6 + PEY,/about/headshots/zoya-khan.jpg
+Sebastian Cooper-Giannotta,Web Dev,CS 2T9 + Co-op,/about/headshots/sebastian-giannotta.jpg
+Preston Cai,Web Dev,CS 2T9,/about/headshots/preston-cai.jpg
+Maha Jamil,Web Dev,ECE 2T9 + PEY,/about/headshots/maha-jamil.jpg
+
+# Finance Team
+Rangajah Manoharan,VP of Finance,INDY 2T6 + PEY,/about/headshots/rangajah-manoharan.jpg
+Taimour Rehan,Finance Director,Econ & Stats 2T8,
+Imaan Sheikh,Finance Director,INDY 2T9 + PEY,
+
+# Sponsorships Team
+Ridaan Gupta,VP of Sponsorships,INDY 2T8 + PEY,/about/headshots/ridaan-gupta.jpg
+Shrena Sribalan,Sponsorships Director,INDY 2T9,
+Abdulahi Abdurahman,Sponsorships Director,CHEM 2T8 + PEY,/about/headshots/abdulahi-abdurahman.jpg

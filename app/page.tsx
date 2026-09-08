@@ -9,6 +9,7 @@ import { PartneredWith } from "@/components/pages/home/PartneredWith";
 import Stats from "@/components/pages/home/Stats";
 import JoinUTESCA from "@/components/pages/home/JoinUTESCA";
 import PastEvents from "@/components/pages/events/PastEvents";
+import Scroll from "@/components/Scroll";
 
 export default function Home() {
   return (
@@ -16,12 +17,16 @@ export default function Home() {
       <NavBar />
       <main>
         <Hero />
-        <Container>
-          <WhatDoesUTESCADo />
+
+        <div>
+          <Scroll><WhatDoesUTESCADo /></Scroll>
+          <Scroll><Stats /></Scroll>
+          <Scroll><JoinUTESCA /></Scroll>
+        </div>
+
+        <section className="bg-background px-6 py-12 md:px-12 lg:px-20">
           <PartneredWith />
-          <Stats />
-          <JoinUTESCA />
-        </Container>
+        </section>
       </main>
       <Footer />
     </>

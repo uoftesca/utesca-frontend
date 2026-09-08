@@ -15,7 +15,7 @@ const SeeMore: React.FC<SeeMoreProps> = ({ link, text = "See More", className })
                 background="var(--primary)"
                 className={`w-full h-full flex-1 text-primary-foreground ${className || ''}`}
             >
-                <span className="text-lg text-primary-foreground">{text}</span>
+                <span className="text-xl text-primary-foreground">{text}</span>
             </ShimmerButton>
         </Link>
     );

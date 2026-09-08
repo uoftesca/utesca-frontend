@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Menu } from "lucide-react";
+import { Menu, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 
@@ -31,6 +31,9 @@ type NavItem = {
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
+  const toggleSection = (href: string) =>
+    setOpenSections((s) => ({ ...s, [href]: !s[href] }));
 
   const navItems: NavItem[] = [
     { href: "/", label: "Home" },
@@ -40,7 +43,7 @@ const NavBar = () => {
       children: [
         { href: "/about/vision-mission", label: "Our Vision & Missions" },
         { href: "/about/team", label: "Our Team" },
-        { href: "/about/alumni", label: "Alumni" },
+        // { href: "/about/alumni", label: "Alumni" },
         { href: "/about/partner", label: "Partner With Us" },
       ],
     },
@@ -149,14 +152,29 @@ const NavBar = () => {
             </SheetHeader>
             <nav className="flex flex-col space-y-4 mt-4">
               {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-lg font-normal hover:text-primary"
-                  onClick={closeMenu}
-                >
-                  {item.label}
-                </Link>
+                <div key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-lg font-normal hover:text-primary"
+                    onClick={closeMenu}
+                  >
+                    {item.label}
+                  </Link>
+                  {item.children && (
+                    <div className="mt-2 flex flex-col space-y-2 pl-4">
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          className="text-base text-muted-foreground hover:text-primary"
+                          onClick={closeMenu}
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
             </nav>
           </SheetContent>
