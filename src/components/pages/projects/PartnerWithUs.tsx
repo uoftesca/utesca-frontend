@@ -6,13 +6,13 @@ export default function PartnerWithUs() {
             <h1 className='text-2xl md:text-4xl text-primary font-bold'>
                 Partner With Us
             </h1>
-            <p className='text-base text-muted-foreground'>
+            <p className='text-lg text-muted-foreground'>
                 We are currently seeking clients and advisors across the GTA for
                 our Consulting Engineering Projects program. We believe that
                 partnering with you would provide valuable resources and
                 learning opportunities for our students.
             </p>
-            <p className='text-base text-muted-foreground'>
+            <p className='text-lg text-muted-foreground'>
                 Join forces with a dynamic team of 4-6 undergraduate engineering
                 students. Our rigorous recruitment process ensures each team
                 member brings technical expertise and passion to craft optimal

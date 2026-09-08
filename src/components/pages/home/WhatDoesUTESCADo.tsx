@@ -4,11 +4,11 @@ import OverviewCard from "./OverviewCard";
 
 const WhatDoesUTESCADo: React.FC = () => {
   return (
-    <div className="w-full text-center max-w-5xl mx-auto space-y-6">
+    <div className="w-full text-center max-w-7xl mx-auto space-y-6">
       <h1 className="text-2xl font-bold tracking-normal md:text-4xl text-primary">
         What does UTESCA do?
       </h1>
-      <p className="text-base text-muted-foreground mx-auto">
+      <p className="text-base text-muted-foreground mx-auto max-w-2xl">
         UTESCA is the premier engineering consulting club at UofT. We bridge
         engineering and consulting for students who are interested in pursuing a
         career in consulting.

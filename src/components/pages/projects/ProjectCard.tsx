@@ -1,95 +1,87 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { ExternalLink, Triangle } from 'lucide-react';
-import { Button, buttonVariants } from '@/components/ui/button';
-import {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger,
-} from '@/components/ui/collapsible';
-import Image from 'next/image';
+import * as React from "react";
+import { ExternalLink, RotateCw } from "lucide-react";
+import Image from "next/image";
 
 interface ProjectProps {
-    title: string;
-    category: string;
-    description: string;
-    img?: string;
-    link?: string;
+  title: string;
+  category: string;
+  description: string;
+  img?: string;
+  link?: string;
+  isFlipped: boolean;
+  onToggle: () => void;
 }
 
 export default function ProjectComponent({
-    title,
-    category,
-    description,
-    img,
-    link = '',
+  title,
+  category,
+  description,
+  img,
+  isFlipped,
+  onToggle,
+  link = "",
 }: ProjectProps) {
-    const [isOpen, setIsOpen] = React.useState(false);
-
-    return (
-        <Collapsible
-            open={isOpen}
-            onOpenChange={setIsOpen}
-            className='w-full rounded-lg bg-transparent relative'
+  return (
+    <div className="w-full">
+      <div className="[perspective:1200px]">
+        <div
+          role="button"
+          tabIndex={0}
+          aria-pressed={isFlipped}
+          onClick={onToggle}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onToggle();
+            }
+          }}
+          className={`relative h-[18rem] w-full cursor-pointer transition-transform duration-500 [transform-style:preserve-3d] ${
+            isFlipped ? "[transform:rotateY(180deg)]" : ""
+          }`}
         >
-            <div className='p-0 space-y-4'>
-                <div className='flex flex-col items-start gap-4'>
-                    <div className='relative w-full h-56 rounded-lg bg-secondary'>
-                        {img && (
-                            <Image
-                                src={img}
-                                alt={title}
-                                fill
-                                className='object-cover rounded-lg select-none'
-                                draggable={false}
-                            />
-                        )}
-                    </div>
-                    <div className='flex items-start justify-between w-full'>
-                        <div className='flex items-start gap-3'>
-                            <CollapsibleTrigger asChild>
-                                <Button
-                                    variant='ghost'
-                                    size='sm'
-                                    className='p-0 h-auto [&_svg]:size-3 hover:bg-transparent text-inherit hover:text-primary mt-[5px]'
-                                >
-                                    <Triangle
-                                        className={`transition-transform duration-200 fill-current ${
-                                            isOpen ? 'rotate-180' : 'rotate-90'
-                                        }`}
-                                    />
-                                </Button>
-                            </CollapsibleTrigger>
-                            <h3 className='font-normal'>{title}</h3>
-                        </div>
-                        <span className='text-muted-foreground italic text-right'>
-                            {category}
-                        </span>
-                    </div>
-                </div>
-                <CollapsibleContent className='transition-all duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0'>
-                    <div className='flex items-stretch justify-between'>
-                        <p className='text-muted-foreground'>{description}</p>
-                        <div className='inline-flex items-end'>
-                            {link && (
-                                <a
-                                    href={link}
-                                    target='_blank'
-                                    rel='noopener noreferrer'
-                                    className={buttonVariants({
-                                        variant: 'ghost',
-                                        className:
-                                            'hover:bg-transparent !p-0 [&_svg]:size-5 !items-end',
-                                    })}
-                                >
-                                    <ExternalLink className='w-full h-full' />
-                                </a>
-                            )}
-                        </div>
-                    </div>
-                </CollapsibleContent>
-            </div>
-        </Collapsible>
-    );
+          {/* Front */}
+          <div className="absolute inset-0 overflow-hidden rounded-lg bg-secondary [backface-visibility:hidden] [-webkit-backface-visibility:hidden]">
+            {img && (
+              <Image
+                src={img}
+                alt={title}
+                fill
+                className="object-cover select-none"
+                draggable={false}
+              />
+            )}
+            <span className="absolute right-2 top-2 rounded-full bg-background/80 p-1.5 text-muted-foreground">
+              <RotateCw className="size-4" />
+            </span>
+          </div>
+
+          {/* Back */}
+          <div className="absolute inset-0 flex flex-col gap-3 overflow-y-auto rounded-lg bg-muted p-6 text-primary-foreground [backface-visibility:hidden] [-webkit-backface-visibility:hidden] [transform:rotateY(180deg)]">
+            <p className="text-black text-sm">{description}</p>
+            {link && (
+              <a
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="mt-auto inline-flex items-center gap-1 text-sm text-primary-foreground hover:text-primary-foreground/70"
+              >
+                Visit <ExternalLink className="size-4" />
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Title */}
+      <div className="mt-4 flex h-12 w-full items-start justify-between">
+        <h3 className="font-normal">{title}</h3>
+        <span className="text-muted-foreground italic text-right">
+          {category}
+        </span>
+      </div>
+    </div>
+  );
 }
