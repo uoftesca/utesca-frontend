@@ -14,6 +14,7 @@ interface ApiEventResponse {
     imageUrl?: string;
     imagePosition?: string | number;
     albumLink?: string;
+    location?: string | null;
 }
 
 interface ApiEventsResponse {
@@ -68,9 +69,12 @@ export async function fetchEvents() {
             e.registrationFormSchema as RegistrationFormSchema | undefined;
 
         return {
+            id: e.id,
             title: e.title,
             slug: e.slug,
             date: d,
+            dateTime: e.dateTime,
+            location: e.location ?? null,
             description: e.description || '',
             category: e.category || '',
             registrationLink: e.registrationLink,
