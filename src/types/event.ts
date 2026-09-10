@@ -17,9 +17,14 @@ export interface Event {
     readonly imagePosition?: ImagePosition;
     readonly albumLink?: string;
     readonly status: EventStatus;
+
+    readonly id: string;
+    readonly dateTime?: string;
+    readonly location?: string | null;
 }
 
 export interface EventCardProps extends Omit<Event, 'date'> {
     readonly month: string;
     readonly day: string;
+    readonly isExpanded?: boolean;
 }

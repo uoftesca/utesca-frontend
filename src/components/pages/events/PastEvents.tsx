@@ -28,9 +28,8 @@ const PastEvents: React.FC = () => {
                         const { month, day } = formatEventDate(event.date);
                         return (
                             <div
-                                key={`${
-                                    event.title
-                                }-${event.date.toISOString()}`}
+                                key={`${event.title
+                                    }-${event.date.toISOString()}`}
                                 className="w-full md:w-[calc(50%-12px)] max-w-[400px]"
                             >
                                 <EventCard {...event} month={month} day={day} />
