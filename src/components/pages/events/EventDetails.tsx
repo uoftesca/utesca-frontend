@@ -125,7 +125,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({
 
   if (!isLoading && upcomingEvents.length === 0) {
     return (
-      <p className="text-muted-foreground">
+      <p className="w-full text-center text-muted-foreground">
         There are no upcoming events right now - check back soon!
       </p>
     );
