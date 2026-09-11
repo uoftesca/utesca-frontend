@@ -70,6 +70,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({
    * Contains the next 3 upcoming events that will be rendered.
    */
   const [upcomingEvents, setUpcomingEvents] = React.useState<Event[]>([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
     /**
@@ -114,11 +115,21 @@ const EventDetails: React.FC<EventDetailsProps> = ({
         console.error("Failed to load upcoming event previews:", error);
 
         setUpcomingEvents([]);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     loadEvents();
   }, []);
+
+  if (!isLoading && upcomingEvents.length === 0) {
+    return (
+      <p className="text-muted-foreground">
+        There are no upcoming events right now - check back soon!
+      </p>
+    );
+  }
 
   return (
     <div className="w-full space-y-6 text-center">
