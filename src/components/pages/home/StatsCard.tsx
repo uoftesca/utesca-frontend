@@ -15,15 +15,15 @@ const StatsCard: React.FC<StatsCardProps> = ({
     className,
 }) => {
     return (
-        <Card className={`bg-card border-none w-full max-w-sm ${className}`}>
-            <CardContent className='flex flex-col items-center space-y-2 p-6'>
-                <p className='text-center text-lg text-primary font-bold'>
+        <Card className={`bg-card border-none w-full max-w-sm h-full transition duration-200 hover:-translate-y-1 hover:shadow-lg ${className}`}>
+            <CardContent className='flex h-full flex-col items-center justify-center space-y-2 p-6'>
+                <p className='text-center text-xl text-primary font-bold font-heading'>
                     {title}
                 </p>
-                <p className='whitespace-pre-wrap text-6xl font-medium text-black dark:text-white'>
+                <p className='whitespace-pre-wrap text-7xl font-medium text-black dark:text-white font-heading'>
                     <NumberTicker value={num} />
                 </p>
-                <p className='text-card-foreground text-center text-sm'>{text}</p>
+                <p className='text-card-foreground text-center text-lg'>{text}</p>
             </CardContent>
         </Card>
     );

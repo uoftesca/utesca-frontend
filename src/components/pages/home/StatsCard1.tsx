@@ -19,9 +19,9 @@ const StatsCard1: React.FC<StatsCard1Props> = ({
         <Card className={`bg-card border-none w-full max-w-md min-h-64 ${className}`}>
             <CardContent className='flex h-full flex-col items-center justify-center p-10'>
                 {title && (
-                    <p className='text-center text-lg font-bold leading-tight'>{title}</p>
+                    <p className='text-center text-lg font-bold leading-tight font-heading'>{title}</p>
                 )}
-                <p className='text-center text-6xl text-primary font-bold leading-tight'>{num}</p>
+                <p className='text-center text-6xl text-primary font-bold leading-tight font-heading'>{num}</p>
                 <div className='flex flex-col'>
                     {text && (
                         <p className='text-muted-foreground text-center text-base font-medium leading-tight'>{text}</p>

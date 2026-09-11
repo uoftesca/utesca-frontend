@@ -43,7 +43,7 @@ const WhatIsCEP: React.FC = () => {
             />
             <div className="col-span-1 md:col-span-1 h-full w-full flex">
               <SeeMore
-                link="/projects/examples"
+                link="/projects/examples#projects"
                 text="Explore Our Projects"
                 className="flex-1 font-bold"
               />

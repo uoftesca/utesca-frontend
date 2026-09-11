@@ -37,21 +37,22 @@ const NavBar = () => {
 
   const navItems: NavItem[] = [
     { href: "/", label: "Home" },
-    {
-      href: "/about",
-      label: "About Us",
-      children: [
-        { href: "/about/vision-mission", label: "Our Vision & Missions" },
-        { href: "/about/team", label: "Our Team" },
-        // { href: "/about/alumni", label: "Alumni" },
-        { href: "/about/partner", label: "Partner With Us" },
-      ],
-    },
+    // {
+    //   href: "/about",
+    //   label: "About Us",
+    //   children: [
+    //     { href: "/about/vision-mission", label: "Our Vision & Missions" },
+    //     { href: "/about/team", label: "Our Team" },
+    //     // { href: "/about/alumni", label: "Alumni" },
+    //     { href: "/about/partner", label: "Partner With Us" },
+    //   ],
+    // },
+    { href: "/team", label: "Team"},
     {
       href: "/projects",
       label: "Services",
       children: [
-        { href: "/projects/cep", label: "What is CEP" },
+        { href: "/projects/cep", label: "Consulting Engineering Projects" },
         { href: "/projects/examples", label: "Projects" },
       ],
     },
@@ -66,15 +67,15 @@ const NavBar = () => {
         item.children ? (
           <NavigationMenuItem key={item.href} className="relative">
             <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="grid w-56 gap-1 p-2">
+            <NavigationMenuContent className="left-auto right-0">
+              <ul className="grid w-max min-w-[14rem] gap-1 p-2">
                 {item.children.map((child) => (
                   <li key={child.href}>
                     <NavigationMenuLink asChild>
                       <Link
                         href={child.href}
-                        className="block select-none rounded-md px-3 py-2 text-sm font-normal leading-none no-underline outline-none 
-                        transition-colors hover:bg-accent hover:text-primary focus:bg-accent focus:text-primary"
+                        className="block select-none whitespace-nowrap rounded-md px-3 py-2 text-sm font-normal leading-none no-underline outline-none
+                      transition-colors hover:bg-accent hover:text-primary focus:bg-accent focus:text-primary"
                         onClick={() => {
                           onClick();
                           closeMenu();

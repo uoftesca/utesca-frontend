@@ -1,5 +1,7 @@
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
+import Reveal from '@/components/Reveal';
+
 export default function PartnerWithUs() {
     return (
         <div className='w-full text-center space-y-6'>
@@ -19,45 +21,51 @@ export default function PartnerWithUs() {
                 solutions for your needs.
             </p>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-                <Card className='bg-card border-none'>
-                    <CardHeader className='text-left pb-2'>
-                        <CardTitle className='text-base'>
-                            1. Reach Out
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent className='text-left'>
-                        Contact UTESCA through their official channels, such as
-                        their website or social media platforms, expressing
-                        interest in partnership opportunities.
-                    </CardContent>
-                </Card>
+                <Reveal delay={0} className='h-full'>
+                    <Card className='bg-card border-none h-full transition duration-200 hover:-translate-y-1 hover:shadow-lg'>
+                        <CardHeader className='text-left pb-2'>
+                            <CardTitle className='text-base text-center'>
+                                1. Reach Out
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className='text-center'>
+                            Contact UTESCA through their official channels, such
+                            as their website or social media platforms,
+                            expressing interest in partnership opportunities.
+                        </CardContent>
+                    </Card>
+                </Reveal>
 
-                <Card className='bg-card border-none'>
-                    <CardHeader className='text-left pb-2'>
-                        <CardTitle className='text-base'>
-                            2. Discuss Collaboration
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent className='text-left'>
-                        Contact UTESCA through their official channels, such as
-                        their website or social media platforms, expressing
-                        interest in partnership opportunities.
-                    </CardContent>
-                </Card>
+                <Reveal delay={100} className='h-full'>
+                    <Card className='bg-card border-none h-full transition duration-200 hover:-translate-y-1 hover:shadow-lg'>
+                        <CardHeader className='text-left pb-2'>
+                            <CardTitle className='text-base text-center'>
+                                2. Discuss Collaboration
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className='text-center'>
+                            Contact UTESCA through their official channels, such
+                            as their website or social media platforms,
+                            expressing interest in partnership opportunities.
+                        </CardContent>
+                    </Card>
+                </Reveal>
 
-                <Card className='bg-card border-none'>
-                    <CardHeader className='text-left pb-2'>
-                        <CardTitle className='text-base'>
-                            3. Formalize Agreement
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent className='text-left'>
-                        After agreeing on terms and benefits, formalize the
-                        partnership through a signed agreement outlining
-                        expectations, contributions, and benefits for both
-                        parties.
-                    </CardContent>
-                </Card>
+                <Reveal delay={200} className='h-full'>
+                    <Card className='bg-card border-none h-full transition duration-200 hover:-translate-y-1 hover:shadow-lg'>
+                        <CardHeader className='text-left pb-2'>
+                            <CardTitle className='text-base text-center'>
+                                3. Formalize Agreement
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className='text-center'>
+                            After agreeing on terms and benefits, formalize the
+                            partnership through a signed agreement outlining
+                            expectations, contributions, and benefits for both
+                            parties.
+                        </CardContent>
+                    </Card>
+                </Reveal>
             </div>
             <p className='text-base text-muted-foreground'>
                 If you are interested in collaborating with us, please contact
