@@ -4,9 +4,11 @@
 
 @layer base {
   :root {
+    /* --background: oklch(0.881 0.015 2); */
     --background: oklch(0.965 0 0);
     --foreground: oklch(0 0 0);
-    --card: oklch(0.995 0 0);
+    /* --card: oklch(0.965 0 0); */
+    --card: oklch(0.925 0.012 25);
     --card-foreground: oklch(43.9% 0 0);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.145 0 0);

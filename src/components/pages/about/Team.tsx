@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 import { Portfolio } from "./Portfolio";
+import Reveal from "@/components/Reveal";
 
 interface TeamMember {
   imageUrl: string;
@@ -74,6 +76,16 @@ export default function Team() {
 
   return (
     <div className="container">
+      <div className="flex justify-center mb-10">
+        <Image
+          src="/utesca-mascot-cntower.png"
+          alt="UTESCA mascot in front of the CN Tower"
+          width={600}
+          height={600}
+          className="h-auto w-auto max-h-[28rem] object-contain"
+          priority
+        />
+      </div>
       {Object.entries(teamGroups).map(([teamName, members]) => {
         const isLead = (m: TeamMember) => /president|^vp\b/i.test(m.role);
         const leads = members.filter(isLead);
@@ -89,8 +101,8 @@ export default function Team() {
             </h2>
             {leads.length > 0 && (
               <div className="flex flex-wrap justify-center gap-12 mb-8">
-                {leads.map((member) => (
-                  <div key={key(member)} className="w-auto">
+                {leads.map((member, i) => (
+                  <Reveal key={key(member)} className="w-auto" delay={i * 80}>
                     <Portfolio
                       name={member.name}
                       role={member.role}
@@ -98,20 +110,20 @@ export default function Team() {
                       imageUrl={member.imageUrl || ""}
                       size="lg"
                     />
-                  </div>
+                  </Reveal>
                 ))}
               </div>
             )}
-            <div className="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
-              {rest.map((member) => (
-                <div key={key(member)} className="w-auto">
+            <div className="flex flex-wrap justify-center gap-20 max-w-6xl mx-auto">
+              {rest.map((member, i) => (
+                <Reveal key={key(member)} className="w-auto" delay={i * 50}>
                   <Portfolio
                     name={member.name}
                     role={member.role}
                     program={member.program}
                     imageUrl={member.imageUrl || ""}
                   />
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>

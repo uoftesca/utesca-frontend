@@ -9,11 +9,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface UpcomingEventsProps {
     onEventsChange: (hasEvents: boolean) => void;
     selectedDate: Date | undefined;
+    registerSlug?: string | null;
 }
 
 const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
     onEventsChange,
     selectedDate,
+    registerSlug,
 }) => {
     const [events, setEvents] = React.useState<Event[]>([]);
     const [selectedEvents, setSelectedEvents] = React.useState<Event[]>([]);
@@ -44,11 +46,22 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
         }
     }, [selectedDate, events, onEventsChange]);
 
+    const registerEvent = registerSlug
+        ? events.find((event) => event.slug === registerSlug)
+        : undefined;
+
+    const displayEvents = registerEvent
+        ? [
+              registerEvent,
+              ...selectedEvents.filter((e) => e.slug !== registerEvent.slug),
+          ]
+        : selectedEvents;
+
     return (
         <div className='space-y-12'>
 
             <AnimatePresence mode='wait'>
-                {selectedEvents.length > 0 && (
+                {displayEvents.length > 0 && (
                     <motion.div
                         key='events-container'
                         data-selected-events
@@ -58,12 +71,12 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
                         transition={{ duration: 0.3 }}
                     >
                         <div
-                            className={`grid gap-6 ${selectedEvents.length === 1
+                            className={`grid gap-6 ${displayEvents.length === 1
                                 ? 'grid-cols-1 place-items-center'
                                 : 'grid-cols-1 md:grid-cols-2'
                                 }`}
                         >
-                            {selectedEvents.map((event) => {
+                            {displayEvents.map((event) => {
                                 const { month, day } = formatEventDate(
                                     event.date
                                 );
@@ -91,6 +104,9 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
                                             month={month}
                                             day={day}
                                             isExpanded={true}
+                                            autoOpenRegistration={
+                                                event.slug === registerSlug
+                                            }
                                         />
                                     </motion.div>
                                 );

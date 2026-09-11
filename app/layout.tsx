@@ -36,7 +36,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-theme="light"
-      className={`${heading.variable} ${body.variable}`}
+      className={`scroll-smooth ${heading.variable} ${body.variable}`}
     >
       <body className="font-sans antialiased">
         {children}

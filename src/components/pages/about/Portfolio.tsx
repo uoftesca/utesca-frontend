@@ -19,7 +19,7 @@ export function Portfolio({
   const isLg = size == "lg";
   return (
     <Card
-      className={`bg-transparent border-none shadow-none ${
+      className={`bg-transparent border-none shadow-none transition duration-200 hover:-translate-y-1 ${
         isLg ? "w-60" : "w-44"
       }`}
     >
@@ -46,8 +46,8 @@ export function Portfolio({
         </Avatar>
         <div className="text-center w-full">
           <p
-            className={`font-semibold text-muted-foreground ${
-              isLg ? "text-base" : "text-sm"
+            className={`font-semibold text-muted-foreground font-heading ${
+              isLg ? "text-xl" : "text-md"
             }`}
           >
             {name}

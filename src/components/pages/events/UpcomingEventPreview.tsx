@@ -1,3 +1,6 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
 import { Card } from '@/components/ui/card';
 
 interface UpcomingEventPreviewProps {
@@ -5,7 +8,8 @@ interface UpcomingEventPreviewProps {
     month: string;
     day: string;
     date: Date;
-    onDateSelect: (date: Date) => void;
+    href?: string;
+    onDateSelect?: (date: Date) => void;
 }
 
 export default function UpcomingEventPreview({
@@ -13,27 +17,37 @@ export default function UpcomingEventPreview({
     month,
     day,
     date,
+    href,
     onDateSelect,
 }: UpcomingEventPreviewProps) {
+  const router = useRouter();
+
+    const handleClick = () => {
+        if (href) {
+            router.push(href);
+        } else {
+            onDateSelect?.(date);
+        }
+    };
     return (
         <Card
-            className='relative w-[500px] max-w-full h-32 rounded-lg bg-secondary overflow-hidden p-6 mx-auto border-none cursor-pointer hover:bg-secondary/80 transition-colors'
-            onClick={() => onDateSelect(date)}
+            className='relative w-full max-w-[500px] h-32 rounded-lg bg-secondary overflow-hidden p-6 mx-auto border-none cursor-pointer hover:bg-secondary/80 transition-colors'
+            onClick={handleClick}
         >
             <div className='flex flex-row items-center w-full h-full'>
 
                 <div className='flex flex-col items-center justify-center w-24 flex-shrink-0'>
-                    <div className='text-2xl font-bold text-black'>
+                    <div className='text-3xl font-bold text-black font-heading'>
                         {month}
                     </div>
 
-                    <div className='text-4xl text-black'>
+                    <div className='text-4xl text-black font-heading'>
                         {day}
                     </div>
                 </div>
 
                 <div className='flex-1 flex items-center justify-center px-6'>
-                    <div className='text-lg font-medium text-center text-primary'>
+                    <div className='text-xl font-medium text-center text-primary font-heading'>
                         {title}
                     </div>
                 </div>

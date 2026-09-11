@@ -22,11 +22,11 @@ const SingleEventCard: React.FC<SingleEventCardProps> = ({
                     <p className='text-muted-foreground text-center text-lg'>
                         {month}
                     </p>
-                    <p className='whitespace-pre-wrap text-6xl font-medium text-black dark:text-white'>
+                    <p className='whitespace-pre-wrap text-6xl font-medium text-black dark:text-white font-heading'>
                         {date}
                     </p>
                 </div>
-                <p className='text-center text-lg text-primary font-bold'>{name}</p>
+                <p className='text-center text-lg text-primary font-bold font-heading'>{name}</p>
                 <p className='text-muted-foreground text-center text-sm'>{description}</p>
             </CardContent>
         </Card>
