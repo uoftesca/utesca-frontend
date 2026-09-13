@@ -290,7 +290,7 @@ export default function EventCard({
                     </div>
                   )}
 
-                  {/* REGISTRATION */}
+                  {/* ACTUAL REGISTRATION */}
                   {/* {status === "upcoming" && (
                     <div>
                       {hasInternalRegistration ? (
@@ -319,6 +319,34 @@ export default function EventCard({
                       )}
                     </div>
                   )} */}
+
+                  {/* Temp. Registration Button */}
+                  {status === "upcoming" && (
+                    <div>
+                      {hasInternalRegistration ? (
+                        <Button
+                          type="button"
+                        >
+                          {showRegistration ? "CLOSE REGISTRATION" : "REGISTER"}
+                        </Button>
+                      ) : hasExternalRegistration ? (
+                        <Button asChild>
+                          <a
+                            href={registrationLink!}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            REGISTER
+                          </a>
+                        </Button>
+                      ) : (
+                        <p className="text-lg font-bold text-muted-foreground">
+                          Registration is closed.
+                        </p>
+                      )}
+                    </div>
+                  )}
+
                 </div>
               </CollapsibleContent>
             </div>
