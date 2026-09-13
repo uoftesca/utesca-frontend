@@ -50,9 +50,9 @@ export default function EventCard({
     );
 
     React.useEffect(() => {
+        setShowRegistration(autoOpenRegistration);
         if (autoOpenRegistration) {
             setIsOpen(true);
-            setShowRegistration(true);
         }
     }, [autoOpenRegistration]);
 
@@ -291,7 +291,7 @@ export default function EventCard({
                   )}
 
                   {/* REGISTRATION */}
-                  {status === "upcoming" && (
+                  {/* {status === "upcoming" && (
                     <div>
                       {hasInternalRegistration ? (
                         <Button
@@ -318,7 +318,7 @@ export default function EventCard({
                         </p>
                       )}
                     </div>
-                  )}
+                  )} */}
                 </div>
               </CollapsibleContent>
             </div>
@@ -326,7 +326,7 @@ export default function EventCard({
         </div>
 
         {/* REGISTRATION FORM */}
-        {showRegistration && hasInternalRegistration && slug && id && (
+        {/* {showRegistration && hasInternalRegistration && slug && id && (
           <div className="w-[600px] min-w-[600px] flex-none">
             <EventRegistrationForm
               event={{
@@ -340,7 +340,7 @@ export default function EventCard({
               onClose={() => setShowRegistration(false)}
             />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

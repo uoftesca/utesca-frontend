@@ -78,10 +78,10 @@ export default function Team() {
     <div className="container">
       <div className="flex justify-center mb-10">
         <Image
-          src="/utesca-mascot-cntower.png"
+          src="/utesca-mascot-team.png"
           alt="UTESCA mascot in front of the CN Tower"
-          width={600}
-          height={600}
+          width={629}
+          height={950}
           className="h-auto w-auto max-h-[28rem] object-contain"
           priority
         />
