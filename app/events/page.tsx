@@ -13,11 +13,16 @@ import PastEvents from '@/components/pages/events/PastEvents';
 
 function EventsContent() {
     const searchParams = useSearchParams();
-    const registerSlug = searchParams.get('register');
 
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(
         new Date()
     );
+    const [registerSlug, setRegisterSlug] = useState<string | null>(null);
+
+    // Pick up a `?register=<slug>` deep link (e.g. from the home page).
+    useEffect(() => {
+        setRegisterSlug(searchParams.get('register'));
+    }, [searchParams]);
 
     const scrollToSelectedEvents = () => {
         const eventContainer = document.querySelector(
@@ -35,6 +40,10 @@ function EventsContent() {
     const handleDateSelect = (date: Date) => {
         const newDate = new Date(date);
         setSelectedDate(newDate);
+
+        // Picking a different event/date on the page overrides any
+        // registration form that was auto-opened via a `?register=` deep link.
+        setRegisterSlug(null);
 
         // Wait for the selected EventCard to render
         setTimeout(scrollToSelectedEvents, 0);
