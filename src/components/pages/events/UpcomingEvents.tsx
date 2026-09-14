@@ -104,9 +104,9 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
                                             month={month}
                                             day={day}
                                             isExpanded={true}
-                                            autoOpenRegistration={
-                                                event.slug === registerSlug
-                                            }
+                                            // autoOpenRegistration={
+                                            //     event.slug === registerSlug
+                                            // }
                                         />
                                     </motion.div>
                                 );
