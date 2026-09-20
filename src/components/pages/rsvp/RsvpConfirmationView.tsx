@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRsvpConfirmation } from '@/hooks/useRsvpConfirmation';
 import { RsvpDetailsResponse } from '@/types/registration';
 import { Check, X, Calendar, MapPin, Clock, AlertTriangle } from 'lucide-react';
@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 interface RsvpConfirmationViewProps {
     initialData: RsvpDetailsResponse;
     registrationId: string;
+    token: string;
 }
 
 // Format date helper following SRP
@@ -101,19 +102,15 @@ function EventDetailsCard({ event }: Readonly<{ event: RsvpDetailsResponse['even
 function PendingRsvpState({
     event,
     canConfirm,
-    canDecline,
     eventHasPassed,
     loading,
     onConfirm,
-    onDecline,
 }: Readonly<{
     event: RsvpDetailsResponse['event'];
     canConfirm: boolean;
-    canDecline: boolean;
     eventHasPassed: boolean;
     loading: boolean;
     onConfirm: () => void;
-    onDecline: () => void;
 }>) {
     return (
         <motion.div
@@ -161,15 +158,6 @@ function PendingRsvpState({
                     {loading ? 'Confirming...' : 'Count me in!'}
                 </Button>
 
-                {canDecline && !eventHasPassed && (
-                    <button
-                        onClick={onDecline}
-                        disabled={loading}
-                        className="text-sm text-muted hover:text-white transition-colors underline underline-offset-4"
-                    >
-                        I won't be able to make it.
-                    </button>
-                )}
             </motion.div>
         </motion.div>
     );
@@ -178,16 +166,8 @@ function PendingRsvpState({
 // Confirmed State Component - Open/Closed Principle
 function ConfirmedRsvpState({
     event,
-    canDecline,
-    eventHasPassed,
-    loading,
-    onDecline,
 }: Readonly<{
     event: RsvpDetailsResponse['event'];
-    canDecline: boolean;
-    eventHasPassed: boolean;
-    loading: boolean;
-    onDecline: () => void;
 }>) {
     const formattedDate = formatEventDate(event.dateTime);
 
@@ -223,17 +203,6 @@ function ConfirmedRsvpState({
                 </div>
             )}
 
-            {canDecline && !eventHasPassed && (
-                <div className="mt-8">
-                    <button
-                        onClick={onDecline}
-                        disabled={loading}
-                        className="text-sm text-muted hover:text-destructive transition-colors underline underline-offset-4"
-                    >
-                        Unable to make it? Click here to decline.
-                    </button>
-                </div>
-            )}
         </motion.div>
     );
 }
@@ -280,91 +249,19 @@ function DeclinedRsvpState() {
     );
 }
 
-// Decline Warning Modal Component
-function DeclineWarningModal({
-    open,
-    onClose,
-    onConfirm,
-    eventTitle,
-    loading,
-}: Readonly<{
-    open: boolean;
-    onClose: () => void;
-    onConfirm: () => void;
-    eventTitle: string;
-    loading: boolean;
-}>) {
-    return (
-        <AnimatePresence>
-            {open && (
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="fixed inset-0 bg-black/5`0 backdrop-blur-sm z-50 flex items-center justify-center p-6"
-                    onClick={onClose}
-                >
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="bg-card border border-border rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <div className="flex items-center gap-3 mb-4">
-                            <h3 className="text-xl font-bold">Are you sure?</h3>
-                        </div>
-
-                        <p className="text-muted-foreground mb-2">
-                            Are you sure you want to decline attendance for{' '}
-                            <strong className="text-foreground">{eventTitle}</strong>?
-                        </p>
-
-                        <p className="text-sm text-destructive font-medium mb-6">
-                            This action is final and cannot be undone. You won't be able to
-                            change your response later.
-                        </p>
-
-                        <div className="flex flex-col sm:flex-row gap-3">
-                            <Button
-                                variant="secondary"
-                                className="flex-1"
-                                onClick={onClose}
-                                disabled={loading}
-                            >
-                                Go back
-                            </Button>
-                            <Button
-                                variant="destructive"
-                                className="flex-1"
-                                onClick={onConfirm}
-                                disabled={loading}
-                            >
-                                {loading ? 'Declining...' : 'Yes, decline'}
-                            </Button>
-                        </div>
-                    </motion.div>
-                </motion.div>
-            )}
-        </AnimatePresence>
-    );
-}
-
 // Main Component
 export function RsvpConfirmationView({
     initialData,
     registrationId,
+    token,
 }: Readonly<RsvpConfirmationViewProps>) {
-    const [showDeclineWarning, setShowDeclineWarning] = useState(false);
-
     const {
         rsvpData,
         loading,
         error,
         confirmAttendance,
-        declineAttendance,
         clearError,
-    } = useRsvpConfirmation(registrationId, initialData);
+    } = useRsvpConfirmation(registrationId, initialData, token);
 
     // Handle errors with toast notifications
     useEffect(() => {
@@ -373,13 +270,6 @@ export function RsvpConfirmationView({
             clearError();
         }
     }, [error, clearError]);
-
-    const handleDeclineClick = () => setShowDeclineWarning(true);
-
-    const handleConfirmDecline = async () => {
-        await declineAttendance();
-        setShowDeclineWarning(false);
-    };
 
     return (
         <div className="min-h-screen bg-[var(--rsvp-navy)] grid-pattern relative overflow-hidden">
@@ -410,35 +300,20 @@ export function RsvpConfirmationView({
                         <PendingRsvpState
                             event={rsvpData.event}
                             canConfirm={rsvpData.canConfirm}
-                            canDecline={rsvpData.canDecline}
                             eventHasPassed={rsvpData.eventHasPassed}
                             loading={loading}
                             onConfirm={confirmAttendance}
-                            onDecline={handleDeclineClick}
                         />
                     )}
 
                     {rsvpData.currentStatus === 'confirmed' && (
                         <ConfirmedRsvpState
                             event={rsvpData.event}
-                            canDecline={rsvpData.canDecline}
-                            eventHasPassed={rsvpData.eventHasPassed}
-                            loading={loading}
-                            onDecline={handleDeclineClick}
                         />
                     )}
 
                     {rsvpData.currentStatus === 'not_attending' && <DeclinedRsvpState />}
                 </AnimatePresence>
-
-                {/* Decline Warning Modal */}
-                <DeclineWarningModal
-                    open={showDeclineWarning}
-                    onClose={() => setShowDeclineWarning(false)}
-                    onConfirm={handleConfirmDecline}
-                    eventTitle={rsvpData.event.title}
-                    loading={loading}
-                />
             </div>
         </div>
     );

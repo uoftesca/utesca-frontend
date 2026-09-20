@@ -61,6 +61,25 @@ export interface RegistrationSubmitResponse {
     message: string;
 }
 
+export interface RegistrationSummary {
+    id: string;
+    status: string;
+    email?: string | null;
+    submittedAt?: string;
+    confirmedAt?: string | null;
+}
+
+export interface ManagementSessionResponse {
+    success: boolean;
+    registration: RegistrationSummary;
+}
+
+export interface ManagementActionResponse {
+    success: boolean;
+    status: string;
+    message: string;
+}
+
 export interface PublicEventDetail {
     id: string;
     slug: string;
@@ -110,6 +129,7 @@ export interface RsvpConfirmResponse {
 
 export interface RsvpDeclineResponse {
     success: boolean;
+    status: RsvpStatus;
     message: string;
     final: boolean;
 }

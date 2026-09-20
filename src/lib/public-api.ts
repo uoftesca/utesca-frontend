@@ -2,6 +2,8 @@ import {
     PublicEventDetail,
     RegistrationSubmitRequest,
     RegistrationSubmitResponse,
+    ManagementActionResponse,
+    ManagementSessionResponse,
     RsvpConfirmResponse,
     RsvpDeclineResponse,
     RsvpDetailsResponse,
@@ -54,6 +56,7 @@ async function publicRequest<T>(
             'Content-Type': 'application/json',
             ...options.headers,
         },
+        credentials: 'include',
         cache: 'no-store',
     });
 
@@ -119,11 +122,36 @@ export const publicApi = {
         return publicRequest<RsvpDetailsResponse>(`/rsvp/${registrationId}`);
     },
 
-    async confirmRsvp(registrationId: string): Promise<RsvpConfirmResponse> {
+    async verifyRegistration(registrationId: string, token: string) {
+        return publicRequest<{ success: boolean; status: string }>(
+            `/registrations/${registrationId}/verify`,
+            { method: 'POST', body: JSON.stringify({ token }) }
+        );
+    },
+
+    async createManagementSession(
+        registrationId: string,
+        token: string
+    ): Promise<ManagementSessionResponse> {
+        return publicRequest<ManagementSessionResponse>(
+            `/registrations/${registrationId}/management-session`,
+            { method: 'POST', body: JSON.stringify({ token }) }
+        );
+    },
+
+    async withdrawRegistration(registrationId: string): Promise<ManagementActionResponse> {
+        return publicRequest<ManagementActionResponse>(
+            `/registrations/${registrationId}/withdraw`,
+            { method: 'POST' }
+        );
+    },
+
+    async confirmRsvp(registrationId: string, token: string): Promise<RsvpConfirmResponse> {
         return publicRequest<RsvpConfirmResponse>(
             `/rsvp/${registrationId}/confirm`,
             {
                 method: 'POST',
+                body: JSON.stringify({ token }),
             }
         );
     },
