@@ -2,6 +2,8 @@ import {
     PublicEventDetail,
     RegistrationSubmitRequest,
     RegistrationSubmitResponse,
+    ManagementActionResponse,
+    ManagementSessionResponse,
     RsvpConfirmResponse,
     RsvpDeclineResponse,
     RsvpDetailsResponse,
@@ -11,7 +13,7 @@ import {
 } from '@/types/registration';
 
 const API_BASE_URL =
-    process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api/v1';
+    process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
 
 type ApiEventResponse = {
     id: string;
@@ -54,6 +56,7 @@ async function publicRequest<T>(
             'Content-Type': 'application/json',
             ...options.headers,
         },
+        credentials: 'include',
         cache: 'no-store',
     });
 
@@ -119,11 +122,36 @@ export const publicApi = {
         return publicRequest<RsvpDetailsResponse>(`/rsvp/${registrationId}`);
     },
 
-    async confirmRsvp(registrationId: string): Promise<RsvpConfirmResponse> {
+    async verifyRegistration(registrationId: string, token: string) {
+        return publicRequest<{ success: boolean; status: string }>(
+            `/registrations/${registrationId}/verify`,
+            { method: 'POST', body: JSON.stringify({ token }) }
+        );
+    },
+
+    async createManagementSession(
+        registrationId: string,
+        token: string
+    ): Promise<ManagementSessionResponse> {
+        return publicRequest<ManagementSessionResponse>(
+            `/registrations/${registrationId}/management-session`,
+            { method: 'POST', body: JSON.stringify({ token }) }
+        );
+    },
+
+    async withdrawRegistration(registrationId: string): Promise<ManagementActionResponse> {
+        return publicRequest<ManagementActionResponse>(
+            `/registrations/${registrationId}/withdraw`,
+            { method: 'POST' }
+        );
+    },
+
+    async confirmRsvp(registrationId: string, token: string): Promise<RsvpConfirmResponse> {
         return publicRequest<RsvpConfirmResponse>(
             `/rsvp/${registrationId}/confirm`,
             {
                 method: 'POST',
+                body: JSON.stringify({ token }),
             }
         );
     },
