@@ -502,7 +502,7 @@ export default function EventCard({
               href={albumLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="block relative w-full h-56 rounded-lg bg-secondary cursor-pointer overflow-hidden"
+              className="block relative w-full h-56 rounded-lg bg-card cursor-pointer overflow-hidden"
             >
               {image ? (
                 <Image
@@ -514,7 +514,7 @@ export default function EventCard({
                   draggable={false}
                 />
               ) : (
-                <div className="flex items-center justify-center w-full h-full bg-card">
+                <div className="flex items-center justify-center w-full h-full">
                   <div className="text-center">
                     <div className="text-4xl font-bold font-heading">
                       {month}
@@ -525,7 +525,7 @@ export default function EventCard({
               )}
             </a>
           ) : (
-            <div className="relative w-full h-56 rounded-lg bg-secondary overflow-hidden">
+            <div className="relative w-full h-56 rounded-lg bg-card overflow-hidden">
               {image ? (
                 <Image
                   src={image}
@@ -536,7 +536,7 @@ export default function EventCard({
                   draggable={false}
                 />
               ) : (
-                <div className="flex items-center justify-center w-full h-full bg-card">
+                <div className="flex items-center justify-center w-full h-full">
                   <div className="text-center">
                     <div className="text-4xl font-bold font-heading">
                       {month}
