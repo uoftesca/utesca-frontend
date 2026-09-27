@@ -31,7 +31,7 @@ export default function UpcomingEventPreview({
     };
     return (
         <Card
-            className='relative w-full max-w-[500px] h-32 rounded-lg bg-secondary overflow-hidden p-6 mx-auto border-none cursor-pointer hover:bg-secondary/80 transition-colors'
+            className='relative w-full max-w-[500px] h-32 rounded-lg bg-card overflow-hidden p-6 mx-auto border-none cursor-pointer hover:bg-card/80 transition-colors'
             onClick={handleClick}
         >
             <div className='flex flex-row items-center w-full h-full'>
