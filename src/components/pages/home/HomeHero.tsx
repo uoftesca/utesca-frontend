@@ -1,25 +1,8 @@
 import Image from "next/image";
 
-/**
- * Home-page-only hero. Deliberately NOT the shared `Hero` component used by
- * every other page (/events, /team, /projects/*) — those keep the original
- * skyline banner with the full club name. This one is the same background
- * treatment, just taller and with "UTESCA" big, bold, and centered.
- *
- * Uses the same `sticky top-0` + `overflow-hidden` mechanic as the
- * <Scroll> sections further down the page (see Scroll.tsx): no scroll-
- * linked JS at all — it just sticks to the top of the viewport, and
- * UpcomingEventFeature, being a normal-flow section right after it in the
- * DOM, naturally scrolls up and paints over it as the page scrolls.
- *
- * The outer div (sized to match the section's own height) is required —
- * a sticky element's "stuck" range is bounded by its *parent's* box, and
- * without this wrapper the parent is <main>, which spans the whole page.
- * That left this hero pinned at top:0 for the entire scroll, only ever
- * hidden by whatever opaque section happened to be painting over it —
- * and visible again at the very bottom of the page, once that coverage
- * ran out.
- */
+// Home-only hero (not the shared Hero component other pages use).
+// Wrapper div matches the section's height so its sticky range stays
+// bounded to itself, not the whole page.
 export default function HomeHero() {
   return (
     <div className="relative h-[320px] md:h-[520px]">

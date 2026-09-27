@@ -15,24 +15,7 @@ const FAST_FACTS = [
   { num: "15", label: "Disciplines Engaged" },
 ];
 
-/**
- * Home-page-only "UTESCA at a Glance" section. Dark red section (bg-
- * primary), white text.
- *
- * "UTESCA At A Glance" sits up top, "Meet Our Mascot" sits at the bottom
- * — both always in the DOM. A single wide diagonal rectangle (no stats on
- * it for now, just a solid lighter-red band, same shape as the earlier
- * "spans the whole section" divider) starts positioned over the bottom
- * (covering the mascot, so only the glance content reads as visible), and
- * as the user scrolls through this pinned section (sticky, with extra
- * scroll room via the h-[200vh] wrapper below) it slides upward to cover
- * the glance content instead — unveiling the mascot underneath as it
- * departs.
- *
- * Can't preview this, so the band's start/end vertical position is a
- * first pass — nudge the top-percentage keyframes if it doesn't fully
- * clear the mascot at rest, or fully cover the glance text by the end.
- */
+// Sliding diagonal band: starts over the mascot, ends over the glance text.
 export default function AtAGlance() {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -41,22 +24,15 @@ export default function AtAGlance() {
     offset: ["start start", "end end"],
   });
 
-  // 0: band sits low, over the mascot. 1: band has slid up, over the
-  // glance text instead.
   const bandTop = useTransform(scrollYProgress, [0, 1], ["78%", "18%"]);
 
-  // Glance fades out and mascot fades in on non-overlapping ranges, so
-  // only one of the two is ever visible at a time — neither relies purely
-  // on the band's rotated shape lining up pixel-perfect with their actual
-  // (rectangular) bounds.
+  // Only one of glance/mascot visible at a time.
   const glanceOpacity = useTransform(scrollYProgress, [0.3, 0.5], [1, 0]);
   const mascotOpacity = useTransform(scrollYProgress, [0.5, 0.7], [0, 1]);
 
   return (
     <div ref={wrapperRef} className="relative h-[200vh]">
       <section className="sticky top-0 flex min-h-screen w-full flex-col justify-between gap-12 overflow-hidden bg-primary px-6 py-16 text-primary-foreground md:px-12 lg:px-20">
-        {/* UTESCA At A Glance — top, fades out as the band arrives to
-            cover it */}
         <motion.div style={{ opacity: glanceOpacity }} className="relative z-0">
           <Reveal className="max-w-3xl text-left">
             <h2 className="text-7xl font-black leading-[0.9] tracking-tight md:text-9xl">
@@ -77,8 +53,6 @@ export default function AtAGlance() {
           </Reveal>
         </motion.div>
 
-        {/* Meet Our Mascot — bottom, hidden until the band has cleared it.
-            Mascot image on the left, heading + traits on the right. */}
         <motion.div
           style={{ opacity: mascotOpacity }}
           className="relative z-0 mb-4 ml-auto flex items-center gap-8 md:mb-8 md:gap-12"
@@ -114,10 +88,6 @@ export default function AtAGlance() {
           </div>
         </motion.div>
 
-        {/* Diagonal band — slides from covering the mascot up to covering
-            the glance text as the user scrolls. The stats live inside it
-            (not counter-rotated), so they're angled the same as the band
-            and move together with it as one unit. */}
         <motion.div
           style={{ top: bandTop }}
           className="absolute left-1/2 z-20 flex h-80 w-[140%] -translate-x-1/2 -translate-y-1/2 -rotate-[35deg] items-center justify-center rounded-2xl bg-[#d24e40] shadow-2xl md:h-96"

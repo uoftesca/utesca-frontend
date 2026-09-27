@@ -35,21 +35,7 @@ function formatTime(dateTime?: string) {
   }).format(parsed);
 }
 
-/**
- * Home-page-only "next event" announcement panel. Light pink background
- * (bg-secondary — already the site's "light maroon/pink" token, see
- * Scroll.tsx).
- *
- * Accepts an optional `overlay` (the diagonal scroll-linked wipe from
- * EventsShowcase.tsx) rendered as the last child of this section, which
- * already has `overflow-hidden` — so the overlay is physically confined to
- * this panel's own box and can never bleed into PastEventsShowcase.
- *
- * Uses a plain <img>, not next/image, for the event photo — the URL comes
- * from the backend and its host isn't necessarily in next.config.js's
- * remotePatterns allowlist, which makes next/image throw a hard render
- * error (not just a broken image) for unlisted hosts.
- */
+// `overlay` is the scroll wipe from EventsShowcase.tsx.
 export default function UpcomingEventFeature({
   overlay,
 }: {

@@ -12,27 +12,11 @@ import type { Event } from "@/types/event";
 
 const VISIBLE_COUNT = 3;
 
-/**
- * Home-page-only black-background showcase of past events. Sits directly
- * beneath UpcomingEventFeature — the diagonal wipe in EventsShowcase merges
- * the two together as the user scrolls. Shows the first 3 events with an
- * arrow through to the full events page for more.
- *
- * Doesn't require an event to have a photo — most events in the current
- * dataset don't have one yet, so gating on `image` left this section
- * looking empty. Events without a photo fall back to a month/day tile
- * (same convention EventCard.tsx uses).
- *
- * Uses a plain <img>, not next/image, for event photos — see the note in
- * UpcomingEventFeature.tsx for why.
- */
+// Falls back to a month/day tile when an event has no photo yet.
 export default function PastEventsShowcase() {
   const [events, setEvents] = useState<Event[]>([]);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Parallax: as this section scrolls through the viewport, shift the
-  // photo upward within its frame so more of its top portion comes into
-  // view the further down you scroll, instead of it sitting static.
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
