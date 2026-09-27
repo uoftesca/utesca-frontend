@@ -514,7 +514,7 @@ export default function EventCard({
                   draggable={false}
                 />
               ) : (
-                <div className="flex items-center justify-center w-full h-full">
+                <div className="flex items-center justify-center w-full h-full bg-card">
                   <div className="text-center">
                     <div className="text-4xl font-bold font-heading">
                       {month}
@@ -536,7 +536,7 @@ export default function EventCard({
                   draggable={false}
                 />
               ) : (
-                <div className="flex items-center justify-center w-full h-full">
+                <div className="flex items-center justify-center w-full h-full bg-card">
                   <div className="text-center">
                     <div className="text-4xl font-bold font-heading">
                       {month}
