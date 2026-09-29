@@ -1,16 +1,12 @@
 "use client";
 
-import Container from "@/components/Container";
 import Footer from "@/components/Footer";
 import HomeHero from "@/components/pages/home/HomeHero";
 import NavBar from "@/components/NavBar";
 import AtAGlance from "@/components/pages/home/AtAGlance";
 import { PartneredWith } from "@/components/pages/home/PartneredWith";
-import JoinUTESCA from "@/components/pages/home/JoinUTESCA";
-import VisionAndMission from "@/components/pages/about/VisionAndMission";
 import PartnerWithUs from "@/components/pages/home/PartnerWithUs";
 import OurReach from "@/components/pages/home/OurReach";
-import Scroll from "@/components/Scroll";
 import EventsShowcase from "@/components/pages/home/EventsShowcase";
 
 export default function Home() {
@@ -31,11 +27,6 @@ export default function Home() {
         </section>
 
         <OurReach />
-
-        <div>
-          <Scroll><VisionAndMission /></Scroll>
-          <Scroll><JoinUTESCA /></Scroll>
-        </div>
       </main>
       <Footer />
     </>
