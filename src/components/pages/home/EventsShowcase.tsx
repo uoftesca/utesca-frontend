@@ -6,9 +6,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import UpcomingEventFeature from "./UpcomingEventFeature";
 import PastEventsShowcase from "./PastEventsShowcase";
 
-// Diagonal wipe merges the pink panel into the black one on scroll.
-// Overlay lives inside UpcomingEventFeature's overflow-hidden box so it
-// can't bleed into PastEventsShowcase.
+// Overlay lives inside UpcomingEventFeature so it can't bleed into PastEventsShowcase.
 export default function EventsShowcase() {
   const wrapperRef = useRef<HTMLDivElement>(null);
 

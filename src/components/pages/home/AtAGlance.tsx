@@ -26,7 +26,6 @@ export default function AtAGlance() {
 
   const bandTop = useTransform(scrollYProgress, [0, 1], ["78%", "18%"]);
 
-  // Only one of glance/mascot visible at a time.
   const glanceOpacity = useTransform(scrollYProgress, [0.3, 0.5], [1, 0]);
   const mascotOpacity = useTransform(scrollYProgress, [0.5, 0.7], [0, 1]);
 
@@ -34,7 +33,7 @@ export default function AtAGlance() {
     <div ref={wrapperRef} className="relative h-[200vh]">
       <section className="sticky top-0 flex min-h-screen w-full flex-col justify-between gap-12 overflow-hidden bg-primary px-6 py-16 text-primary-foreground md:px-12 lg:px-20">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black to-transparent md:h-40" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/40 to-transparent md:h-40" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#77302d] to-transparent md:h-40" />
 
         <motion.div style={{ opacity: glanceOpacity }} className="relative z-0">
           <Reveal className="max-w-3xl text-left">

@@ -12,7 +12,6 @@ import type { Event } from "@/types/event";
 
 const VISIBLE_COUNT = 3;
 
-// Falls back to a month/day tile when an event has no photo yet.
 export default function PastEventsShowcase() {
   const [events, setEvents] = useState<Event[]>([]);
   const sectionRef = useRef<HTMLElement>(null);
@@ -49,14 +48,6 @@ export default function PastEventsShowcase() {
       ref={sectionRef}
       className="relative flex min-h-[90vh] w-full flex-col justify-start overflow-hidden bg-black px-6 pb-20 pt-12 md:px-12 lg:px-20"
     >
-      {/* Full-bleed background photo — inset-0 so it reaches the very top
-          of the section too (visible as soon as you scroll up into this
-          section from the diagonal wipe above). A controlled gradient
-          scrim sits on top for text legibility, rather than relying on
-          the source image's own fade, which didn't line up cleanly with
-          where the header/content actually sit. The photo itself parallax-
-          shifts upward on scroll, so more of it shows near the top of the
-          section the further down you scroll. */}
       <div className="absolute inset-0">
         <motion.div
           style={{ y: imageY }}

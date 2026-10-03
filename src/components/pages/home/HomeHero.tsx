@@ -1,8 +1,6 @@
 import Image from "next/image";
 
-// Home-only hero (not the shared Hero component other pages use).
-// Wrapper div matches the section's height so its sticky range stays
-// bounded to itself, not the whole page.
+// Wrapper div matches the section's height so the sticky range stays bounded to itself.
 export default function HomeHero() {
   return (
     <div className="relative h-[320px] md:h-[520px]">
