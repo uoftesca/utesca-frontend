@@ -150,13 +150,13 @@ export default function UpcomingEventFeature({
 
                 <div className="flex flex-wrap gap-4 pt-2">
                   {nextEvent && (
-                    <Button asChild size="lg">
+                    <Button asChild size="xl">
                       <Link href={`/events?register=${nextEvent.slug}`}>
                         RSVP Now
                       </Link>
                     </Button>
                   )}
-                  <Button asChild size="lg" variant="outline">
+                  <Button asChild size="xl" variant="outline">
                     <Link href="/events">View All Events</Link>
                   </Button>
                 </div>
