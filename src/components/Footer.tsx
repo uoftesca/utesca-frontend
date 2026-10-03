@@ -10,19 +10,19 @@ const socialLinks = {
 
 export default function Footer() {
   return (
-    <footer className="bg-sidebar text-sidebar-foreground">
+    <footer className="bg-primary text-primary-foreground">
       <div className="container mx-auto px-8 py-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-8 md:flex-row md:items-start md:justify-between">
           {/* First column */}
           <div className="space-y-4">
-            <h2 className="max-w-sm text-xl font-bold">
+            <h2 className="max-w-sm text-2xl font-black md:text-3xl">
               University of Toronto Engineering Student Consulting Association
             </h2>
-            <p className="flex items-center gap-2 text-sm text-sidebar-foreground/80">
+            <p className="flex items-center gap-2 text-base text-primary-foreground/80">
               <Mail className="h-4 w-4" />
               uoft.esca@gmail.com
             </p>
-            <p className="flex items-center gap-2 text-sm text-sidebar-foreground/80">
+            <p className="flex items-center gap-2 text-base text-primary-foreground/80">
               <Globe className="h-4 w-4" />
               www.utesca.ca
             </p>
@@ -31,8 +31,8 @@ export default function Footer() {
           <div className="flex gap-10 md:gap-24">
             {/* Second Column */}
             <div>
-              <h3 className="mb-4 text-lg font-semibold">Explore</h3>
-              <ul className="space-y-2 text-sm">
+              <h3 className="mb-4 text-xl font-black md:text-2xl">Explore</h3>
+              <ul className="space-y-2 text-base">
                 <li>
                   <Link href="/" className="hover:underline">
                     Home
@@ -58,7 +58,7 @@ export default function Footer() {
 
             {/* Third Column */}
             <div>
-              <h3 className="mb-4 text-lg font-semibold">Connect</h3>
+              <h3 className="mb-4 text-xl font-black md:text-2xl">Connect</h3>
               <div className="flex space-x-4">
                 <Link
                   href={socialLinks.instagram}
@@ -89,7 +89,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="mx-auto mt-8 max-w-5xl border-t border-primary-foreground/10 pt-8 text-center text-sm">
+        <div className="mx-auto mt-8 max-w-5xl border-t border-primary-foreground/10 pt-8 text-center text-base">
           <p>
             &copy; {new Date().getFullYear()} University of Toronto Engineering
             Student Consulting Association. All rights reserved.
