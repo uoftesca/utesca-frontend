@@ -2,7 +2,7 @@
 
 import Container from "@/components/Container";
 import Footer from "@/components/Footer";
-import Hero from "@/components/Hero";
+import HomeHero from "@/components/pages/home/HomeHero";
 import NavBar from "@/components/NavBar";
 import WhatDoesUTESCADo from "@/components/pages/home/WhatDoesUTESCADo";
 import { PartneredWith } from "@/components/pages/home/PartneredWith";
@@ -19,7 +19,7 @@ export default function Home() {
     <>
       <NavBar />
       <main>
-        <Hero />
+        <HomeHero />
 
         <div>
           <Scroll>
