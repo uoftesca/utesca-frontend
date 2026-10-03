@@ -34,6 +34,7 @@ export default function AtAGlance() {
     <div ref={wrapperRef} className="relative h-[200vh]">
       <section className="sticky top-0 flex min-h-screen w-full flex-col justify-between gap-12 overflow-hidden bg-primary px-6 py-16 text-primary-foreground md:px-12 lg:px-20">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black to-transparent md:h-40" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/40 to-transparent md:h-40" />
 
         <motion.div style={{ opacity: glanceOpacity }} className="relative z-0">
           <Reveal className="max-w-3xl text-left">
@@ -94,10 +95,10 @@ export default function AtAGlance() {
           style={{ top: bandTop }}
           className="absolute left-1/2 z-20 flex h-80 w-[140%] -translate-x-1/2 -translate-y-1/2 -rotate-[35deg] items-center justify-center rounded-2xl bg-[#d24e40] shadow-2xl md:h-96"
         >
-          <div className="grid grid-cols-3 gap-14 text-center text-white md:gap-28">
+          <div className="grid grid-cols-3 gap-16 text-center text-white md:gap-32">
             {FAST_FACTS.map((fact) => (
               <div key={fact.label}>
-                <p className="text-6xl font-black font-heading md:text-8xl">
+                <p className="text-6xl font-black font-heading md:text-9xl">
                   {fact.num}
                 </p>
                 <p className="text-base font-black uppercase tracking-wide text-white/90 md:text-lg">

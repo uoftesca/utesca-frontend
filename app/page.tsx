@@ -8,7 +8,7 @@ import AtAGlance from "@/components/pages/home/AtAGlance";
 import { PartneredWith } from "@/components/pages/home/PartneredWith";
 import JoinUTESCA from "@/components/pages/home/JoinUTESCA";
 import VisionAndMission from "@/components/pages/about/VisionAndMission";
-import PartnerWithUs from "@/components/pages/projects/PartnerWithUs";
+import PartnerWithUs from "@/components/pages/home/PartnerWithUs";
 import Scroll from "@/components/Scroll";
 import EventsShowcase from "@/components/pages/home/EventsShowcase";
 
@@ -23,10 +23,11 @@ export default function Home() {
 
         <AtAGlance />
 
+        <PartnerWithUs />
+
         <div>
           <Scroll><VisionAndMission /></Scroll>
           <Scroll><JoinUTESCA /></Scroll>
-          <Scroll><PartnerWithUs /></Scroll>
         </div>
 
         <section className="bg-background px-6 py-12 md:px-12 lg:px-20">
