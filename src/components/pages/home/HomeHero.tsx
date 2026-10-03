@@ -23,7 +23,7 @@ export default function HomeHero() {
 
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 motion-reduce:animate-none text-center">
-          <h1 className="text-6xl font-black tracking-tight text-white md:text-8xl">
+          <h1 className="text-6xl font-black tracking-tight text-white md:text-9xl">
             UTESCA
           </h1>
           <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-primary" />

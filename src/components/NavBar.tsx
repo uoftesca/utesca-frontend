@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { Menu, ChevronDown } from "lucide-react";
 import { useState } from "react";
-import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -66,7 +66,9 @@ const NavBar = () => {
       {navItems.map((item) =>
         item.children ? (
           <NavigationMenuItem key={item.href} className="relative">
-            <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
+            <NavigationMenuTrigger className="text-lg font-bold text-primary-foreground hover:text-primary-foreground/80 hover:bg-white/10 focus:text-primary-foreground data-[active]:bg-white/10 data-[state=open]:bg-white/10">
+              {item.label}
+            </NavigationMenuTrigger>
             <NavigationMenuContent className="left-auto right-0">
               <ul className="grid w-max min-w-[14rem] gap-1 p-2">
                 {item.children.map((child) => (
@@ -74,7 +76,7 @@ const NavBar = () => {
                     <NavigationMenuLink asChild>
                       <Link
                         href={child.href}
-                        className="block select-none whitespace-nowrap rounded-md px-3 py-2 text-sm font-normal leading-none no-underline outline-none
+                        className="block select-none whitespace-nowrap rounded-md px-3 py-2 text-base font-bold leading-none no-underline outline-none
                       transition-colors hover:bg-accent hover:text-primary focus:bg-accent focus:text-primary"
                         onClick={() => {
                           onClick();
@@ -94,7 +96,10 @@ const NavBar = () => {
             <NavigationMenuLink asChild>
               <Link
                 href={item.href}
-                className={navigationMenuTriggerStyle()}
+                className={cn(
+                  navigationMenuTriggerStyle(),
+                  "text-lg font-bold text-primary-foreground hover:text-primary-foreground/80 hover:bg-white/10 focus:text-primary-foreground data-[active]:bg-white/10",
+                )}
                 onClick={() => {
                   onClick();
                   closeMenu();
@@ -110,16 +115,18 @@ const NavBar = () => {
   );
 
   return (
-    <nav className="flex items-center justify-between px-4 py-2 bg-background shadow-md">
+    <nav className="flex items-center justify-between px-4 py-2 bg-[oklch(0.32_0.07_29)] text-primary-foreground shadow-md">
       <div className="flex items-center">
         <Link href="/">
-          <div className="relative w-[100px] h-[40px]">
-            <Image
-              src="/utesca-logo.png"
+          <div className="relative w-[150px] h-[62px]">
+            {/* Plain <img>, not next/image — local SVGs need
+                `dangerouslyAllowSVG` in next.config.js to go through the
+                image optimizer, which we don't want to flip site-wide for
+                one small vector logo. */}
+            <img
+              src="/utesca-logo-white-skyline.svg"
               alt="UTESCA Logo"
-              fill
-              sizes="100px"
-              className="object-contain"
+              className="h-full w-full object-contain"
             />
           </div>
         </Link>
@@ -156,7 +163,7 @@ const NavBar = () => {
                 <div key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-lg font-normal hover:text-primary"
+                    className="text-xl font-bold hover:text-primary"
                     onClick={closeMenu}
                   >
                     {item.label}
@@ -167,7 +174,7 @@ const NavBar = () => {
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="text-base text-muted-foreground hover:text-primary"
+                          className="text-lg font-bold text-muted-foreground hover:text-primary"
                           onClick={closeMenu}
                         >
                           {child.label}
