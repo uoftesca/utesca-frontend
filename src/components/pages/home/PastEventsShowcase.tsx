@@ -54,7 +54,7 @@ export default function PastEventsShowcase() {
           className="absolute -top-[15%] -bottom-[15%] left-0 -right-[15%]"
         >
           <Image
-            src="/students-sitting.png"
+            src="/students-sitting2.png"
             alt="Students sitting in an auditorium"
             fill
             priority

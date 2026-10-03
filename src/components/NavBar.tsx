@@ -115,7 +115,7 @@ const NavBar = () => {
   );
 
   return (
-    <nav className="flex items-center justify-between px-4 py-2 bg-[#c57e7d] text-primary-foreground shadow-md">
+    <nav className="flex items-center justify-between px-4 py-2 bg-primary text-primary-foreground shadow-md">
       <div className="flex items-center">
         <Link href="/">
           <div className="relative w-[150px] h-[62px]">
