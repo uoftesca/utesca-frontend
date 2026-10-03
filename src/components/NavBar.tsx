@@ -115,14 +115,10 @@ const NavBar = () => {
   );
 
   return (
-    <nav className="flex items-center justify-between px-4 py-2 bg-[oklch(0.32_0.07_29)] text-primary-foreground shadow-md">
+    <nav className="flex items-center justify-between px-4 py-2 bg-[oklch(0.28_0.19_29)] text-primary-foreground shadow-md">
       <div className="flex items-center">
         <Link href="/">
           <div className="relative w-[150px] h-[62px]">
-            {/* Plain <img>, not next/image — local SVGs need
-                `dangerouslyAllowSVG` in next.config.js to go through the
-                image optimizer, which we don't want to flip site-wide for
-                one small vector logo. */}
             <img
               src="/utesca-logo-white-skyline.svg"
               alt="UTESCA Logo"

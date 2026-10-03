@@ -5,10 +5,16 @@ import Image from "next/image";
  * every other page (/events, /team, /projects/*) — those keep the original
  * skyline banner with the full club name. This one is the same background
  * treatment, just taller and with "UTESCA" big, bold, and centered.
+ *
+ * Uses the same `sticky top-0` + `overflow-hidden` mechanic as the
+ * <Scroll> sections further down the page (see Scroll.tsx): no scroll-
+ * linked JS at all — it just sticks to the top of the viewport, and
+ * UpcomingEventFeature, being a normal-flow section right after it in the
+ * DOM, naturally scrolls up and paints over it as the page scrolls.
  */
 export default function HomeHero() {
   return (
-    <section className="relative h-[320px] w-full overflow-hidden md:h-[520px]">
+    <section className="sticky top-0 h-[320px] w-full overflow-hidden md:h-[520px]">
       <Image
         src="/toronto-skyline.jpg"
         alt="Toronto Skyline"
