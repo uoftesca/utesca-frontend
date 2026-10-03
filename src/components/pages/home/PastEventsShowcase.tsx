@@ -80,29 +80,28 @@ export default function PastEventsShowcase() {
               return (
                 <div
                   key={event.id}
-                  className="w-56 shrink-0 overflow-hidden rounded-2xl bg-black text-white shadow-2xl ring-2 ring-primary transition-transform duration-300 hover:z-10 hover:scale-105 md:w-64"
+                  className="relative aspect-square w-56 shrink-0 overflow-hidden rounded-2xl bg-black text-white shadow-2xl ring-2 ring-primary transition-transform duration-300 hover:z-10 hover:scale-105 md:w-64"
                 >
-                  <div className="p-3 text-center">
-                    <p className="truncate text-sm font-semibold">
+                  {event.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={event.image}
+                      alt={event.title}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full flex-col items-center justify-center text-primary">
+                      <span className="text-2xl font-bold font-heading">
+                        {month}
+                      </span>
+                      <span className="text-4xl font-heading">{day}</span>
+                    </div>
+                  )}
+
+                  <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-black/80 to-transparent p-3 pb-8 text-center">
+                    <p className="line-clamp-2 text-xl font-black font-heading leading-tight">
                       {event.title}
                     </p>
-                  </div>
-                  <div className="relative h-24 w-full md:h-30">
-                    {event.image ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={event.image}
-                        alt={event.title}
-                        className="h-full w-full object-cover"
-                      />
-                    ) : (
-                      <div className="flex h-full w-full flex-col items-center justify-center text-primary">
-                        <span className="text-2xl font-bold font-heading">
-                          {month}
-                        </span>
-                        <span className="text-4xl font-heading">{day}</span>
-                      </div>
-                    )}
                   </div>
                 </div>
               );
@@ -111,7 +110,7 @@ export default function PastEventsShowcase() {
             <Link
               href="/events"
               aria-label="See more past events"
-              className="flex h-28 w-24 shrink-0 items-center justify-center rounded-2xl border border-white/20 text-white/70 transition-colors hover:border-white/50 hover:text-white md:h-32"
+              className="flex aspect-square w-20 shrink-0 items-center justify-center rounded-2xl border border-white/20 text-white/70 transition-colors hover:border-white/50 hover:text-white md:w-24"
             >
               <ArrowRight className="h-8 w-8" />
             </Link>
