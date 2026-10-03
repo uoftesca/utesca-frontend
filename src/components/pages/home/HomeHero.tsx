@@ -11,10 +11,10 @@ export default function HomeHero() {
           fill
           sizes="100vw"
           priority
-          className="scale-105 object-cover object-top"
+          className="scale-105 object-cover object-top brightness-125"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/25" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/10" />
         <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/50 to-transparent" />
 
         <div className="absolute inset-0 flex items-center justify-center">
