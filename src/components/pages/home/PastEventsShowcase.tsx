@@ -83,7 +83,7 @@ export default function PastEventsShowcase() {
             alt="Students sitting in an auditorium"
             fill
             priority
-            className="object-cover object-right brightness-150"
+            className="object-cover object-right brightness-110"
           />
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/10" />
