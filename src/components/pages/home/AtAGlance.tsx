@@ -92,7 +92,7 @@ export default function AtAGlance() {
 
         <motion.div
           style={{ top: bandTop }}
-          className="absolute left-1/2 z-20 flex h-80 w-[140%] -translate-x-1/2 -translate-y-1/2 -rotate-[35deg] items-center justify-center rounded-2xl bg-[#e1d4d7] shadow-[0_30px_70px_-10px_rgba(0,0,0,0.65)] md:h-96"
+          className="absolute left-1/2 z-20 flex h-80 w-[140%] -translate-x-1/2 -translate-y-1/2 -rotate-[35deg] items-center justify-center rounded-2xl bg-[#e1d4d7] shadow-[0_30px_70px_-10px_rgba(0,0,0,0.65),0_-30px_70px_-10px_rgba(0,0,0,0.65)] md:h-96"
         >
           <div className="grid grid-cols-3 gap-16 text-center text-black md:gap-32">
             {FAST_FACTS.map((fact) => (
