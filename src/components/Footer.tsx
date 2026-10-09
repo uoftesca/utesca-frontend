@@ -17,35 +17,34 @@ export default function Footer() {
       <div className="container mx-auto px-8 py-6">
         <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-start md:justify-between">
           {/* First column */}
-          <div className="flex items-center gap-4">
-            <div className="space-y-2">
-              <h2 className="max-w-sm text-2xl font-black md:text-3xl">
-                University of Toronto Engineering Student Consulting Association
-              </h2>
-              <p className="flex items-center gap-2 text-base text-primary-foreground/80">
-                <Mail className="h-4 w-4" />
-                uoft.esca@gmail.com
-              </p>
-              <p className="flex items-center gap-2 text-base text-primary-foreground/80">
-                <Globe className="h-4 w-4" />
-                www.utesca.ca
-              </p>
-            </div>
-            <Link
-              href={socialLinks.linktree}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="shrink-0"
-            >
-              <Image
-                src="/linktree-qrcode2.png"
-                alt="Scan to open the UTESCA Linktree"
-                width={144}
-                height={144}
-                className="rounded-md bg-white p-1.5"
-              />
-            </Link>
+          <div className="space-y-2">
+            <h2 className="max-w-sm text-2xl font-black md:text-3xl">
+              University of Toronto Engineering Student Consulting Association
+            </h2>
+            <p className="flex items-center gap-2 text-base text-primary-foreground/80">
+              <Mail className="h-4 w-4" />
+              uoft.esca@gmail.com
+            </p>
+            <p className="flex items-center gap-2 text-base text-primary-foreground/80">
+              <Globe className="h-4 w-4" />
+              www.utesca.ca
+            </p>
           </div>
+
+          <Link
+            href={socialLinks.linktree}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 self-center"
+          >
+            <Image
+              src="/linktree-qrcode2.png"
+              alt="Scan to open the UTESCA Linktree"
+              width={144}
+              height={144}
+              className="rounded-md bg-white p-1.5"
+            />
+          </Link>
 
           <div className="flex gap-10 md:gap-24">
             {/* Second Column */}
