@@ -94,13 +94,13 @@ export default function AtAGlance() {
           style={{ top: bandTop }}
           className="absolute left-1/2 z-20 flex h-80 w-[140%] -translate-x-1/2 -translate-y-1/2 -rotate-[35deg] items-center justify-center rounded-2xl bg-[#e1d4d7] shadow-2xl md:h-96"
         >
-          <div className="grid grid-cols-3 gap-16 text-center text-primary md:gap-32">
+          <div className="grid grid-cols-3 gap-16 text-center text-black md:gap-32">
             {FAST_FACTS.map((fact) => (
               <div key={fact.label}>
                 <p className="text-6xl font-black font-heading md:text-9xl">
                   {fact.num}
                 </p>
-                <p className="text-base font-black uppercase tracking-wide text-primary/90 md:text-lg">
+                <p className="text-base font-black uppercase tracking-wide text-black/90 md:text-lg">
                   {fact.label}
                 </p>
               </div>
