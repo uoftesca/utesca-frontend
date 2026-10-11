@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import ProjectCard from "./ProjectCard";
 import Reveal from "@/components/Reveal";
 import {
@@ -48,7 +47,6 @@ interface ProjectsListProps {
 }
 
 export default function ProjectsList({ projects }: ProjectsListProps) {
-  const [flippedKey, setFlippedKey] = useState<string | null>(null);
   return (
     <div className="space-y-16">
       {/* <h1>

@@ -6,16 +6,14 @@ import { fetchEvents, getEventsForDate, formatEventDate } from '@/utils/events';
 import EventCard from './EventCard';
 import { motion, AnimatePresence } from 'framer-motion';
 
-interface UpcomingEventsProps {
-    onEventsChange: (hasEvents: boolean) => void;
+interface SelectedEventCardsProps {
     selectedDate: Date | undefined;
-    registerSlug?: string | null;
+    selectedEventSlug?: string | null;
 }
 
-const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
-    onEventsChange,
+const SelectedEventCards: React.FC<SelectedEventCardsProps> = ({
     selectedDate,
-    registerSlug,
+    selectedEventSlug,
 }) => {
     const [events, setEvents] = React.useState<Event[]>([]);
     const [selectedEvents, setSelectedEvents] = React.useState<Event[]>([]);
@@ -39,21 +37,21 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
             const dateEvents = getEventsForDate(events, selectedDate);
 
             setSelectedEvents(dateEvents);
-            onEventsChange(dateEvents.length > 0);
         } else {
             setSelectedEvents([]);
-            onEventsChange(false);
         }
-    }, [selectedDate, events, onEventsChange]);
+    }, [selectedDate, events]);
 
-    const registerEvent = registerSlug
-        ? events.find((event) => event.slug === registerSlug)
+    const selectedEvent = selectedEventSlug
+        ? events.find((event) => event.slug === selectedEventSlug)
         : undefined;
 
-    const displayEvents = registerEvent
+    const displayEvents = selectedEvent
         ? [
-              registerEvent,
-              ...selectedEvents.filter((e) => e.slug !== registerEvent.slug),
+              selectedEvent,
+              ...selectedEvents.filter(
+                  (event) => event.slug !== selectedEvent.slug
+              ),
           ]
         : selectedEvents;
 
@@ -104,9 +102,6 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
                                             month={month}
                                             day={day}
                                             isExpanded={true}
-                                            // autoOpenRegistration={
-                                            //     event.slug === registerSlug
-                                            // }
                                         />
                                     </motion.div>
                                 );
@@ -119,4 +114,4 @@ const UpcomingEvents: React.FC<UpcomingEventsProps> = ({
     );
 };
 
-export default UpcomingEvents;
+export default SelectedEventCards;

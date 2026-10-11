@@ -1,6 +1,5 @@
 "use client";
 
-import Container from "@/components/Container";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import NavBar from "@/components/NavBar";
@@ -8,11 +7,10 @@ import WhatDoesUTESCADo from "@/components/pages/home/WhatDoesUTESCADo";
 import { PartneredWith } from "@/components/pages/home/PartneredWith";
 import Stats from "@/components/pages/home/Stats";
 import JoinUTESCA from "@/components/pages/home/JoinUTESCA";
-import PastEvents from "@/components/pages/events/PastEvents";
 import VisionAndMission from "@/components/pages/about/VisionAndMission";
 import PartnerWithUs from "@/components/pages/projects/PartnerWithUs";
 import Scroll from "@/components/Scroll";
-import EventDetails from "@/components/pages/events/EventDetails";
+import UpcomingEventPreviews from "@/components/pages/events/UpcomingEventPreviews";
 
 export default function Home() {
   return (
@@ -27,7 +25,7 @@ export default function Home() {
               <h1 className="text-2xl font-bold tracking-normal md:text-4xl text-primary font-heading">
                 Upcoming Events
               </h1>
-              <EventDetails linkToRegistration />
+              <UpcomingEventPreviews linkToEventsPage />
             </div>
           </Scroll>
           <Scroll><WhatDoesUTESCADo /></Scroll>

@@ -520,7 +520,7 @@ export function RegistrationForm({
     return last?.split("?")[0] || null;
   };
 
-  const renderFileField = (field: RegistrationFormField, value: unknown) => {
+  const renderFileField = (field: RegistrationFormField) => {
     const uploadState = fileUploads[field.id] ?? { status: "idle" as const };
     const isBusy =
       isFieldDisabled(field) ||
@@ -656,7 +656,7 @@ export function RegistrationForm({
         select: () => renderSelectField(field, value),
         radio: () => renderRadioField(field, value),
         checkbox: () => renderCheckboxField(field, value),
-        file: () => renderFileField(field, value),
+        file: () => renderFileField(field),
         text: () => renderTextField(field, value),
       };
 

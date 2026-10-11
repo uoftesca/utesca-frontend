@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, ChevronDown } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 
@@ -29,41 +29,24 @@ type NavItem = {
   children?: { href: string; label: string }[];
 };
 
-const NavBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
-  const toggleSection = (href: string) =>
-    setOpenSections((s) => ({ ...s, [href]: !s[href] }));
+const NAV_ITEMS: NavItem[] = [
+  { href: "/", label: "Home" },
+  { href: "/team", label: "Team" },
+  {
+    href: "/projects",
+    label: "Services",
+    children: [
+      { href: "/projects/cep", label: "Consulting Engineering Projects" },
+      { href: "/projects/examples", label: "Projects" },
+    ],
+  },
+  { href: "/events", label: "Events" },
+];
 
-  const navItems: NavItem[] = [
-    { href: "/", label: "Home" },
-    // {
-    //   href: "/about",
-    //   label: "About Us",
-    //   children: [
-    //     { href: "/about/vision-mission", label: "Our Vision & Missions" },
-    //     { href: "/about/team", label: "Our Team" },
-    //     // { href: "/about/alumni", label: "Alumni" },
-    //     { href: "/about/partner", label: "Partner With Us" },
-    //   ],
-    // },
-    { href: "/team", label: "Team"},
-    {
-      href: "/projects",
-      label: "Services",
-      children: [
-        { href: "/projects/cep", label: "Consulting Engineering Projects" },
-        { href: "/projects/examples", label: "Projects" },
-      ],
-    },
-    { href: "/events", label: "Events" },
-  ];
-
-  const closeMenu = () => setIsOpen(false);
-
-  const NavItems = ({ onClick = () => {} }: { onClick?: () => void }) => (
+function NavItems({ onClick }: { onClick?: () => void }) {
+  return (
     <>
-      {navItems.map((item) =>
+      {NAV_ITEMS.map((item) =>
         item.children ? (
           <NavigationMenuItem key={item.href} className="relative">
             <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
@@ -76,10 +59,7 @@ const NavBar = () => {
                         href={child.href}
                         className="block select-none whitespace-nowrap rounded-md px-3 py-2 text-sm font-normal leading-none no-underline outline-none
                       transition-colors hover:bg-accent hover:text-primary focus:bg-accent focus:text-primary"
-                        onClick={() => {
-                          onClick();
-                          closeMenu();
-                        }}
+                        onClick={onClick}
                       >
                         {child.label}
                       </Link>
@@ -95,10 +75,7 @@ const NavBar = () => {
               <Link
                 href={item.href}
                 className={navigationMenuTriggerStyle()}
-                onClick={() => {
-                  onClick();
-                  closeMenu();
-                }}
+                onClick={onClick}
               >
                 {item.label}
               </Link>
@@ -108,6 +85,12 @@ const NavBar = () => {
       )}
     </>
   );
+}
+
+const NavBar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const closeMenu = () => setIsOpen(false);
 
   return (
     <nav className="flex items-center justify-between px-4 py-2 bg-background shadow-md">
@@ -152,7 +135,7 @@ const NavBar = () => {
               <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
             </SheetHeader>
             <nav className="flex flex-col space-y-4 mt-4">
-              {navItems.map((item) => (
+              {NAV_ITEMS.map((item) => (
                 <div key={item.href}>
                   <Link
                     href={item.href}
