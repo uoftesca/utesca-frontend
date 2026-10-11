@@ -3,13 +3,10 @@
 import { useMemo, useState, type ReactNode } from "react";
 import {
   CircleAlert,
-  Calendar,
   CircleCheck,
   Loader2,
-  MapPin,
   Upload,
   ArrowLeft,
-  Clock,
 } from "lucide-react";
 import Link from "next/link";
 import imageCompression from "browser-image-compression";
@@ -19,6 +16,7 @@ import { useUploadThing } from "@/lib/uploadthing";
 import {
   PublicEventDetail,
   RegistrationFormField,
+  RegistrationFormMode,
   RegistrationFormSchema,
   RegistrationSubmitRequest,
 } from "@/types/registration";
@@ -45,10 +43,27 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  EditRegistrationHeader,
+  InitialRegistrationHeader,
+} from "./RegistrationFormHeader";
+
+const DEFAULT_NOT_EDITABLE_FIELDS = [
+  "email",
+  "full_name",
+  "fullName",
+  "first_name",
+  "firstName",
+  "last_name",
+  "lastName",
+];
 
 type RegistrationFormProps = {
   readonly event: PublicEventDetail;
   readonly slug: string;
+  readonly mode: RegistrationFormMode;
+  readonly initialValues?: Record<string, unknown>;
+  readonly registrationId?: string;
 };
 
 type FieldErrors = Record<string, string[]>;
@@ -79,49 +94,6 @@ function getDefaultValue(field: RegistrationFormField) {
   if (field.type === "checkbox") return [] as string[];
   if (field.type === "select" || field.type === "radio") return "";
   return "";
-}
-
-function formatEventDate(value?: string | null) {
-  if (!value) return null;
-  const parsed = new Date(value);
-  if (Number.isNaN(parsed.getTime())) return null;
-
-  return new Intl.DateTimeFormat("en-CA", {
-    timeZone: "America/Toronto",
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(parsed);
-}
-
-function formatEventTime(value?: string | null) {
-  if (!value) return null;
-  const parsed = new Date(value);
-  if (Number.isNaN(parsed.getTime())) return null;
-
-  return new Intl.DateTimeFormat("en-CA", {
-    timeZone: "America/Toronto",
-    hour: "numeric",
-    minute: "2-digit",
-    timeZoneName: "short",
-  }).format(parsed);
-}
-
-function formatDate(value?: string | null) {
-  if (!value) return null;
-  const parsed = new Date(value);
-  if (Number.isNaN(parsed.getTime())) return null;
-
-  return new Intl.DateTimeFormat("en-CA", {
-    timeZone: "America/Toronto",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    timeZoneName: "short",
-  }).format(parsed);
 }
 
 function validateCheckboxField(required: boolean, value: unknown) {
@@ -202,14 +174,20 @@ function validateField(
   return validateTextField(required ?? false, validation, value);
 }
 
-export function RegistrationForm({ event, slug }: RegistrationFormProps) {
+export function RegistrationForm({
+  event,
+  slug,
+  mode,
+  initialValues = {},
+  registrationId,
+}: RegistrationFormProps) {
   const schema: RegistrationFormSchema | null =
     event.registrationFormSchema ?? null;
 
   const [formValues, setFormValues] = useState<Record<string, unknown>>(() => {
     const initial: Record<string, unknown> = {};
     schema?.fields.forEach((field) => {
-      initial[field.id] = getDefaultValue(field);
+      initial[field.id] = initialValues[field.id] ?? getDefaultValue(field);
     });
     return initial;
   });
@@ -253,11 +231,8 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
     );
   }
 
-  const headline = schema.autoAccept
-    ? `Register for ${event.title}`
-    : `Application for ${event.title}`;
-
   const isClosed = (() => {
+    if (mode === RegistrationFormMode.Edit) return false;
     if (!event.registrationDeadline) return false;
     const deadline = new Date(event.registrationDeadline);
     return (
@@ -265,49 +240,21 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
     );
   })();
 
-  const eventDateDisplay = formatEventDate(event.dateTime);
-  const eventTimeDisplay = formatEventTime(event.dateTime);
-  const deadlineDisplay = formatDate(event.registrationDeadline);
+  const configuredNotEditable = schema.notEditable ?? schema.not_editable ?? [];
+  const notEditableFields = new Set([
+    ...DEFAULT_NOT_EDITABLE_FIELDS,
+    ...configuredNotEditable,
+  ]);
+  const isProtectedField = (field: RegistrationFormField) =>
+    mode === RegistrationFormMode.Edit &&
+    (field.type === "file" || notEditableFields.has(field.id));
+  const isFieldDisabled = (field: RegistrationFormField) =>
+    submitting || isClosed || isProtectedField(field);
 
   if (isClosed) {
     return (
       <div className="w-full max-w-5xl space-y-6">
-        <Button variant="ghost" size="lg" asChild className="-ml-4 w-fit">
-          <Link href="/events" className="inline-flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            Back to Events
-          </Link>
-        </Button>
-        <div className="space-y-2">
-          <h1 className="text-3xl md:text-4xl font-semibold text-primary">
-            {headline}
-          </h1>
-          <div className="space-y-2 text-base text-foreground">
-            {eventDateDisplay && (
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                <span>{eventDateDisplay}</span>
-              </div>
-            )}
-            {eventTimeDisplay && (
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                <span>{eventTimeDisplay}</span>
-              </div>
-            )}
-            {event.location && (
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
-                <span>{event.location}</span>
-              </div>
-            )}
-            {deadlineDisplay && (
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <span>Registration closed on {deadlineDisplay}</span>
-              </div>
-            )}
-          </div>
-        </div>
+        <InitialRegistrationHeader event={event} closed />
 
         <Alert className="border-amber-300 bg-amber-50 text-amber-900">
           <AlertTitle>Registration is closed</AlertTitle>
@@ -458,6 +405,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
   const validateAll = () => {
     const errors: FieldErrors = {};
     schema.fields.forEach((field) => {
+      if (isFieldDisabled(field)) return;
       const errs = validateField(
         field,
         formValues[field.id],
@@ -482,7 +430,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
         <Textarea
           value={textValue}
           placeholder={field.placeholder}
-          disabled={submitting || isClosed}
+          disabled={isFieldDisabled(field)}
           onChange={(e) => handleTextChange(field.id, e.target.value)}
         />
         {(minLength || maxLength) && (
@@ -503,7 +451,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
     <Select
       value={typeof value === "string" ? value : ""}
       onValueChange={(v) => handleTextChange(field.id, v)}
-      disabled={submitting || isClosed}
+      disabled={isFieldDisabled(field)}
     >
       <SelectTrigger>
         <SelectValue placeholder="Select an option" />
@@ -522,7 +470,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
     <RadioGroup
       value={typeof value === "string" ? value : ""}
       onValueChange={(v) => handleTextChange(field.id, v)}
-      disabled={submitting || isClosed}
+      disabled={isFieldDisabled(field)}
       className="grid gap-3"
     >
       {field.options?.map((option) => (
@@ -555,7 +503,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
               onCheckedChange={(checkedValue) =>
                 handleCheckboxChange(field.id, option, checkedValue === true)
               }
-              disabled={submitting || isClosed}
+              disabled={isFieldDisabled(field)}
             />
             <span>{option}</span>
           </label>
@@ -575,8 +523,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
   const renderFileField = (field: RegistrationFormField, value: unknown) => {
     const uploadState = fileUploads[field.id] ?? { status: "idle" as const };
     const isBusy =
-      submitting ||
-      isClosed ||
+      isFieldDisabled(field) ||
       uploadState.status === "uploading" ||
       uploadState.status === "compressing";
     const deleteInFlight = uploadState.status === "deleting";
@@ -601,6 +548,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
           onDragLeave={() => setActiveDropField(null)}
           onDrop={(e) => {
             e.preventDefault();
+            if (isFieldDisabled(field)) return;
             handleFileChange(field.id, e.dataTransfer.files);
             setActiveDropField(null);
           }}
@@ -622,9 +570,9 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
           onChange={(e) => handleFileChange(field.id, e.target.files)}
         />
         <span className="text-sm text-muted-foreground">
-          {formatAllowedTypes(field.validation?.allowedTypes)}, max{" "}
-          {Math.round((field.validation?.maxSize ?? 8_388_608) / (1024 * 1024))}
-          MB. Files are stored after successful upload.
+          {mode === RegistrationFormMode.Edit
+            ? "File uploads cannot be changed. Your existing file will be kept."
+            : `${formatAllowedTypes(field.validation?.allowedTypes)}, max ${Math.round((field.validation?.maxSize ?? 8_388_608) / (1024 * 1024))}MB. Files are stored after successful upload.`}
         </span>
         {uploadState.status === "uploaded" && uploadState.file && (
           <div className="flex items-center justify-between text-sm">
@@ -695,7 +643,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
       type="text"
       value={typeof value === "string" ? value : ""}
       placeholder={field.placeholder}
-      disabled={submitting || isClosed}
+      disabled={isFieldDisabled(field)}
       onChange={(e) => handleTextChange(field.id, e.target.value)}
     />
   );
@@ -734,6 +682,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
     const requiredFileMissing = schema.fields.some(
       (field) =>
         field.type === "file" &&
+        !isFieldDisabled(field) &&
         field.required &&
         (fileUploads[field.id]?.status !== "uploaded" ||
           !fileUploads[field.id]?.url),
@@ -747,10 +696,12 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
     try {
       const payload: RegistrationSubmitRequest = {
         uploadSessionId,
-        formData: {},
+        formData:
+          mode === RegistrationFormMode.Edit ? { ...initialValues } : {},
       };
 
       schema.fields.forEach((field) => {
+        if (isProtectedField(field)) return;
         const current = formValues[field.id];
 
         if (field.type === "file") {
@@ -772,7 +723,16 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
         payload.formData[field.id] = current ?? "";
       });
 
-      const response = await publicApi.submitRegistration(slug, payload);
+      let response;
+      if (mode === RegistrationFormMode.Edit) {
+        if (!registrationId) throw new Error("Registration ID is required.");
+        response = await publicApi.updateApplication(
+          registrationId,
+          payload.formData,
+        );
+      } else {
+        response = await publicApi.submitRegistration(slug, payload);
+      }
       setSuccessMessage(response.message);
     } catch (err) {
       setSubmitError(
@@ -790,42 +750,11 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
 
   return (
     <div className="w-full max-w-5xl space-y-8">
-      <Button variant="ghost" size="lg" asChild className="-ml-4 w-fit">
-        <Link href="/events" className="inline-flex items-center gap-2">
-          <ArrowLeft className="h-4 w-4" />
-          Back to Events
-        </Link>
-      </Button>
-      <div className="space-y-4">
-        <h1 className="text-3xl md:text-4xl font-semibold text-primary">
-          {headline}
-        </h1>
-        <div className="space-y-2 text-base text-foreground">
-          {eventDateDisplay && (
-            <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4" />
-              <span>{eventDateDisplay}</span>
-            </div>
-          )}
-          {eventTimeDisplay && (
-            <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4" />
-              <span>{eventTimeDisplay}</span>
-            </div>
-          )}
-          {event.location && (
-            <div className="flex items-center gap-2">
-              <MapPin className="h-4 w-4" />
-              <span>{event.location}</span>
-            </div>
-          )}
-          {deadlineDisplay && (
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <span>Registration closes on {deadlineDisplay}</span>
-            </div>
-          )}
-        </div>
-      </div>
+      {mode === RegistrationFormMode.Edit && registrationId ? (
+        <EditRegistrationHeader event={event} registrationId={registrationId} />
+      ) : (
+        <InitialRegistrationHeader event={event} />
+      )}
 
       <form className="space-y-8" onSubmit={handleSubmit}>
         {submitError && (
@@ -838,7 +767,11 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
           <div className="space-y-4 rounded-xl border border-emerald-300 bg-emerald-50 p-5 text-base text-emerald-900">
             <div className="inline-flex items-center gap-2 text-xl font-semibold">
               <CircleCheck className="h-5 w-5 text-emerald-600" />
-              <span>Registration Submitted</span>
+              <span>
+                {mode === RegistrationFormMode.Edit
+                  ? "Application Updated"
+                  : "Registration Submitted"}
+              </span>
             </div>
             <p>{successMessage}</p>
             <Button
@@ -847,15 +780,20 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
               size="lg"
               className="w-fit"
               onClick={() => {
-                globalThis.location.href = "/events";
+                globalThis.location.href =
+                  mode === RegistrationFormMode.Edit && registrationId
+                    ? `/registrations/${registrationId}/manage`
+                    : "/events";
               }}
             >
-              Return to Events
+              {mode === RegistrationFormMode.Edit
+                ? "Return to Manage Application"
+                : "Return to Events"}
             </Button>
           </div>
         ) : (
           <>
-            {schema.autoAccept && (
+            {mode === RegistrationFormMode.Create && schema.autoAccept && (
               <Alert className="border-primary/30 bg-primary/5 text-primary">
                 <CircleAlert className="h-4 w-4 !text-primary" />
                 <AlertTitle>
@@ -884,7 +822,7 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
                   return (
                     <Field
                       key={field.id}
-                      className={`gap-2 ${isWideField(field.type) ? "md:col-span-2" : ""}`}
+                      className={`gap-2 rounded-lg p-3 ${isWideField(field.type) ? "md:col-span-2" : ""} ${isProtectedField(field) ? "bg-muted/70 text-muted-foreground" : ""}`}
                     >
                       <FieldLabel>
                         <div className="flex items-center gap-1 text-base font-medium text-foreground">
@@ -919,10 +857,14 @@ export function RegistrationForm({ event, slug }: RegistrationFormProps) {
                 {submitting ? (
                   <span className="inline-flex items-center gap-2">
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    Submitting...
+                    {mode === RegistrationFormMode.Edit
+                      ? "Saving..."
+                      : "Submitting..."}
                   </span>
                 ) : (
-                  "Submit Registration"
+                  mode === RegistrationFormMode.Edit
+                    ? "Save Changes"
+                    : "Submit Registration"
                 )}
               </Button>
             </div>

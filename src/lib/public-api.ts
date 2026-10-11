@@ -4,6 +4,7 @@ import {
     RegistrationSubmitResponse,
     ManagementActionResponse,
     ManagementSessionResponse,
+    EditableApplicationResponse,
     RsvpConfirmResponse,
     RsvpDeclineResponse,
     RsvpDetailsResponse,
@@ -143,6 +144,22 @@ export const publicApi = {
         return publicRequest<ManagementActionResponse>(
             `/registrations/${registrationId}/withdraw`,
             { method: 'POST' }
+        );
+    },
+
+    async getEditableApplication(registrationId: string): Promise<EditableApplicationResponse> {
+        return publicRequest<EditableApplicationResponse>(
+            `/registrations/${registrationId}/application`
+        );
+    },
+
+    async updateApplication(
+        registrationId: string,
+        formData: Record<string, unknown>
+    ): Promise<ManagementActionResponse> {
+        return publicRequest<ManagementActionResponse>(
+            `/registrations/${registrationId}/application`,
+            { method: 'PUT', body: JSON.stringify({ formData }) }
         );
     },
 
