@@ -3,15 +3,15 @@ import Image from "next/image";
 // Wrapper div matches the section's height so the sticky range stays bounded to itself.
 export default function HomeHero() {
   return (
-    <div className="relative h-[320px] md:h-[520px]">
-      <section className="sticky top-0 h-[320px] w-full overflow-hidden md:h-[520px]">
+    <div className="relative aspect-[7008/3550] w-full">
+      <section className="sticky top-0 aspect-[7008/3550] w-full overflow-hidden">
         <Image
           src="/toronto-hero.jpg"
           alt="Toronto Skyline"
           fill
           sizes="100vw"
           priority
-          className="scale-110 object-cover object-bottom brightness-90"
+          className="object-cover object-bottom brightness-90"
         />
 
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/10" />
