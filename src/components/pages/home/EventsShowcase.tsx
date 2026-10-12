@@ -29,7 +29,12 @@ export default function EventsShowcase() {
   return (
     <div ref={wrapperRef} className="relative">
       <UpcomingEventFeature overlay={overlay} />
-      <PastEventsShowcase />
+      {/* -mt-px: min-h-screen can round to a fractional device pixel,
+          leaving a hairline gap at this seam that shows the page
+          background through. 1px overlap removes it. */}
+      <div className="-mt-px">
+        <PastEventsShowcase />
+      </div>
     </div>
   );
 }
