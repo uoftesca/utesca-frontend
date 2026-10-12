@@ -77,7 +77,7 @@ const NavBar = () => {
                       <Link
                         href={child.href}
                         className="block select-none whitespace-nowrap rounded-md px-3 py-2 text-base font-bold leading-none no-underline outline-none
-                      transition-colors hover:bg-accent hover:text-primary focus:bg-accent focus:text-primary"
+                      transition-colors hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground"
                         onClick={() => {
                           onClick();
                           closeMenu();
