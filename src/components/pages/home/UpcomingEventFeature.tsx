@@ -68,7 +68,7 @@ export default function UpcomingEventFeature({
   const isLoading = nextEvent === undefined;
 
   return (
-    <section className="relative flex min-h-screen w-full flex-col justify-center overflow-hidden bg-secondary px-6 py-20 md:px-12 lg:px-20">
+    <section className="sticky top-0 flex min-h-screen w-full flex-col justify-center overflow-hidden bg-secondary px-6 py-20 md:px-12 lg:px-20">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-black/50 to-transparent md:h-16" />
 
       <div className="mx-auto w-full max-w-6xl space-y-12">
