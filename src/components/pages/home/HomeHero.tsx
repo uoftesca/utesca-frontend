@@ -6,7 +6,7 @@ export default function HomeHero() {
     <div className="relative h-[320px] md:h-[520px]">
       <section className="sticky top-0 h-[320px] w-full overflow-hidden md:h-[520px]">
         <Image
-          src="/toronto-skyline.jpg"
+          src="/toronto-hero.jpg"
           alt="Toronto Skyline"
           fill
           sizes="100vw"
