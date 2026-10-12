@@ -1,15 +1,10 @@
 import Image from "next/image";
 
 // Wrapper div matches the section's height so the sticky range stays bounded to itself.
-// Height is viewport-relative and capped below 100vh (not the image's own
-// aspect ratio) so it's always shorter than the viewport -- Upcoming Event's
-// sticky overtake needs the reveal to kick in immediately on scroll,
-// regardless of screen size, rather than only in the last stretch of a
-// very tall hero.
 export default function HomeHero() {
   return (
-    <div className="relative h-[70vh] md:h-[80vh]">
-      <section className="sticky top-0 h-[70vh] w-full overflow-hidden md:h-[80vh]">
+    <div className="relative h-screen">
+      <section className="sticky top-0 h-screen w-full overflow-hidden">
         <Image
           src="/toronto-hero.jpg"
           alt="Toronto Skyline"
