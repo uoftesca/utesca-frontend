@@ -69,15 +69,15 @@ const NavBar = () => {
             <NavigationMenuTrigger className="text-lg font-bold text-primary-foreground hover:text-primary-foreground/80 hover:bg-white/10 focus:text-primary-foreground data-[active]:bg-white/10 data-[state=open]:bg-white/10">
               {item.label}
             </NavigationMenuTrigger>
-            <NavigationMenuContent className="left-auto right-0">
+            <NavigationMenuContent className="left-auto right-0 bg-primary text-primary-foreground">
               <ul className="grid w-max min-w-[14rem] gap-1 p-2">
                 {item.children.map((child) => (
                   <li key={child.href}>
                     <NavigationMenuLink asChild>
                       <Link
                         href={child.href}
-                        className="block select-none whitespace-nowrap rounded-md bg-primary px-3 py-2 text-base font-bold leading-none text-primary-foreground no-underline outline-none
-                      transition-colors hover:bg-primary/80 focus:bg-primary/80"
+                        className="block select-none whitespace-nowrap rounded-md px-3 py-2 text-base font-bold leading-none text-primary-foreground no-underline outline-none
+                      transition-colors hover:bg-white/15 focus:bg-white/15"
                         onClick={() => {
                           onClick();
                           closeMenu();
