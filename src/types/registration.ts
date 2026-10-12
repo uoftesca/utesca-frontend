@@ -6,6 +6,11 @@ export type RegistrationFieldType =
     | 'checkbox'
     | 'file';
 
+export enum RegistrationFormMode {
+    Create = 'create',
+    Edit = 'edit',
+}
+
 export interface RegistrationFieldValidation {
     minLength?: number;
     maxLength?: number;
@@ -28,6 +33,8 @@ export interface RegistrationFormField {
 export interface RegistrationFormSchema {
     autoAccept?: boolean;
     fields: RegistrationFormField[];
+    notEditable?: string[];
+    not_editable?: string[];
 }
 
 export interface UploadFileRequest {
@@ -78,6 +85,14 @@ export interface ManagementActionResponse {
     success: boolean;
     status: string;
     message: string;
+}
+
+export interface EditableApplicationResponse {
+    registration: RegistrationSummary & {
+        eventId: string;
+        formData: Record<string, unknown>;
+    };
+    event: PublicEventDetail;
 }
 
 export interface PublicEventDetail {

@@ -6,6 +6,12 @@ import { publicApi } from '@/lib/public-api';
 import { Button } from '@/components/ui/button';
 import { ManagementActionResponse, RegistrationSummary, RsvpDeclineResponse } from '@/types/registration';
 import { RegistrationPageShell } from '@/components/pages/registrations/RegistrationPageShell';
+import {
+    canDeclineRegistration,
+    canEditRegistration,
+    canWithdrawRegistration,
+    isTerminalRegistration,
+} from '@/lib/registration-status';
 
 export default function ManageRegistrationPage() {
     const { registration_id: registrationId } = useParams<{ registration_id: string }>();
@@ -21,12 +27,11 @@ export default function ManageRegistrationPage() {
     useEffect(() => {
         if (started.current) return;
         started.current = true;
-        if (!token) {
-            router.replace('/registrations/invalid-token');
-            return;
-        }
-        window.history.replaceState({}, '', window.location.pathname);
-        publicApi.createManagementSession(registrationId, token)
+        const request = token
+            ? publicApi.createManagementSession(registrationId, token)
+            : publicApi.getEditableApplication(registrationId);
+        if (token) window.history.replaceState({}, '', window.location.pathname);
+        request
             .then((result) => {
                 if (!result.registration) throw new Error('Registration was not returned');
                 setRegistration(result.registration);
@@ -54,9 +59,10 @@ export default function ManageRegistrationPage() {
     }
     if (!registration) return null;
 
-    const canWithdraw = ['submitted', 'waitlist'].includes(registration.status);
-    const canDecline = ['accepted', 'confirmed'].includes(registration.status);
-    const isTerminal = ['withdrawn', 'not_attending'].includes(registration.status);
+    const canWithdraw = canWithdrawRegistration(registration.status);
+    const canDecline = canDeclineRegistration(registration.status);
+    const isTerminal = isTerminalRegistration(registration.status);
+    const canEdit = canEditRegistration(registration.status);
 
     return (
         <RegistrationPageShell>
@@ -93,6 +99,11 @@ export default function ManageRegistrationPage() {
                         </Button>
                     </div>
                 </div>
+            )}
+            {canEdit && !pendingAction && (
+                <Button variant="outline" onClick={() => router.push(`/registrations/${registrationId}/manage/edit`)}>
+                    Edit application
+                </Button>
             )}
             {canWithdraw && !pendingAction && (
                 <Button disabled={working} onClick={() => setPendingAction('withdraw')}>

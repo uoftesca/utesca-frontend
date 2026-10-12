@@ -24,7 +24,7 @@ export function useRsvpConfirmation(
         setError(null);
 
         try {
-            const response = await publicApi.confirmRsvp(registrationId, token);
+            await publicApi.confirmRsvp(registrationId, token);
 
             // Optimistic update
             setRsvpData((prev) => ({

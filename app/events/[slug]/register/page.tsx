@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 
 import { RegistrationForm } from '@/components/pages/events/RegistrationForm';
 import { publicApi } from '@/lib/public-api';
+import { RegistrationFormMode } from '@/types/registration';
 
 type RegisterPageProps = {
     params: Promise<{ slug: string }>;
@@ -15,12 +16,10 @@ export default async function RegisterPage({ params }: RegisterPageProps) {
         notFound();
     }
 
-    console.log(event);
-
     return (
         <main className="min-h-screen bg-background">
             <div className="container mx-auto flex justify-center py-16 px-8 md:py-24">
-                <RegistrationForm event={event} slug={slug} />
+                <RegistrationForm event={event} slug={slug} mode={RegistrationFormMode.Create} />
             </div>
         </main>
     );

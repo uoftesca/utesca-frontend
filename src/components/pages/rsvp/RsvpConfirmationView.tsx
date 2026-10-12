@@ -127,7 +127,7 @@ function PendingRsvpState({
                 transition={{ delay: 0.2 }}
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center  mb-4 text-white"
             >
-                You're <span className="text-gradient">Invited</span>.
+                You&apos;re <span className="text-gradient">Invited</span>.
             </motion.h1>
 
             <motion.p
@@ -190,11 +190,11 @@ function ConfirmedRsvpState({
             </motion.div>
 
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-                You're <span className="text-gradient">confirmed!</span>
+                You&apos;re <span className="text-gradient">confirmed!</span>
             </h2>
 
             <p className="text-lg text-muted max-w-md mx-auto mb-8">
-                We can't wait to see you there.
+                We can&apos;t wait to see you there.
             </p>
 
             {formattedDate && (
@@ -228,7 +228,7 @@ function DeclinedRsvpState() {
             </motion.div>
 
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-                We'll miss you!
+                We&apos;ll miss you!
             </h2>
 
             <p className="text-lg text-muted max-w-md mx-auto mb-4">

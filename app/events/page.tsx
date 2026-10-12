@@ -7,8 +7,8 @@ import Container from '@/components/Container';
 import Footer from '@/components/Footer';
 import Hero from '@/components/Hero';
 import NavBar from '@/components/NavBar';
-import UpcomingEvents from '@/components/pages/events/UpcomingEvents';
-import EventDetails from '@/components/pages/events/EventDetails';
+import SelectedEventCards from '@/components/pages/events/SelectedEventCards';
+import UpcomingEventPreviews from '@/components/pages/events/UpcomingEventPreviews';
 import PastEvents from '@/components/pages/events/PastEvents';
 
 function EventsContent() {
@@ -17,11 +17,13 @@ function EventsContent() {
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(
         new Date()
     );
-    const [registerSlug, setRegisterSlug] = useState<string | null>(null);
+    const [selectedEventSlug, setSelectedEventSlug] = useState<string | null>(
+        null
+    );
 
-    // Pick up a `?register=<slug>` deep link (e.g. from the home page).
+    // Pick up a `?selected=<slug>` deep link (e.g. from the home page).
     useEffect(() => {
-        setRegisterSlug(searchParams.get('register'));
+        setSelectedEventSlug(searchParams.get('selected'));
     }, [searchParams]);
 
     const scrollToSelectedEvents = () => {
@@ -41,23 +43,21 @@ function EventsContent() {
         const newDate = new Date(date);
         setSelectedDate(newDate);
 
-        // Picking a different event/date on the page overrides any
-        // registration form that was auto-opened via a `?register=` deep link.
-        setRegisterSlug(null);
+        // A date selection replaces an event selected via the URL.
+        setSelectedEventSlug(null);
 
         // Wait for the selected EventCard to render
         setTimeout(scrollToSelectedEvents, 0);
     };
 
-    // Arriving from a "Register" link (e.g. the home page): once UpcomingEvents
-    // has had a chance to fetch and render the opened card, scroll it into view.
+    // Once the selected event card has rendered, scroll it into view.
     useEffect(() => {
-        if (!registerSlug) return;
+        if (!selectedEventSlug) return;
 
         const timeout = setTimeout(scrollToSelectedEvents, 300);
 
         return () => clearTimeout(timeout);
-    }, [registerSlug]);
+    }, [selectedEventSlug]);
 
     return (
         <Container>
@@ -70,15 +70,14 @@ function EventsContent() {
                         </h1>
                     </div>
 
-                    <EventDetails
+                    <UpcomingEventPreviews
                         onDateSelect={handleDateSelect}
                     />
                 </div>
 
-                <UpcomingEvents
-                    onEventsChange={() => { }}
+                <SelectedEventCards
                     selectedDate={selectedDate}
-                    registerSlug={registerSlug}
+                    selectedEventSlug={selectedEventSlug}
                 />
 
                 <PastEvents />
