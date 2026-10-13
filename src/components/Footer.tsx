@@ -1,28 +1,31 @@
 import { Globe, Mail } from "lucide-react";
 import Link from "next/link";
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
+import { MdOutlineForwardToInbox } from "react-icons/md";
 
 const socialLinks = {
   facebook: "https://www.facebook.com/uoftesca/",
   instagram: "https://www.instagram.com/utesca/",
   linkedin: "https://www.linkedin.com/company/utescaconsulting/",
+  mailingList:
+    "https://docs.google.com/forms/d/e/1FAIpQLScRBQrz6BUoxtbjPG-wmoDpDJnLd4Ac3iALir-K5vEJ3wHE2g/viewform?pli=1",
 } as const;
 
 export default function Footer() {
   return (
-    <footer className="bg-sidebar text-sidebar-foreground">
-      <div className="container mx-auto px-8 py-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-8 md:flex-row md:items-start md:justify-between">
+    <footer className="bg-primary text-primary-foreground">
+      <div className="mx-auto px-6 py-6 md:px-10">
+        <div className="mx-auto flex max-w-[88rem] flex-col gap-6 md:flex-row md:items-start md:justify-between">
           {/* First column */}
-          <div className="space-y-4">
-            <h2 className="max-w-sm text-xl font-bold">
-              University of Toronto Engineering Student Consulting Association
+          <div className="space-y-2">
+            <h2 className="max-w-sm text-2xl font-black md:text-3xl">
+              University of Toronto Engineering Students Consulting Association
             </h2>
-            <p className="flex items-center gap-2 text-sm text-sidebar-foreground/80">
+            <p className="flex items-center gap-2 text-base text-primary-foreground/80">
               <Mail className="h-4 w-4" />
               uoft.esca@gmail.com
             </p>
-            <p className="flex items-center gap-2 text-sm text-sidebar-foreground/80">
+            <p className="flex items-center gap-2 text-base text-primary-foreground/80">
               <Globe className="h-4 w-4" />
               www.utesca.ca
             </p>
@@ -31,8 +34,8 @@ export default function Footer() {
           <div className="flex gap-10 md:gap-24">
             {/* Second Column */}
             <div>
-              <h3 className="mb-4 text-lg font-semibold">Explore</h3>
-              <ul className="space-y-2 text-sm">
+              <h3 className="mb-2 text-xl font-black md:text-2xl">Explore</h3>
+              <ul className="space-y-2 text-base">
                 <li>
                   <Link href="/" className="hover:underline">
                     Home
@@ -58,41 +61,50 @@ export default function Footer() {
 
             {/* Third Column */}
             <div>
-              <h3 className="mb-4 text-lg font-semibold">Connect</h3>
-              <div className="flex space-x-4">
+              <h3 className="mb-2 text-xl font-black md:text-2xl">Connect</h3>
+              <div className="flex flex-col gap-3">
                 <Link
                   href={socialLinks.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="transition-colors duration-200 ease-in-out hover:text-primary"
+                  className="flex items-center gap-3 transition-opacity duration-200 ease-in-out hover:opacity-70"
                 >
-                  <span className="sr-only">Instagram</span>
-                  <FaInstagram className="h-6 w-6" />
+                  <FaInstagram className="h-7 w-7" />
+                  <span>Instagram</span>
                 </Link>
                 <Link
                   href={socialLinks.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="transition-colors duration-200 ease-in-out hover:text-primary"
+                  className="flex items-center gap-3 transition-opacity duration-200 ease-in-out hover:opacity-70"
                 >
-                  <span className="sr-only">LinkedIn</span>
-                  <FaLinkedin className="h-6 w-6" />
+                  <FaLinkedin className="h-7 w-7" />
+                  <span>LinkedIn</span>
                 </Link>
                 <a
                   href="mailto:uoft.esca@gmail.com"
-                  className="transition-colors duration-200 ease-in-out hover:text-primary"
+                  className="flex items-center gap-3 transition-opacity duration-200 ease-in-out hover:opacity-70"
                 >
-                  <span className="sr-only">Email</span>
-                  <Mail className="h-6 w-6" />
+                  <Mail className="h-7 w-7" />
+                  <span>Email</span>
                 </a>
+                <Link
+                  href={socialLinks.mailingList}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 transition-opacity duration-200 ease-in-out hover:opacity-70"
+                >
+                  <MdOutlineForwardToInbox className="h-7 w-7" />
+                  <span>Join Mailing List</span>
+                </Link>
               </div>
             </div>
           </div>
         </div>
-        <div className="mx-auto mt-8 max-w-5xl border-t border-primary-foreground/10 pt-8 text-center text-sm">
+        <div className="mx-auto mt-4 max-w-5xl border-t border-primary-foreground/10 pt-4 text-center text-base">
           <p>
             &copy; {new Date().getFullYear()} University of Toronto Engineering
-            Student Consulting Association. All rights reserved.
+            Students Consulting Association. All rights reserved.
           </p>
         </div>
       </div>

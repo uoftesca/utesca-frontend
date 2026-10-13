@@ -1,41 +1,27 @@
 "use client";
 
 import Footer from "@/components/Footer";
-import Hero from "@/components/Hero";
+import HomeHero from "@/components/pages/home/HomeHero";
 import NavBar from "@/components/NavBar";
-import WhatDoesUTESCADo from "@/components/pages/home/WhatDoesUTESCADo";
+import AtAGlance from "@/components/pages/home/AtAGlance";
 import { PartneredWith } from "@/components/pages/home/PartneredWith";
-import Stats from "@/components/pages/home/Stats";
-import JoinUTESCA from "@/components/pages/home/JoinUTESCA";
-import VisionAndMission from "@/components/pages/about/VisionAndMission";
-import PartnerWithUs from "@/components/pages/projects/PartnerWithUs";
-import Scroll from "@/components/Scroll";
-import UpcomingEventPreviews from "@/components/pages/events/UpcomingEventPreviews";
+import PartnerWithUs from "@/components/pages/home/PartnerWithUs";
+import EventsShowcase from "@/components/pages/home/EventsShowcase";
 
 export default function Home() {
   return (
     <>
       <NavBar />
       <main>
-        <Hero />
+        <HomeHero />
 
-        <div>
-          <Scroll>
-            <div className="w-full max-w-6xl mx-auto space-y-8 text-center">
-              <h1 className="text-2xl font-bold tracking-normal md:text-4xl text-primary font-heading">
-                Upcoming Events
-              </h1>
-              <UpcomingEventPreviews linkToEventsPage />
-            </div>
-          </Scroll>
-          <Scroll><WhatDoesUTESCADo /></Scroll>
-          <Scroll><VisionAndMission /></Scroll>
-          <Scroll><Stats /></Scroll>
-          <Scroll><JoinUTESCA /></Scroll>
-          <Scroll><PartnerWithUs /></Scroll>
-        </div>
+        <EventsShowcase />
 
-        <section className="bg-background px-6 py-12 md:px-12 lg:px-20">
+        <AtAGlance />
+
+        <PartnerWithUs />
+
+        <section className="bg-[#c7bfb9] px-6 py-6 md:px-12 md:py-8 lg:px-20">
           <PartneredWith />
         </section>
       </main>

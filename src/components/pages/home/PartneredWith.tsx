@@ -59,14 +59,14 @@ const PartnerCard = ({
     return (
         <figure
             className={cn(
-                'relative w-24 flex items-center justify-center overflow-hidden rounded-xl p-4 select-none'
+                'relative w-32 flex items-center justify-center overflow-hidden rounded-xl p-4 select-none'
             )}
         >
             <div className='flex items-center justify-center'>
                 <Image
                     className='object-cover pointer-events-none'
-                    width={64}
-                    height={24}
+                    width={96}
+                    height={36}
                     alt={`logo`}
                     src={img}
                     draggable={false}
@@ -95,8 +95,6 @@ export function PartneredWith() {
                     />
                 ))}
             </Marquee>
-            <div className='pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white dark:from-background'></div>
-            <div className='pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white dark:from-background'></div>
         </div>
     );
 }

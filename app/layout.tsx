@@ -23,7 +23,7 @@ const body = Poppins({
 export const metadata: Metadata = {
   title: "UTESCA",
   description:
-    "University of Toronto Engineering Student Consulting Association",
+    "University of Toronto Engineering Students Consulting Association",
 };
 
 export default function RootLayout({
