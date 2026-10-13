@@ -8,9 +8,15 @@ import { motion, useScroll, useTransform } from "framer-motion";
 
 import Reveal from "@/components/Reveal";
 import { fetchEvents, formatEventDate } from "@/utils/events";
-import type { Event } from "@/types/event";
+import type { Event, ImagePosition } from "@/types/event";
 
 const VISIBLE_COUNT = 3;
+
+// Same framing as EventCard on the events page: a named position, or a pixel
+// offset from the top.
+function toObjectPosition(position: ImagePosition = "center") {
+  return typeof position === "number" ? `center ${position}px` : `center ${position}`;
+}
 
 export default function PastEventsShowcase() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -80,17 +86,19 @@ export default function PastEventsShowcase() {
               return (
                 <div
                   key={event.id}
-                  className="relative aspect-square w-56 shrink-0 overflow-hidden rounded-2xl bg-black text-white shadow-2xl ring-2 ring-primary transition-transform duration-300 hover:z-10 hover:scale-105 md:w-64"
+                  className="relative aspect-[25/14] w-72 shrink-0 overflow-hidden rounded-2xl bg-black text-white shadow-2xl ring-2 ring-primary transition-transform duration-300 hover:z-10 hover:scale-105 lg:w-80"
                 >
                   {event.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Image
                       src={event.image}
                       alt={event.title}
-                      className="h-full w-full object-cover"
+                      fill
+                      sizes="(min-width: 1024px) 20rem, 18rem"
+                      className="object-cover"
+                      style={{ objectPosition: toObjectPosition(event.imagePosition) }}
                     />
                   ) : (
-                    <div className="flex h-full w-full flex-col items-center justify-center text-primary">
+                    <div className="flex h-full w-full flex-col items-center justify-center pt-10 text-primary">
                       <span className="text-2xl font-bold font-heading">
                         {month}
                       </span>
