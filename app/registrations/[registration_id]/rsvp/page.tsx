@@ -10,15 +10,15 @@ import { RsvpDetailsResponse } from '@/types/registration';
 export default function RegistrationRsvpPage() {
     const { registration_id: registrationId } = useParams<{ registration_id: string }>();
     const router = useRouter();
-    const token = useSearchParams().get('token');
-    const tokenRef = useRef(token);
+    const searchParams = useSearchParams();
+    const [token] = useState(() => searchParams.get('token'));
     const started = useRef(false);
     const [data, setData] = useState<RsvpDetailsResponse | null>(null);
 
     useEffect(() => {
         if (started.current) return;
         started.current = true;
-        if (!tokenRef.current) {
+        if (!token) {
             router.replace('/registrations/invalid-token');
             return;
         }
@@ -26,7 +26,7 @@ export default function RegistrationRsvpPage() {
         publicApi.getRsvpDetails(registrationId)
             .then(setData)
             .catch(() => router.replace('/registrations/invalid-token'));
-    }, [registrationId, router]);
+    }, [registrationId, router, token]);
 
     if (!data) {
         return (
@@ -37,5 +37,5 @@ export default function RegistrationRsvpPage() {
         );
     }
 
-    return <RsvpConfirmationView initialData={data} registrationId={registrationId} token={tokenRef.current!} />;
+    return <RsvpConfirmationView initialData={data} registrationId={registrationId} token={token!} />;
 }

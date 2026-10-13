@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, ChevronDown } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useState } from "react";
-
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
@@ -29,41 +28,24 @@ type NavItem = {
   children?: { href: string; label: string }[];
 };
 
-const NavBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
-  const toggleSection = (href: string) =>
-    setOpenSections((s) => ({ ...s, [href]: !s[href] }));
+const NAV_ITEMS: NavItem[] = [
+  { href: "/", label: "Home" },
+  { href: "/team", label: "Team" },
+  {
+    href: "/projects",
+    label: "Services",
+    children: [
+      { href: "/projects/cep", label: "Consulting Engineering Projects" },
+      { href: "/projects/examples", label: "Projects" },
+    ],
+  },
+  { href: "/events", label: "Events" },
+];
 
-  const navItems: NavItem[] = [
-    { href: "/", label: "Home" },
-    // {
-    //   href: "/about",
-    //   label: "About Us",
-    //   children: [
-    //     { href: "/about/vision-mission", label: "Our Vision & Missions" },
-    //     { href: "/about/team", label: "Our Team" },
-    //     // { href: "/about/alumni", label: "Alumni" },
-    //     { href: "/about/partner", label: "Partner With Us" },
-    //   ],
-    // },
-    { href: "/team", label: "Team"},
-    {
-      href: "/projects",
-      label: "Services",
-      children: [
-        { href: "/projects/cep", label: "Consulting Engineering Projects" },
-        { href: "/projects/examples", label: "Projects" },
-      ],
-    },
-    { href: "/events", label: "Events" },
-  ];
-
-  const closeMenu = () => setIsOpen(false);
-
-  const NavItems = ({ onClick = () => {} }: { onClick?: () => void }) => (
+function NavItems({ onClick }: { onClick?: () => void }) {
+  return (
     <>
-      {navItems.map((item) =>
+      {NAV_ITEMS.map((item) =>
         item.children ? (
           <NavigationMenuItem key={item.href} className="relative">
             <NavigationMenuTrigger className="text-lg font-bold text-primary-foreground hover:text-primary-foreground/80 hover:bg-white/10 focus:text-primary-foreground data-[active]:bg-white/10 data-[state=open]:bg-white/10">
@@ -78,10 +60,7 @@ const NavBar = () => {
                         href={child.href}
                         className="block select-none whitespace-nowrap rounded-md px-3 py-2 text-base font-bold leading-none text-primary-foreground no-underline outline-none
                       transition-colors hover:bg-white/15 focus:bg-white/15"
-                        onClick={() => {
-                          onClick();
-                          closeMenu();
-                        }}
+                        onClick={onClick}
                       >
                         {child.label}
                       </Link>
@@ -100,10 +79,7 @@ const NavBar = () => {
                   navigationMenuTriggerStyle(),
                   "text-lg font-bold text-primary-foreground hover:text-primary-foreground/80 hover:bg-white/10 focus:text-primary-foreground data-[active]:bg-white/10",
                 )}
-                onClick={() => {
-                  onClick();
-                  closeMenu();
-                }}
+                onClick={onClick}
               >
                 {item.label}
               </Link>
@@ -113,12 +89,19 @@ const NavBar = () => {
       )}
     </>
   );
+}
+
+const NavBar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const closeMenu = () => setIsOpen(false);
 
   return (
     <nav className="flex items-center justify-between px-4 py-2 bg-primary text-primary-foreground shadow-md">
       <div className="flex items-center">
         <Link href="/">
           <div className="relative w-[150px] h-[62px]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/utesca-logo-white-skyline.svg"
               alt="UTESCA Logo"
@@ -155,7 +138,7 @@ const NavBar = () => {
               <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
             </SheetHeader>
             <nav className="flex flex-col space-y-4 mt-4">
-              {navItems.map((item) => (
+              {NAV_ITEMS.map((item) => (
                 <div key={item.href}>
                   <Link
                     href={item.href}

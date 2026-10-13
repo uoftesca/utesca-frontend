@@ -2,7 +2,6 @@ import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Fraunces, Poppins } from "next/font/google";
 import { Toaster } from "sonner";
-// @ts-ignore
 import "./globals.css";
 
 // Header font

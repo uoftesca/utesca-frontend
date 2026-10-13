@@ -6,13 +6,12 @@ import UpcomingEventPreview from "./UpcomingEventPreview";
 
 /**
  * ============================================================================
- * EventDetails
+ * UpcomingEventPreviews
  * ============================================================================
  *
  * PURPOSE
  * -------
  * Displays previews for the next 3 upcoming events.
- * Registration logic belongs in EventRegistrationForm.tsx.
  *
  *
  * DATA FLOW
@@ -48,7 +47,7 @@ import UpcomingEventPreview from "./UpcomingEventPreview";
  * ============================================================================
  */
 
-interface EventDetailsProps {
+interface UpcomingEventPreviewsProps {
   /**
    * Called when the user selects one of the event previews.
    *
@@ -57,14 +56,13 @@ interface EventDetailsProps {
    */
   onDateSelect?: (date: Date) => void;
 
-  /** Home-page behaviour: clicking a preview goes to the events page with
-   *  that event's registration form opened (`/events?register=<slug>`). */
-  linkToRegistration?: boolean;
+  /** Home-page behaviour: clicking a preview opens that event on the events page. */
+  linkToEventsPage?: boolean;
 }
 
-const EventDetails: React.FC<EventDetailsProps> = ({
+const UpcomingEventPreviews: React.FC<UpcomingEventPreviewsProps> = ({
   onDateSelect,
-  linkToRegistration = false,
+  linkToEventsPage = false,
 }) => {
   /**
    * Contains the next 3 upcoming events that will be rendered.
@@ -191,8 +189,8 @@ const EventDetails: React.FC<EventDetailsProps> = ({
                  */
                 date={calendarDate}
                 href={
-                  linkToRegistration
-                    ? `/events?register=${event.slug}`
+                  linkToEventsPage
+                    ? `/events?selected=${event.slug}`
                     : undefined
                 }
                 onDateSelect={onDateSelect}
@@ -205,4 +203,4 @@ const EventDetails: React.FC<EventDetailsProps> = ({
   );
 };
 
-export default EventDetails;
+export default UpcomingEventPreviews;
