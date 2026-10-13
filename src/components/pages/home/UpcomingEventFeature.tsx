@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Calendar, Clock, MapPin } from "lucide-react";
 
@@ -88,11 +89,12 @@ export default function UpcomingEventFeature({
             <div className="grid gap-10 md:grid-cols-2 md:items-center md:gap-16">
               <div className="relative h-64 w-full overflow-hidden rounded-2xl bg-primary/80 text-primary-foreground shadow-xl md:h-[420px]">
                 {nextEvent?.image ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={nextEvent.image}
                     alt={nextEvent.title}
-                    className="h-full w-full object-cover"
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
                   />
                 ) : (
                   nextEvent && (
@@ -113,7 +115,7 @@ export default function UpcomingEventFeature({
                   Next Up
                 </p>
 
-                <h3 className="text-3xl font-bold leading-tight text-primary md:text-5xl">
+                <h3 className="text-3xl font-bold leading-tight text-primary md:text-4xl">
                   {isLoading ? "Loading…" : nextEvent?.title}
                 </h3>
 
@@ -146,18 +148,19 @@ export default function UpcomingEventFeature({
                   </p>
                 )}
 
-                <div className="flex flex-wrap gap-4 pt-2">
-                  {nextEvent && (
-                    <Button asChild size="xl">
+                {nextEvent && (
+                  <div className="pt-2">
+                    <Button
+                      asChild
+                      size="xl"
+                      className="h-12 px-12 text-base font-bold"
+                    >
                       <Link href={`/events?register=${nextEvent.slug}`}>
                         RSVP Now
                       </Link>
                     </Button>
-                  )}
-                  <Button asChild size="xl" variant="outline">
-                    <Link href="/events">View All Events</Link>
-                  </Button>
-                </div>
+                  </div>
+                )}
               </div>
             </div>
           </Reveal>
