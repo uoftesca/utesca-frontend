@@ -25,7 +25,7 @@ export default function EventsShowcase() {
     offset: ["start start", "end start"],
   });
 
-  const wipeProgress = useTransform(scrollYProgress, [0.3, 0.95], [0, 1]);
+  const wipeProgress = useTransform(scrollYProgress, [0.15, 0.95], [0, 1]);
   const overlayTop = useTransform(wipeProgress, (v) => `${100 - v * 100}%`);
 
   const overlay = (

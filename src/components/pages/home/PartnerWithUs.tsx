@@ -13,8 +13,10 @@ export default function PartnerWithUs() {
         sizes="100vw"
         className="object-cover object-bottom"
       />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#77302d] to-transparent md:h-64" />
       <div className="absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-black/70 to-transparent" />
+      {/* Above the black overlay so the top edge is pure #77302d, matching
+          AtAGlance's bottom fade -- no visible seam. */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#77302d] to-transparent md:h-64" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-[#c7bfb9] md:h-24" />
 
       <Reveal className="relative z-10">
