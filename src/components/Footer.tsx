@@ -104,7 +104,7 @@ export default function Footer() {
         <div className="mx-auto mt-4 max-w-5xl border-t border-primary-foreground/10 pt-4 text-center text-base">
           <p>
             &copy; {new Date().getFullYear()} University of Toronto Engineering
-            Student Consulting Association. All rights reserved.
+            Students Consulting Association. All rights reserved.
           </p>
         </div>
       </div>
