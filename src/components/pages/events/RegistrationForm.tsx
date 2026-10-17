@@ -793,14 +793,14 @@ export function RegistrationForm({
           </div>
         ) : (
           <>
-            {mode === RegistrationFormMode.Create && schema.autoAccept && (
+            {mode === RegistrationFormMode.Create && !schema.autoAccept && (
               <Alert className="border-primary/30 bg-primary/5 text-primary">
                 <CircleAlert className="h-4 w-4 !text-primary" />
                 <AlertTitle>
-                  You will automatically be accepted to this event.
+                  This event requires manual approval to attend.
                 </AlertTitle>
                 <AlertDescription>
-                  You may receive a confirmation email shortly after submitting.
+                  You will receive an email regarding your acceptance prior to the event.
                 </AlertDescription>
               </Alert>
             )}
