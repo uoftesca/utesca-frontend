@@ -33,8 +33,7 @@ export interface RegistrationFormField {
 export interface RegistrationFormSchema {
     autoAccept?: boolean;
     fields: RegistrationFormField[];
-    notEditable?: string[];
-    not_editable?: string[];
+    editable?: string[];
 }
 
 export interface UploadFileRequest {

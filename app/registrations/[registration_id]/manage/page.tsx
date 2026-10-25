@@ -6,6 +6,7 @@ import { publicApi } from '@/lib/public-api';
 import { Button } from '@/components/ui/button';
 import { ManagementActionResponse, RegistrationSummary, RsvpDeclineResponse } from '@/types/registration';
 import { RegistrationPageShell } from '@/components/pages/registrations/RegistrationPageShell';
+import { hasApplicantEditableFields } from '@/lib/registration-form';
 import {
     canDeclineRegistration,
     canEditRegistration,
@@ -19,6 +20,7 @@ export default function ManageRegistrationPage() {
     const token = useSearchParams().get('token');
     const started = useRef(false);
     const [registration, setRegistration] = useState<RegistrationSummary | null>(null);
+    const [hasEditableFields, setHasEditableFields] = useState(false);
     const [actionError, setActionError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [working, setWorking] = useState(false);
@@ -29,12 +31,14 @@ export default function ManageRegistrationPage() {
         started.current = true;
         const request = token
             ? publicApi.createManagementSession(registrationId, token)
+                .then(() => publicApi.getEditableApplication(registrationId))
             : publicApi.getEditableApplication(registrationId);
         if (token) window.history.replaceState({}, '', window.location.pathname);
         request
             .then((result) => {
                 if (!result.registration) throw new Error('Registration was not returned');
                 setRegistration(result.registration);
+                setHasEditableFields(hasApplicantEditableFields(result.event?.registrationFormSchema));
             })
             .catch(() => router.replace('/registrations/invalid-token'))
             .finally(() => setLoading(false));
@@ -62,7 +66,7 @@ export default function ManageRegistrationPage() {
     const canWithdraw = canWithdrawRegistration(registration.status);
     const canDecline = canDeclineRegistration(registration.status);
     const isTerminal = isTerminalRegistration(registration.status);
-    const canEdit = canEditRegistration(registration.status);
+    const canEdit = canEditRegistration(registration.status) && hasEditableFields;
 
     return (
         <RegistrationPageShell>
