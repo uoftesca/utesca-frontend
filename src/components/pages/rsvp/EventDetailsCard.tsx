@@ -25,6 +25,7 @@ function formatDate(dateString: string | null): string | null {
 
 export function EventDetailsCard({ event }: EventDetailsCardProps) {
     const formattedDate = formatDate(event.dateTime);
+    const formattedEndDate = formatDate(event.endDateTime);
 
     return (
         <Card>
@@ -36,6 +37,13 @@ export function EventDetailsCard({ event }: EventDetailsCardProps) {
                     <div className="flex items-center gap-2 text-foreground">
                         <Calendar className="h-4 w-4 text-muted-foreground" />
                         <span>{formattedDate}</span>
+                    </div>
+                )}
+
+                {formattedEndDate && (
+                    <div className="flex items-center gap-2 text-foreground">
+                        <Calendar className="h-4 w-4 text-muted-foreground" />
+                        <span>Ends: {formattedEndDate}</span>
                     </div>
                 )}
 

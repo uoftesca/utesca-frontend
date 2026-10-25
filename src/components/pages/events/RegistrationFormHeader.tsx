@@ -47,11 +47,13 @@ export function formatRegistrationDeadline(value?: string | null) {
 function EventDetails({ event, deadlineLabel }: Readonly<{ event: PublicEventDetail; deadlineLabel?: string }>) {
   const date = formatEventDate(event.dateTime);
   const time = formatEventTime(event.dateTime);
+  const end = formatRegistrationDeadline(event.endDateTime);
   const deadline = formatRegistrationDeadline(event.registrationDeadline);
   return (
     <div className="space-y-2 text-base text-foreground">
       {date && <div className="flex items-center gap-2"><Calendar className="h-4 w-4" /><span>{date}</span></div>}
       {time && <div className="flex items-center gap-2"><Clock className="h-4 w-4" /><span>{time}</span></div>}
+      {end && <div className="flex items-center gap-2"><Clock className="h-4 w-4" /><span>Ends: {end}</span></div>}
       {event.location && <div className="flex items-center gap-2"><MapPin className="h-4 w-4" /><span>{event.location}</span></div>}
       {deadline && deadlineLabel && <div className="text-muted-foreground">{deadlineLabel} {deadline}</div>}
     </div>

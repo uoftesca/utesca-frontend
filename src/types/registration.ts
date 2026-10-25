@@ -101,6 +101,7 @@ export interface PublicEventDetail {
     title: string;
     description?: string | null;
     dateTime: string | null;
+    endDateTime?: string | null;
     location?: string | null;
     registrationDeadline?: string | null;
     registrationFormSchema?: RegistrationFormSchema | null;
@@ -112,6 +113,7 @@ export type RsvpStatus = 'accepted' | 'confirmed' | 'not_attending';
 export interface RsvpEventDetails {
     title: string;
     dateTime: string | null;
+    endDateTime: string | null;
     location: string | null;
     description: string | null;
 }
@@ -138,6 +140,7 @@ export interface RsvpConfirmResponse {
     event: {
         title: string | null;
         dateTime: string | null;
+        endDateTime?: string | null;
         location: string | null;
     };
 }

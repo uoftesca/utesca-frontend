@@ -133,6 +133,15 @@ export default function UpcomingEventFeature({
                         <span>{formatTime(nextEvent.dateTime)}</span>
                       </div>
                     )}
+                    {nextEvent.endDateTime && (
+                      <div className="flex items-center gap-2">
+                        <Clock className="h-5 w-5 shrink-0 text-primary" />
+                        <span>
+                          Ends: {formatDate(nextEvent.endDateTime)} at{" "}
+                          {formatTime(nextEvent.endDateTime)}
+                        </span>
+                      </div>
+                    )}
                     {nextEvent.location && (
                       <div className="flex items-center gap-2">
                         <MapPin className="h-5 w-5 shrink-0 text-primary" />

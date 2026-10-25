@@ -25,6 +25,7 @@ export default function EventCard({
   albumLink,
   status,
   dateTime,
+  endDateTime,
   location,
   isExpanded = false,
 }: EventCardProps & { isExpanded?: boolean }) {
@@ -97,6 +98,7 @@ export default function EventCard({
   const eventDateDisplay = formatEventDate(dateTime);
   const eventTimeDisplay = formatEventTime(dateTime);
   const deadlineDisplay = formatDeadline(registrationDeadline);
+  const endDateTimeDisplay = formatDeadline(endDateTime);
 
   const registrationDeadlineDate = registrationDeadline
     ? new Date(registrationDeadline)
@@ -217,6 +219,12 @@ export default function EventCard({
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4 shrink-0" />
                   <span>{eventTimeDisplay}</span>
+                </div>
+              )}
+              {endDateTimeDisplay && (
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 shrink-0" />
+                  <span>Ends: {endDateTimeDisplay}</span>
                 </div>
               )}
               {location && (
