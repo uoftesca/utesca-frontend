@@ -43,20 +43,11 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { isApplicantEditableField } from "@/lib/registration-form";
 import {
   EditRegistrationHeader,
   InitialRegistrationHeader,
 } from "./RegistrationFormHeader";
-
-const DEFAULT_NOT_EDITABLE_FIELDS = [
-  "email",
-  "full_name",
-  "fullName",
-  "first_name",
-  "firstName",
-  "last_name",
-  "lastName",
-];
 
 type RegistrationFormProps = {
   readonly event: PublicEventDetail;
@@ -240,14 +231,9 @@ export function RegistrationForm({
     );
   })();
 
-  const configuredNotEditable = schema.notEditable ?? schema.not_editable ?? [];
-  const notEditableFields = new Set([
-    ...DEFAULT_NOT_EDITABLE_FIELDS,
-    ...configuredNotEditable,
-  ]);
   const isProtectedField = (field: RegistrationFormField) =>
     mode === RegistrationFormMode.Edit &&
-    (field.type === "file" || notEditableFields.has(field.id));
+    !isApplicantEditableField(schema, field);
   const isFieldDisabled = (field: RegistrationFormField) =>
     submitting || isClosed || isProtectedField(field);
 
