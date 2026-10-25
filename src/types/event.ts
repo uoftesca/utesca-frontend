@@ -20,6 +20,7 @@ export interface Event {
 
     readonly id: string;
     readonly dateTime?: string;
+    readonly endDateTime?: string | null;
     readonly location?: string | null;
 }
 

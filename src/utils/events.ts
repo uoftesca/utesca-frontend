@@ -6,6 +6,7 @@ interface ApiEventResponse {
     slug: string;
     title: string;
     dateTime: string;
+    endDateTime?: string | null;
     description: string;
     category: string;
     registrationLink?: string;
@@ -74,6 +75,7 @@ export async function fetchEvents() {
             slug: e.slug,
             date: d,
             dateTime: e.dateTime,
+            endDateTime: e.endDateTime ?? null,
             location: e.location ?? null,
             description: e.description || '',
             category: e.category || '',
