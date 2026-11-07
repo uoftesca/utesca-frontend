@@ -14,8 +14,8 @@ const socialLinks = {
 export default function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground">
-      <div className="mx-auto px-6 py-6 md:px-10">
-        <div className="mx-auto flex max-w-[88rem] flex-col gap-6 md:flex-row md:items-start md:justify-between">
+      <div className="mx-auto px-8 py-6 md:px-14">
+        <div className="mx-auto flex max-w-[84rem] flex-col gap-6 md:flex-row md:items-start md:justify-between">
           {/* First column */}
           <div className="space-y-2">
             <h2 className="max-w-sm text-2xl font-black md:text-3xl">

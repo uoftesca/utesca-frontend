@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 
@@ -15,9 +15,35 @@ const FAST_FACTS = [
   { num: "15", label: "Disciplines Engaged" },
 ];
 
+// Handshake image's solid border colour, and where its arms end, as % of the
+// image box (measured from public/handshake.png). The bars extend each arm off
+// the edge of the screen so the handshake spans the whole diagonal.
+const HANDSHAKE_RED = "rgb(165, 73, 72)";
+const LEFT_ARM = { end: "88%", top: "1%", height: "49.7%" }; // `end` = right offset
+const RIGHT_ARM = { start: "86%", top: "35.2%", height: "56.4%" };
+
+// Steeper than this and the stats on the band get hard to read (phones).
+const MAX_ANGLE_DEG = 40;
+
 // Sliding diagonal band: starts over the mascot, ends over the glance text.
 export default function AtAGlance() {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Tilt the band to the section's own corner-to-corner diagonal.
+  const [angle, setAngle] = useState(32);
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const update = () => {
+      const deg = (Math.atan2(el.clientHeight, el.clientWidth) * 180) / Math.PI;
+      setAngle(Math.min(deg, MAX_ANGLE_DEG));
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
@@ -31,7 +57,9 @@ export default function AtAGlance() {
 
   return (
     <div ref={wrapperRef} className="relative h-[200vh]">
-      <section className="sticky top-0 flex min-h-screen w-full flex-col justify-between gap-12 overflow-hidden bg-primary px-6 py-16 text-primary-foreground md:px-12 lg:px-20">
+      <section
+        ref={sectionRef}
+        className="sticky top-0 flex min-h-screen w-full flex-col justify-between gap-12 overflow-hidden bg-primary px-6 py-16 text-primary-foreground md:px-12 lg:px-20">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black to-transparent md:h-40" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#77302d] to-transparent md:h-40" />
 
@@ -91,20 +119,53 @@ export default function AtAGlance() {
         </motion.div>
 
         <motion.div
-          style={{ top: bandTop }}
-          className="absolute left-1/2 z-20 flex h-80 w-[140%] -translate-x-1/2 -translate-y-1/2 -rotate-[35deg] items-center justify-center rounded-2xl bg-[#e1d4d7] shadow-[0_30px_70px_-10px_rgba(0,0,0,0.65),0_-30px_70px_-10px_rgba(0,0,0,0.65)] md:h-96"
+          // Centring goes through motion too: a motion `rotate` replaces any CSS
+          // transform classes on the same element.
+          style={{ top: bandTop, rotate: -angle, x: "-50%", y: "-50%" }}
+          className="absolute left-1/2 z-20 [filter:drop-shadow(0_30px_40px_rgba(0,0,0,0.55))]"
         >
-          <div className="grid grid-cols-3 gap-16 text-center text-black md:gap-32">
-            {FAST_FACTS.map((fact) => (
-              <div key={fact.label}>
-                <p className="text-6xl font-black font-heading md:text-9xl">
-                  {fact.num}
-                </p>
-                <p className="text-base font-black uppercase tracking-wide text-black/90 md:text-lg">
-                  {fact.label}
-                </p>
+          {/* Hands sit toward the top-right end of the diagonal; the left arm's
+              bar runs down to the bottom-left and carries the stats. */}
+          <div className="relative aspect-[16/9] w-[22rem] translate-x-[49%] sm:w-[40rem] sm:translate-x-[67%] md:w-[56rem] md:translate-x-[78%]">
+            {/* Arm extensions, behind the image so its ragged ends overlap them. */}
+            <div
+              className="absolute flex w-[300vmax] items-center justify-end pr-6 sm:pr-16 md:pr-32"
+              style={{
+                right: LEFT_ARM.end,
+                top: LEFT_ARM.top,
+                height: LEFT_ARM.height,
+                backgroundColor: HANDSHAKE_RED,
+              }}
+            >
+              <div className="grid grid-cols-3 gap-1 text-center text-white [text-shadow:0_4px_18px_rgba(0,0,0,0.45)] sm:gap-10 md:gap-14">
+                {FAST_FACTS.map((fact) => (
+                  <div key={fact.label} className="max-w-[4.5rem] sm:max-w-[9rem] md:max-w-[11rem]">
+                    <p className="text-3xl font-black font-heading sm:text-6xl md:text-8xl">
+                      {fact.num}
+                    </p>
+                    <p className="text-[0.65rem] font-black uppercase leading-tight tracking-wide text-white/90 sm:text-base md:text-lg">
+                      {fact.label}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+            <div
+              className="absolute w-[300vmax]"
+              style={{
+                left: RIGHT_ARM.start,
+                top: RIGHT_ARM.top,
+                height: RIGHT_ARM.height,
+                backgroundColor: HANDSHAKE_RED,
+              }}
+            />
+            <Image
+              src="/handshake.png"
+              alt=""
+              fill
+              sizes="(min-width: 768px) 56rem, (min-width: 640px) 40rem, 22rem"
+              className="object-contain"
+            />
           </div>
         </motion.div>
       </section>

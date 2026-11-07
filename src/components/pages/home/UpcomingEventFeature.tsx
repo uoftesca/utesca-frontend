@@ -10,30 +10,57 @@ import Reveal from "@/components/Reveal";
 import { fetchEvents, formatEventDate } from "@/utils/events";
 import type { Event } from "@/types/event";
 
-function formatDate(dateTime?: string) {
+const TIME_ZONE = "America/Toronto";
+
+const dateFormat = new Intl.DateTimeFormat("en-CA", {
+  timeZone: TIME_ZONE,
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+});
+const timeFormat = new Intl.DateTimeFormat("en-CA", {
+  timeZone: TIME_ZONE,
+  hour: "numeric",
+  minute: "2-digit",
+  timeZoneName: "short",
+});
+const timeNoZoneFormat = new Intl.DateTimeFormat("en-CA", {
+  timeZone: TIME_ZONE,
+  hour: "numeric",
+  minute: "2-digit",
+});
+const dayKeyFormat = new Intl.DateTimeFormat("en-CA", { timeZone: TIME_ZONE });
+
+function parse(dateTime?: string | null) {
   if (!dateTime) return null;
   const parsed = new Date(dateTime);
-  if (Number.isNaN(parsed.getTime())) return null;
-
-  return new Intl.DateTimeFormat("en-CA", {
-    timeZone: "America/Toronto",
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  }).format(parsed);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
 }
 
-function formatTime(dateTime?: string) {
-  if (!dateTime) return null;
-  const parsed = new Date(dateTime);
-  if (Number.isNaN(parsed.getTime())) return null;
+// End is ignored if missing, invalid, or not after the start.
+function parseRange(start?: string, end?: string | null) {
+  const from = parse(start);
+  const to = parse(end);
+  return { from, to: from && to && to > from ? to : null };
+}
 
-  return new Intl.DateTimeFormat("en-CA", {
-    timeZone: "America/Toronto",
-    hour: "numeric",
-    minute: "2-digit",
-    timeZoneName: "short",
-  }).format(parsed);
+// "Friday, November 20", or "Friday, November 20–Sunday, November 22".
+function formatDateRange(start?: string, end?: string | null) {
+  const { from, to } = parseRange(start, end);
+  if (!from) return null;
+  return to ? dateFormat.formatRange(from, to) : dateFormat.format(from);
+}
+
+// "6:00 p.m. EST", "6:00–8:00 p.m. EST", or for multi-day events
+// "6:00 p.m. – 2:00 p.m. EST" (the dates are on the line above).
+function formatTimeRange(start?: string, end?: string | null) {
+  const { from, to } = parseRange(start, end);
+  if (!from) return null;
+  if (!to) return timeFormat.format(from);
+  if (dayKeyFormat.format(from) === dayKeyFormat.format(to)) {
+    return timeFormat.formatRange(from, to);
+  }
+  return `${timeNoZoneFormat.format(from)} – ${timeFormat.format(to)}`;
 }
 
 // `overlay` is the scroll wipe from EventsShowcase.tsx.
@@ -121,28 +148,24 @@ export default function UpcomingEventFeature({
 
                 {nextEvent && (
                   <div className="space-y-2 text-base text-secondary-foreground/80">
-                    {formatDate(nextEvent.dateTime) && (
+                    {formatDateRange(nextEvent.dateTime, nextEvent.endDateTime) && (
                       <div className="flex items-center gap-2">
                         <Calendar className="h-5 w-5 shrink-0 text-primary" />
-                        <span>{formatDate(nextEvent.dateTime)}</span>
+                        <span>
+                          {formatDateRange(nextEvent.dateTime, nextEvent.endDateTime)}
+                        </span>
                       </div>
                     )}
-                    {formatTime(nextEvent.dateTime) && (
-                      <div className="flex items-center gap-2">
-                        <Clock className="h-5 w-5 shrink-0 text-primary" />
-                        <span>{formatTime(nextEvent.dateTime)}</span>
-                      </div>
-                    )}
-                    {nextEvent.endDateTime && (
+                    {formatTimeRange(nextEvent.dateTime, nextEvent.endDateTime) && (
                       <div className="flex items-center gap-2">
                         <Clock className="h-5 w-5 shrink-0 text-primary" />
                         <span>
-                          Ends: {formatDate(nextEvent.endDateTime)} at{" "}
-                          {formatTime(nextEvent.endDateTime)}
+                          {formatTimeRange(nextEvent.dateTime, nextEvent.endDateTime)}
                         </span>
                       </div>
                     )}
                     {nextEvent.location && (
+
                       <div className="flex items-center gap-2">
                         <MapPin className="h-5 w-5 shrink-0 text-primary" />
                         <span>{nextEvent.location}</span>
