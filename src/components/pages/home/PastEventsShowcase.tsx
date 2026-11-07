@@ -117,10 +117,17 @@ export default function PastEventsShowcase() {
 
             <Link
               href="/events"
-              aria-label="See more past events"
-              className="flex aspect-square w-20 shrink-0 items-center justify-center rounded-2xl border border-white/20 text-white/70 transition-colors hover:border-white/50 hover:text-white md:w-24"
+              aria-label="See all events"
+              className="group relative flex shrink-0 items-center justify-center p-2 text-white outline-none"
             >
-              <ArrowRight className="h-8 w-8" />
+              <ArrowRight
+                strokeWidth={3}
+                className="h-14 w-14 transition-transform duration-200 group-hover:translate-x-1 group-focus-visible:translate-x-1 md:h-16 md:w-16"
+              />
+              {/* Label floats below the arrow so showing it doesn't shift the row. */}
+              <span className="pointer-events-none absolute left-1/2 top-full ml-3 mt-1 -translate-x-1/2 whitespace-nowrap text-sm font-bold text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+                See all events
+              </span>
             </Link>
           </div>
         ) : (
