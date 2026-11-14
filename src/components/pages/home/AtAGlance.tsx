@@ -9,6 +9,21 @@ import Reveal from "@/components/Reveal";
 const DESCRIPTION =
   "UTESCA is the premier engineering consulting club at UofT. We bridge engineering and consulting for students who are interested in pursuing a career in consulting.";
 
+const MASCOT_INTRO =
+  "Meet the face of UTESCA! Our mascot embodies the creativity, collaboration, and problem-solving mindset that drives our community of future engineers and consultants.";
+
+const MASCOT_TRAITS = [
+  {
+    name: "Creative Thinker",
+    text: "Turning bold ideas into innovative solutions.",
+  },
+  { name: "Team Player", text: "Bringing people together to achieve more." },
+  {
+    name: "Problem Solver",
+    text: "Tackling real-world challenges with curiosity and confidence.",
+  },
+];
+
 const FAST_FACTS = [
   { num: "80", label: "Student Executives" },
   { num: "30", label: "Projects Since 2020" },
@@ -50,7 +65,7 @@ export default function AtAGlance() {
     offset: ["start start", "end end"],
   });
 
-  const bandTop = useTransform(scrollYProgress, [0, 1], ["78%", "18%"]);
+  const bandTop = useTransform(scrollYProgress, [0, 1], ["90%", "18%"]);
 
   const glanceOpacity = useTransform(scrollYProgress, [0.3, 0.5], [1, 0]);
   const mascotOpacity = useTransform(scrollYProgress, [0.5, 0.7], [0, 1]);
@@ -85,12 +100,12 @@ export default function AtAGlance() {
 
         <motion.div
           style={{ opacity: mascotOpacity }}
-          className="relative z-0 mb-4 ml-auto flex items-center gap-8 md:mb-8 md:gap-12"
+          className="relative z-0 mb-4 flex flex-col items-start gap-4 md:mb-8 md:ml-auto md:flex-row md:items-center md:gap-12"
         >
           <motion.div
             animate={{ y: [0, -20, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="relative h-80 w-80 shrink-0 md:h-[28rem] md:w-[28rem]"
+            className="relative h-40 w-40 shrink-0 self-center md:h-[28rem] md:w-[28rem] md:self-auto"
           >
             <Image
               src="/utesca-mascot-cntower.png"
@@ -104,16 +119,24 @@ export default function AtAGlance() {
             />
           </motion.div>
 
-          <div className="text-left">
-            <h3 className="text-7xl font-black leading-[0.9] tracking-tight md:text-9xl">
+          <div className="max-w-2xl text-left">
+            <h3 className="text-5xl font-black leading-[0.9] tracking-tight md:text-9xl">
               Meet Our
               <br />
               Mascot
             </h3>
-            <ul className="mt-8 list-inside list-disc space-y-4 text-2xl text-primary-foreground/90 md:text-3xl">
-              <li>Unites & Engage</li>
-              <li>Quick Team</li>
-              <li>Problem Solver</li>
+            <p className="mt-4 text-base font-bold text-primary-foreground/90 md:mt-6 md:text-2xl">
+              {MASCOT_INTRO}
+            </p>
+            <ul className="mt-4 list-outside list-disc space-y-2 pl-5 text-sm text-primary-foreground/90 md:mt-6 md:space-y-3 md:pl-6 md:text-xl">
+              {MASCOT_TRAITS.map((trait) => (
+                <li key={trait.name}>
+                  <span className="font-bold text-primary-foreground">
+                    {trait.name}:
+                  </span>{" "}
+                  {trait.text}
+                </li>
+              ))}
             </ul>
           </div>
         </motion.div>

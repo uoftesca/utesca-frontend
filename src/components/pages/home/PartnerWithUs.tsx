@@ -14,18 +14,21 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import Reveal from "@/components/Reveal";
 
-const SLIDES = [
-  "/partnerwithus/picture1.png",
-  "/partnerwithus/picture2.png",
-  "/partnerwithus/picture3.png",
-  "/partnerwithus/picture4.png",
+// Shown if the Drive folder can't be loaded or is empty
+const FALLBACK_SLIDES = [
+  "/partnerwithus/01-Kickoff Event.jpg",
+  "/partnerwithus/02-Isaac Event.jpg",
+  "/partnerwithus/03-Alumni Panel Event.png",
+  "/partnerwithus/04-picture1.png",
 ];
 
 const INTERVAL_MS = 5000;
 
-// Home-only slideshow, not the shared projects/PartnerWithUs.tsx. The current
-// slide sits centred and uncropped; a blurred copy of it fills the section.
+// Home-only slideshow, not the shared projects/PartnerWithUs.tsx. Slides come
+// from a Google Drive folder via /api/partner-slides.
 export default function PartnerWithUs() {
+  // null until the Drive list arrives, so the bundled images never flash first.
+  const [slides, setSlides] = useState<string[] | null>(null);
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const reduceMotion = useReducedMotion();
@@ -35,10 +38,30 @@ export default function PartnerWithUs() {
   // 0 → 1 over INTERVAL_MS; drives the active dot's fill bar.
   const progress = useMotionValue(0);
 
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/partner-slides")
+      .then((res) => (res.ok ? res.json() : { slides: [] }))
+      .then((data: { slides?: { src: string }[] }) => {
+        if (cancelled) return;
+        const fromDrive = (data.slides ?? []).map((slide) => slide.src);
+        setSlides(fromDrive.length > 0 ? fromDrive : FALLBACK_SLIDES);
+      })
+      .catch(() => {
+        if (!cancelled) setSlides(FALLBACK_SLIDES);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const count = slides?.length ?? 0;
+  const current = slides?.[index];
+
   const go = useCallback(
     (delta: number) =>
-      setIndex((i) => (i + delta + SLIDES.length) % SLIDES.length),
-    [],
+      setIndex((i) => (count === 0 ? 0 : (i + delta + count) % count)),
+    [count],
   );
 
   // Any slide change (auto, arrows, dots) starts a fresh, empty bar.
@@ -49,7 +72,7 @@ export default function PartnerWithUs() {
   // Fills the bar only while on screen and not hovered; advances when full.
   // delta is capped so returning to a backgrounded tab doesn't skip ahead.
   useAnimationFrame((_, delta) => {
-    if (paused || reduceMotion || !inView) return;
+    if (paused || reduceMotion || !inView || count < 2) return;
     const next = progress.get() + Math.min(delta, 100) / INTERVAL_MS;
     if (next >= 1) go(1);
     else progress.set(next);
@@ -73,15 +96,17 @@ export default function PartnerWithUs() {
     >
       {/* Blurred backdrop of the current slide */}
       <AnimatePresence initial={false}>
-        <motion.div key={SLIDES[index]} className="absolute inset-0" {...fade}>
-          <Image
-            src={SLIDES[index]}
-            alt=""
-            fill
-            sizes="50vw"
-            className="scale-110 object-cover blur-3xl brightness-50"
-          />
-        </motion.div>
+        {current && (
+          <motion.div key={current} className="absolute inset-0" {...fade}>
+            <Image
+              src={current}
+              alt=""
+              fill
+              sizes="50vw"
+              className="scale-110 object-cover blur-3xl brightness-50"
+            />
+          </motion.div>
+        )}
       </AnimatePresence>
 
       {/* Seam fades: top matches AtAGlance's bottom, bottom matches the
@@ -103,20 +128,17 @@ export default function PartnerWithUs() {
           onMouseLeave={() => setPaused(false)}
         >
           <AnimatePresence initial={false}>
-            <motion.div
-              key={SLIDES[index]}
-              className="absolute inset-0"
-              {...fade}
-            >
-              <Image
-                src={SLIDES[index]}
-                alt={`Partner with UTESCA, slide ${index + 1} of ${SLIDES.length}`}
-                fill
-                sizes="(min-width: 768px) 80vw, 100vw"
-                priority={index === 0}
-                className="object-contain"
-              />
-            </motion.div>
+            {current && (
+              <motion.div key={current} className="absolute inset-0" {...fade}>
+                <Image
+                  src={current}
+                  alt={`Partner with UTESCA, slide ${index + 1} of ${count}`}
+                  fill
+                  sizes="(min-width: 768px) 70vw, 100vw"
+                  className="object-contain"
+                />
+              </motion.div>
+            )}
           </AnimatePresence>
 
           <button
@@ -138,7 +160,7 @@ export default function PartnerWithUs() {
         </div>
 
         <div className="mt-6 flex items-center justify-center gap-2">
-          {SLIDES.map((src, i) => (
+          {(slides ?? []).map((src, i) => (
             <button
               key={src}
               type="button"
