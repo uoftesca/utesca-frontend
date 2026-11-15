@@ -83,6 +83,11 @@ interface TeamNotebookProps {
   team: TeamNotebookConfig;
   /** Preload the opening pages (use for the first notebook on the page). */
   preloadCover?: boolean;
+  /**
+   * When set, the book rests on a taped paper mat tilted by this many degrees
+   * (scrapbook look). Omit for no mat.
+   */
+  tilt?: number;
 }
 
 interface Flip {
@@ -96,6 +101,7 @@ interface Flip {
 export default function TeamNotebook({
   team,
   preloadCover = false,
+  tilt,
 }: TeamNotebookProps) {
   const { pages, name } = team;
   const twoUp = useMediaQuery("(min-width: 768px)");
@@ -220,6 +226,13 @@ export default function TeamNotebook({
         right: target.right === null ? "53%" : "3%",
       }
     : { left: "5%", right: "5%" };
+  // The paper mat, like the shadow, frames only the visible pages.
+  const mat = twoUp
+    ? {
+        left: target.left === null ? "48.4%" : "-1.6%",
+        right: target.right === null ? "48.4%" : "-1.6%",
+      }
+    : { left: "-3.5%", right: "-3.5%" };
 
   // Neighbouring pages are fetched ahead of time so turns don't flash.
   const preloadPages = [spreads[current - 1], spreads[current + 1]]
@@ -273,6 +286,16 @@ export default function TeamNotebook({
           style={{ transform: `translateX(${shift})` }}
         >
           <div className={styles.groundShadow} style={ground} aria-hidden />
+          {tilt !== undefined && (
+            <div
+              className={styles.mat}
+              style={{ ...mat, ["--tilt" as string]: `${tilt}deg` }}
+              aria-hidden
+            >
+              <span className={cn(styles.matTape, styles.matTapeLeft)} />
+              <span className={cn(styles.matTape, styles.matTapeRight)} />
+            </div>
+          )}
           {twoUp ? (
             <>
               {under.left !== null && (

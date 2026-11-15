@@ -21,6 +21,8 @@ export interface TeamNotebookConfig {
   id: string;
   /** Heading shown above the notebook. */
   name: string;
+  /** Optional handwritten annotation shown beside the notebook. */
+  note?: string;
   pages: NotebookPage[];
 }
 
@@ -37,6 +39,7 @@ export const TEAM_NOTEBOOKS: TeamNotebookConfig[] = [
   {
     id: "presidents",
     name: "Presidents",
+    note: "the people steering the ship ✶",
     pages: [
       page("presidents", 1, "Co-Presidents 2026-27 cover with photos of Clemen Chan and Carolina Fischmeister."),
       page("presidents", 2, "Clemen Chan, Co-President, with discipline, fun fact and favourite UTESCA moment."),
@@ -46,6 +49,7 @@ export const TEAM_NOTEBOOKS: TeamNotebookConfig[] = [
   {
     id: "outreach-marketing",
     name: "Outreach & Marketing",
+    note: "the faces behind every post & partnership",
     pages: [
       page("outreach-marketing", 1, "Outreach and Marketing 2026-27 cover with photos of the team's VPs."),
       page("outreach-marketing", 2, "Johnny Campos, VP Outreach, with discipline, fun fact and favourite UTESCA moment."),
@@ -57,6 +61,7 @@ export const TEAM_NOTEBOOKS: TeamNotebookConfig[] = [
   {
     id: "events-oia",
     name: "Events and O&IA",
+    note: "the crew behind every event",
     pages: [
       page("events-oia", 1, "Events and O&IA 2026-27 cover with photos of the team's VPs."),
       page("events-oia", 2, "Amiran Sultana, VP Events, with discipline, fun fact and favourite UTESCA moment."),
@@ -70,6 +75,7 @@ export const TEAM_NOTEBOOKS: TeamNotebookConfig[] = [
   {
     id: "web",
     name: "Web Development",
+    note: "psst… they built this page :)",
     pages: [
       page("web", 1, "Web Development 2026-27 cover with a photo of the team's VP."),
       page("web", 2, "Muhtasim Khan, VP Web, with discipline, fun fact and favourite UTESCA moment."),
@@ -81,6 +87,7 @@ export const TEAM_NOTEBOOKS: TeamNotebookConfig[] = [
   {
     id: "cep",
     name: "Consulting Engineering Program",
+    note: "where engineering meets consulting",
     pages: [
       page("cep", 1, "Consulting Engineering Program 2026-27 cover with a photo of the team's VP."),
       page("cep", 2, "Joel Vadakken, VP CEP, with discipline, fun fact and favourite UTESCA moment."),
@@ -94,6 +101,7 @@ export const TEAM_NOTEBOOKS: TeamNotebookConfig[] = [
   {
     id: "sponsors-finance",
     name: "Sponsorships & Finance",
+    note: "keeping UTESCA running behind the scenes",
     pages: [
       page("sponsors-finance", 1, "Sponsorships and Finance 2026-27 cover with photos of the team's VPs."),
       page("sponsors-finance", 2, "Ridaan Gupta, VP Sponsorships, with discipline, fun fact and favourite UTESCA moment."),
