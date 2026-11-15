@@ -35,6 +35,9 @@ export default function Team() {
         for (let i = 1; i < lines.length; i++) {
           const line = lines[i].trim();
 
+          // "//" comments out a line.
+          if (line.startsWith("//")) continue;
+
           if (line.startsWith("#")) {
             currentTeam = line.substring(2).trim();
             groups[currentTeam] = [];
