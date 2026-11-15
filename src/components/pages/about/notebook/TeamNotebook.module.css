@@ -1,0 +1,310 @@
+/* Scoped styles for <TeamNotebook />. Layout and colours come from the site's
+   Tailwind theme; this file only holds the 3D page-turn mechanics. */
+
+.stage {
+  --turn-duration: 700ms;
+  --single-turn-duration: 520ms;
+  position: relative;
+  margin-inline: auto;
+  perspective: 2400px;
+  /* Let the browser handle vertical scrolling; horizontal swipes reach us. */
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.stage:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 8px;
+}
+
+/* Desktop: two 4:5 pages side by side. Width is capped by the viewport height
+   so a whole spread (plus controls) fits on screen. */
+.twoUp {
+  aspect-ratio: 8 / 5;
+  width: min(100%, 76rem, calc((100svh - 9rem) * 1.6));
+}
+
+/* Mobile: a single 4:5 page. It's allowed to extend slightly into the
+   container's side padding (the flex parent centres the overflow evenly). */
+.single {
+  aspect-ratio: 4 / 5;
+  flex-shrink: 0;
+  /* Auto margins would pin the overflow to the right; let align-items centre it. */
+  margin-inline: 0;
+  width: min(calc(100% + 2.5rem), 32rem, calc((100svh - 8rem) * 0.8));
+}
+
+/* The book slides so a lone cover (or lone last page) sits centred. */
+.book {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform var(--turn-duration) cubic-bezier(0.45, 0, 0.2, 1);
+}
+
+.slot {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  background: #262626;
+}
+
+.slotLeft {
+  left: 0;
+  width: 50%;
+  border-radius: 6px 0 0 6px;
+}
+
+.slotRight {
+  left: 50%;
+  width: 50%;
+  border-radius: 0 6px 6px 0;
+}
+
+.slotFull {
+  left: 0;
+  width: 100%;
+  border-radius: 6px;
+}
+
+.paperShadow {
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.14),
+    0 6px 12px -4px rgb(0 0 0 / 0.22),
+    0 24px 48px -18px rgb(0 0 0 / 0.5);
+}
+
+/* Soft contact shadow on the "table" beneath the book, so it reads as an
+   object resting on the page. Its edges follow whichever pages are visible. */
+.groundShadow {
+  position: absolute;
+  bottom: -26px;
+  height: 44px;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgb(0 0 0 / 0.42) 0%,
+    rgb(0 0 0 / 0.18) 45%,
+    rgb(0 0 0 / 0) 72%
+  );
+  filter: blur(6px);
+  transition:
+    left var(--turn-duration) cubic-bezier(0.45, 0, 0.2, 1),
+    right var(--turn-duration) cubic-bezier(0.45, 0, 0.2, 1);
+}
+
+/* Soft inner shading where each page curves into the binding. */
+.slotLeft::after,
+.slotRight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.slotLeft::after {
+  background: linear-gradient(to left, rgb(0 0 0 / 0.28), rgb(0 0 0 / 0) 9%);
+}
+
+.slotRight::after {
+  background: linear-gradient(to right, rgb(0 0 0 / 0.28), rgb(0 0 0 / 0) 9%);
+}
+
+.spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 14px;
+  transform: translateX(-50%);
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    rgb(0 0 0 / 0),
+    rgb(0 0 0 / 0.35) 45%,
+    rgb(255 255 255 / 0.08) 50%,
+    rgb(0 0 0 / 0.35) 55%,
+    rgb(0 0 0 / 0)
+  );
+}
+
+/* ---------- Turning leaf ---------- */
+
+.leaf {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #262626;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+}
+
+/* Desktop, forward: right page lifts and turns over the spine to the left. */
+.leafNext {
+  left: 50%;
+  width: 50%;
+  transform-origin: left center;
+  animation: turnNext var(--turn-duration) cubic-bezier(0.45, 0, 0.2, 1) forwards;
+}
+
+.leafNext .front {
+  border-radius: 0 6px 6px 0;
+}
+
+.leafNext .back {
+  border-radius: 6px 0 0 6px;
+}
+
+.leafNext .front .shade {
+  background: linear-gradient(to right, rgb(0 0 0 / 0.55), rgb(0 0 0 / 0.15));
+  animation: shadeIn var(--turn-duration) ease-in forwards;
+}
+
+.leafNext .back .shade {
+  background: linear-gradient(to left, rgb(0 0 0 / 0.55), rgb(0 0 0 / 0.15));
+  animation: shadeOut var(--turn-duration) ease-out forwards;
+}
+
+/* Desktop, backward: left page turns over the spine to the right. */
+.leafPrev {
+  left: 0;
+  width: 50%;
+  transform-origin: right center;
+  animation: turnPrev var(--turn-duration) cubic-bezier(0.45, 0, 0.2, 1) forwards;
+}
+
+.leafPrev .front {
+  border-radius: 6px 0 0 6px;
+}
+
+.leafPrev .back {
+  border-radius: 0 6px 6px 0;
+}
+
+.leafPrev .front .shade {
+  background: linear-gradient(to left, rgb(0 0 0 / 0.55), rgb(0 0 0 / 0.15));
+  animation: shadeIn var(--turn-duration) ease-in forwards;
+}
+
+.leafPrev .back .shade {
+  background: linear-gradient(to right, rgb(0 0 0 / 0.55), rgb(0 0 0 / 0.15));
+  animation: shadeOut var(--turn-duration) ease-out forwards;
+}
+
+/* Mobile: the page swings away from / back onto the left (spiral) edge.
+   It never rotates past 90deg, so it stays within the page's own box. */
+.leafOut,
+.leafIn {
+  left: 0;
+  width: 100%;
+  transform-origin: left center;
+}
+
+.leafOut {
+  animation: swingOut var(--single-turn-duration) cubic-bezier(0.55, 0, 0.8, 0.4) forwards;
+}
+
+.leafIn {
+  animation: swingIn var(--single-turn-duration) cubic-bezier(0.2, 0.6, 0.45, 1) forwards;
+}
+
+.leafOut .face,
+.leafIn .face {
+  border-radius: 6px;
+}
+
+.leafOut .shade {
+  background: linear-gradient(to right, rgb(0 0 0 / 0.6), rgb(0 0 0 / 0.2));
+  animation: shadeIn var(--single-turn-duration) ease-in forwards;
+}
+
+.leafIn .shade {
+  background: linear-gradient(to right, rgb(0 0 0 / 0.6), rgb(0 0 0 / 0.2));
+  animation: shadeOut var(--single-turn-duration) ease-out forwards;
+}
+
+@keyframes turnNext {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(-180deg); }
+}
+
+@keyframes turnPrev {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(180deg); }
+}
+
+@keyframes swingOut {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(-90deg); }
+}
+
+@keyframes swingIn {
+  from { transform: rotateY(-90deg); }
+  to { transform: rotateY(0deg); }
+}
+
+@keyframes shadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes shadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Reduced motion: no 3D turn (handled in JS), just a quick cross-fade. */
+.fadeIn {
+  animation: fadeIn 180ms ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.preload {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book,
+  .groundShadow {
+    transition: none;
+  }
+}
