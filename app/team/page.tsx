@@ -1,4 +1,3 @@
-import Container from '@/components/Container';
 import Footer from '@/components/Footer';
 import Hero from '@/components/Hero';
 import NavBar from '@/components/NavBar';
@@ -10,9 +9,8 @@ export default function TeamPage() {
             <NavBar />
             <main>
                 <Hero />
-                <Container>
-                    <MeetTheTeam />
-                </Container>
+                {/* Full-bleed scrapbook paper; MeetTheTeam handles its own content width. */}
+                <MeetTheTeam />
             </main>
             <Footer />
         </>
