@@ -99,15 +99,13 @@ export const TEAM_NOTEBOOKS: TeamNotebookConfig[] = [
     ],
   },
   {
-    id: "sponsors-finance",
-    name: "Sponsorships & Finance",
+    id: "finance",
+    name: "Finance",
     note: "keeping UTESCA running behind the scenes",
     pages: [
-      page("sponsors-finance", 1, "Sponsorships and Finance 2026-27 cover with photos of the team's VPs."),
-      page("sponsors-finance", 2, "Ridaan Gupta, VP Sponsorships, with discipline, fun fact and favourite UTESCA moment."),
-      page("sponsors-finance", 3, "Sponsorship directors Shrena Sribalan and Abdulahi Abdurahman, with their disciplines and fun facts."),
-      page("sponsors-finance", 4, "Rangajah Manoharan, VP Finance, with discipline, fun fact and favourite UTESCA moment."),
-      page("sponsors-finance", 5, "Finance directors Imaan Sheikh and Taimour Rehan, with their disciplines."),
+      page("finance", 1, "Finance 2026-27 cover with a photo of the team's VP."),
+      page("finance", 2, "Rangajah Manoharan, VP Finance, with discipline, fun fact and favourite UTESCA moment."),
+      page("finance", 3, "Finance directors Imaan Sheikh and Taimour Rehan, with their disciplines."),
     ],
   },
 ];
