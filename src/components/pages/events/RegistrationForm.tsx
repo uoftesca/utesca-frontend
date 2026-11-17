@@ -118,6 +118,13 @@ function formatAllowedTypes(allowedTypes: string[] | undefined): string {
   return allowedTypes.map((t) => labels[t] ?? t).join(", ");
 }
 
+function getFileKeyFromUrl(url: string | undefined) {
+  if (!url) return null;
+  const parts = url.split("/");
+  const last = parts.at(-1);
+  return last?.split("?")[0] || null;
+}
+
 function validateTextField(
   required: boolean,
   validation: RegistrationFormField["validation"] | undefined,
@@ -237,6 +244,18 @@ export function RegistrationForm({
   const isFieldDisabled = (field: RegistrationFormField) =>
     submitting || isClosed || isProtectedField(field);
 
+  const scrollToFormError = (fieldId?: string) => {
+    requestAnimationFrame(() => {
+      const target = fieldId
+        ? document.getElementById(`registration-field-${fieldId}`)
+        : document.getElementById("registration-form");
+      target?.scrollIntoView({
+        behavior: "smooth",
+        block: fieldId ? "center" : "start",
+      });
+    });
+  };
+
   if (isClosed) {
     return (
       <div className="w-full max-w-5xl space-y-6">
@@ -272,6 +291,37 @@ export function RegistrationForm({
     });
   };
 
+  const deleteHostedFile = async (uploadState: FileUploadState) => {
+    const fileKey = getFileKeyFromUrl(uploadState.url);
+    if (!fileKey) return;
+
+    try {
+      const response = await fetch("/api/uploadthing/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fileKey }),
+      });
+      if (!response.ok) {
+        console.warn("Failed to delete replaced file from UploadThing", fileKey);
+      }
+    } catch (error) {
+      console.warn("Failed to delete replaced file from UploadThing", error);
+    }
+  };
+
+  const deleteUploadedFile = async (
+    fieldId: string,
+    uploadState: FileUploadState,
+  ) => {
+    if (!uploadState.fileId) return;
+
+    await publicApi.deleteRegistrationFile(slug, uploadState.fileId, {
+      uploadSessionId,
+      fieldName: fieldId,
+    });
+    await deleteHostedFile(uploadState);
+  };
+
   const handleFileUpload = async (fieldId: string, file: File | null) => {
     if (!file) {
       setFileUploads((prev) => ({
@@ -282,6 +332,7 @@ export function RegistrationForm({
       return;
     }
 
+    const previousUpload = fileUploads[fieldId];
     const fieldDef = schema.fields.find((f) => f.id === fieldId);
     const maxSize = fieldDef?.validation?.maxSize ?? 8_388_608;
     const allowedTypes = fieldDef?.validation?.allowedTypes ?? [
@@ -357,6 +408,10 @@ export function RegistrationForm({
         eventId: event.id,
       });
       const returnedFileId = meta.fileId;
+
+      if (previousUpload?.status === "uploaded" && previousUpload.fileId) {
+        await deleteHostedFile(previousUpload);
+      }
 
       setFileUploads((prev) => ({
         ...prev,
@@ -498,14 +553,6 @@ export function RegistrationForm({
     </div>
   );
 
-  const getFileKeyFromUrl = (url: string | undefined) => {
-    if (!url) return null;
-    const parts = url.split("/");
-    if (!parts.length) return null;
-    const last = parts[parts.length - 1];
-    return last?.split("?")[0] || null;
-  };
-
   const renderFileField = (field: RegistrationFormField) => {
     const uploadState = fileUploads[field.id] ?? { status: "idle" as const };
     const isBusy =
@@ -577,22 +624,7 @@ export function RegistrationForm({
                   [field.id]: { ...uploadState, status: "deleting" },
                 }));
                 try {
-                  await publicApi.deleteRegistrationFile(
-                    slug,
-                    uploadState.fileId,
-                    {
-                      uploadSessionId,
-                      fieldName: field.id,
-                    },
-                  );
-                  const fileKey = getFileKeyFromUrl(uploadState.url);
-                  if (fileKey) {
-                    await fetch("/api/uploadthing/delete", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ fileKey }),
-                    });
-                  }
+                  await deleteUploadedFile(field.id, uploadState);
                   setFileUploads((prev) => ({
                     ...prev,
                     [field.id]: { status: "idle" },
@@ -655,13 +687,18 @@ export function RegistrationForm({
     setSuccessMessage(null);
 
     const errors = validateAll();
-    if (Object.keys(errors).length > 0) return;
+    const firstInvalidField = Object.keys(errors)[0];
+    if (firstInvalidField) {
+      scrollToFormError(firstInvalidField);
+      return;
+    }
 
     const hasUploading = Object.values(fileUploads).some(
       (state) => state.status === "uploading" || state.status === "deleting",
     );
     if (hasUploading) {
       setSubmitError("Please wait for file uploads to finish.");
+      scrollToFormError();
       return;
     }
 
@@ -675,6 +712,7 @@ export function RegistrationForm({
     );
     if (requiredFileMissing) {
       setSubmitError("Please upload the required file(s) before submitting.");
+      scrollToFormError();
       return;
     }
 
@@ -726,6 +764,7 @@ export function RegistrationForm({
           ? err.message
           : "Failed to submit registration. Please try again.",
       );
+      scrollToFormError();
     } finally {
       setSubmitting(false);
     }
@@ -742,7 +781,7 @@ export function RegistrationForm({
         <InitialRegistrationHeader event={event} />
       )}
 
-      <form className="space-y-8" onSubmit={handleSubmit}>
+      <form id="registration-form" className="space-y-8" onSubmit={handleSubmit}>
         {submitError && (
           <div className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-base text-destructive">
             {submitError}
@@ -808,6 +847,7 @@ export function RegistrationForm({
                   return (
                     <Field
                       key={field.id}
+                      id={`registration-field-${field.id}`}
                       className={`gap-2 rounded-lg p-3 ${isWideField(field.type) ? "md:col-span-2" : ""} ${isProtectedField(field) ? "bg-muted/70 text-muted-foreground" : ""}`}
                     >
                       <FieldLabel>
