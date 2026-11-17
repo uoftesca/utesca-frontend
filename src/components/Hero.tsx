@@ -1,15 +1,25 @@
 import Image from "next/image";
 
-export default function Hero() {
+export default function Hero({
+  imageSrc = "/toronto-skyline.jpg",
+  imageClassName = "scale-105 object-top",
+  title = "University of Toronto Engineering Students Consulting Association",
+  titleClassName = "text-3xl font-bold md:text-5xl",
+}: {
+  imageSrc?: string;
+  imageClassName?: string;
+  title?: string;
+  titleClassName?: string;
+}) {
   return (
     <section className="relative h-[200px] md:h-[400px] w-full overflow-hidden">
       <Image
-        src="/toronto-skyline.jpg"
+        src={imageSrc}
         alt="Toronto Skyline"
         fill
         sizes="100vw"
         priority
-        className="scale-105 object-cover object-top"
+        className={`object-cover ${imageClassName}`}
       />
 
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/25" />
@@ -22,8 +32,8 @@ export default function Hero() {
             {/* <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-white/70 md:text-sm">
               Engineering Consulting at U&nbsp;of&nbsp;T
             </p> */}
-            <h1 className="max-w-2xl text-balance text-3xl font-bold leading-tight text-white md:text-5xl">
-              University of Toronto Engineering Students Consulting Association
+            <h1 className={`max-w-2xl text-balance leading-tight text-white ${titleClassName}`}>
+              {title}
             </h1>
             <div className="mt-5 h-1 w-16 rounded-full bg-primary" />
           </div>
